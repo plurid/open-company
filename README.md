@@ -11,7 +11,7 @@
 
 # Open Invoice
 
-Open Source, [Electron-React-Boilerplate](https://github.com/electron-react-boilerplate/examples/tree/master/examples/typescript)-based application for invoicing.
+Open Source, [Electron-React-Typescript-boilerplate](https://github.com/electron-react-boilerplate/examples/tree/master/examples/typescript)-based application for invoicing.
 
 
 <div style="text-align: center;">
