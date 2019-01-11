@@ -2,8 +2,9 @@ import * as React from 'react';
 import { Component } from 'react';
 // import { Link } from 'react-router-dom';
 // const routes = require('../constants/routes.json');
-const styles = require('./Home.css');
+import Header from './Header';
 
+const styles = require('./Home.css');
 
 const { dialog } = require('electron').remote;
 import * as fs from 'fs';
@@ -60,23 +61,26 @@ export default class Home extends Component<Props> {
 
     render() {
         return (
-            <div className={styles.mainContainer}>
-                <div className={styles.container}>
-                    <button
-                        name="createDb"
-                        onClick={this.handleClick}
-                        className={styles.btn}
-                    >
-                        Create Database
-                    </button>
+            <div style={ {height: '100%', display: 'grid', gridTemplateRows: '200px auto' } }>
+                <Header />
+                <div className={styles.mainContainer}>
+                    <div className={styles.container}>
+                        <button
+                            name="createDb"
+                            onClick={this.handleClick}
+                            className={styles.btn}
+                        >
+                            Create Database
+                        </button>
 
-                    <button
-                        name="selectDb"
-                        onClick={this.handleClick}
-                        className={styles.btn}
-                    >
-                        Select Database
-                    </button>
+                        <button
+                            name="selectDb"
+                            onClick={this.handleClick}
+                            className={styles.btn}
+                        >
+                            Select Database
+                        </button>
+                    </div>
                 </div>
             </div>
         );
