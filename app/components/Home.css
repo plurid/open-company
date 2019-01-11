@@ -1,14 +1,41 @@
+.mainContainer {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
 .container {
-    position: absolute;
-    top: 30%;
-    left: 10px;
-    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
 }
 
-.container h2 {
-    font-size: 5rem;
+@media (max-width: 800px) {
+    .container {
+        grid-template-columns: 1fr;
+        height: 50%;
+        width: 100%;
+    }
 }
 
-.container a {
-    font-size: 1.4rem;
+.btn {
+    background-color: hsl(220, 3%, 13%);
+    width: 150px;
+    color: white;
+    padding: 20px;
+    margin: 30px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 0 20px 3px hsla(0, 0%, 0%, 0.4);
+}
+
+.btn:hover {
+    background-color: hsl(220, 3%, 35%);
 }

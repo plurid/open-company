@@ -24,7 +24,7 @@ export default class AppUpdater {
 }
 
 
-let mainWindow = null;
+export let mainWindow = null;
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -46,8 +46,8 @@ const installExtensions = async () => {
     const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
 
     return Promise.all(
-            extensions.map(name => installer.default(installer[name], forceDownload))
-        ).catch(console.log);
+        extensions.map(name => installer.default(installer[name], forceDownload))
+    ).catch(console.log);
 };
 
 /**
@@ -70,10 +70,23 @@ app.on('ready', async () => {
         await installExtensions();
     }
 
+    // mainWindow = new BrowserWindow({
+    //     show: false,
+    //     width: 1024,
+    //     height: 728
+    // });
+
     mainWindow = new BrowserWindow({
-        show: false,
         width: 1024,
-        height: 728
+        height: 728,
+        icon: '../resources/icon.png',
+        minHeight: 500,
+        minWidth: 300,
+        title: 'Open Invoice',
+        titleBarStyle: 'hiddenInset',
+        // webPreferences: {
+        //     nodeIntegration: false,
+        // },
     });
 
     mainWindow.loadURL(`file://${__dirname}/app.html`);

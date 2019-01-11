@@ -6,7 +6,6 @@
     "productName": "Open Invoice",
     "author": "Jan Cavel <mail@caveljan.com> (https://caveljan.com/)",
     "homepage": "https://github.com/caveljan/open-invoice#readme",
-
     "repository": {
         "type": "git",
         "url": "git+https://github.com/caveljan/open-invoice.git"
@@ -14,7 +13,6 @@
     "bugs": {
         "url": "https://github.com/caveljan/open-invoice/issues"
     },
-
     "scripts": {
         "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
         "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
@@ -116,7 +114,6 @@
             "private": false
         }
     },
-
     "keywords": [
         "electron",
         "boilerplate",
@@ -252,6 +249,7 @@
         "electron-log": "^2.2.17",
         "electron-updater": "^4.0.6",
         "history": "^4.7.2",
+        "nedb": "^1.8.0",
         "react": "^16.7.0",
         "react-dom": "^16.7.0",
         "react-hot-loader": "^4.6.3",
@@ -267,6 +265,5 @@
         "npm": ">=4.x",
         "yarn": ">=0.21.3"
     },
-
     "browserslist": "electron 1.6"
 }
