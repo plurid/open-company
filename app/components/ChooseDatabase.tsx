@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Component } from 'react';
-import { Link } from 'react-router-dom';
-const routes = require('../constants/routes.json');
+// import { Link } from 'react-router-dom';
+// const routes = require('../constants/routes.json');
 import Header from './layout/Header';
 
-const styles = require('./Home.css');
+const styles = require('./ChooseDatabase.css');
 
 const { dialog } = require('electron').remote;
 import * as fs from 'fs';
@@ -13,7 +13,7 @@ import * as fs from 'fs';
 
 type Props = {};
 
-export default class Home extends Component<Props> {
+export default class ChooseDatabase extends Component<Props> {
     props: Props;
 
     constructor(props: Props) {
@@ -65,11 +65,21 @@ export default class Home extends Component<Props> {
                 <Header />
                 <div className={styles.mainContainer}>
                     <div className={styles.container}>
-                        <Link to={routes.CHOOSE_DATABASE}>
-                            <button className={styles.btn}>
-                                Choose Database
-                            </button>
-                        </Link>
+                        <button
+                            name="createDb"
+                            onClick={this.handleClick}
+                            className={styles.btn}
+                        >
+                            Create Database
+                        </button>
+
+                        <button
+                            name="selectDb"
+                            onClick={this.handleClick}
+                            className={styles.btn}
+                        >
+                            Select Database
+                        </button>
                     </div>
                 </div>
             </div>

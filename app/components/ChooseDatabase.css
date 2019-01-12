@@ -8,7 +8,7 @@
 
 .container {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
     justify-items: center;
     width: 100%;
@@ -26,7 +26,7 @@
 
 .btn {
     background-color: hsl(220, 3%, 13%);
-    width: 250px;
+    width: 150px;
     color: white;
     padding: 20px;
     margin: 30px;

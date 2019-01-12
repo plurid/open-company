@@ -1,4 +1,12 @@
 {
     "HOME": "/",
-    "COUNTER": "/counter"
+
+    "CHOOSE_DATABASE": "/choose-database",
+    "PASSWORD_DATABASE": "/password-database",
+
+    "CREATE_COMPANY": "/create-company",
+
+    "CREATE_CLIENT": "/create-client",
+
+    "CREATE_INVOICE": "/create-invoice"
 }

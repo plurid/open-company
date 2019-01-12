@@ -5,7 +5,7 @@ import Root from './containers/Root';
 import { configureStore, history } from './store/configureStore';
 import './app.global.css';
 
-import TitleBar from './components/TitleBar';
+import TitleBar from './components/layout/TitleBar';
 
 
 // const Datastore = require('nedb');
