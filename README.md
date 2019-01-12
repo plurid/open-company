@@ -7,13 +7,10 @@
     </a>
 </p>
 
-
-
 # Open Invoice
 
 Open Source, [Electron-React-Typescript-boilerplate](https://github.com/electron-react-boilerplate/examples/tree/master/examples/typescript)-based application for invoicing.
 
-
 <div style="text-align: center;">
-    <img style="height: 600px" src="./about/identity/mock-Initial-Page.png">
+    <img style="height: 600px" src="./about/identity/home-page.png">
 </div>
