@@ -3,11 +3,11 @@ import { Component } from 'react';
 
 
 
-export default class CreateCompany extends Component {
+export default class CompanyEdit extends Component {
     render() {
         return (
             <div>
-                Create Company
+                Company Select
             </div>
         );
     }

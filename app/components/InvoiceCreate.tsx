@@ -3,7 +3,7 @@ import { Component } from 'react';
 
 
 
-export default class CreateInvoice extends Component {
+export default class InvoiceCreate extends Component {
     render() {
         return (
             <div>

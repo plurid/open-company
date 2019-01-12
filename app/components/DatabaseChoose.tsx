@@ -4,16 +4,18 @@ import { Component } from 'react';
 // const routes = require('../constants/routes.json');
 import Header from './layout/Header';
 
-const styles = require('./ChooseDatabase.css');
+const styles = require('./DatabaseChoose.scss');
 
 const { dialog } = require('electron').remote;
 import * as fs from 'fs';
+
+import { history } from '../store/configureStore';
 
 
 
 type Props = {};
 
-export default class ChooseDatabase extends Component<Props> {
+export default class DatabaseChoose extends Component<Props> {
     props: Props;
 
     constructor(props: Props) {
@@ -38,6 +40,8 @@ export default class ChooseDatabase extends Component<Props> {
                     }
                     console.log('written file ', fileName);
                 });
+
+                history.push('/database-password');
             });
         }
 

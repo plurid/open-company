@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Component } from 'react';
-import CreateClient from '../components/CreateClient';
+import ClientCreate from '../components/ClientCreate';
 
 
 
 export default class CreateClientPage extends Component {
     render() {
-        return <CreateClient />;
+        return <ClientCreate />;
     }
 }

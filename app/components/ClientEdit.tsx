@@ -3,11 +3,11 @@ import { Component } from 'react';
 
 
 
-export default class CreateClient extends Component {
+export default class ClientEdit extends Component {
     render() {
         return (
             <div>
-                Create Client
+                Edit Client
             </div>
         );
     }

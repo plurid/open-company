@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const routes = require('../constants/routes.json');
 import Header from './layout/Header';
 
-const styles = require('./Home.css');
+const styles = require('./Home.scss');
 
 const { dialog } = require('electron').remote;
 import * as fs from 'fs';
@@ -65,7 +65,7 @@ export default class Home extends Component<Props> {
                 <Header />
                 <div className={styles.mainContainer}>
                     <div className={styles.container}>
-                        <Link to={routes.CHOOSE_DATABASE}>
+                        <Link to={routes.DATABASE_CHOOSE}>
                             <button className={styles.btn}>
                                 Choose Database
                             </button>

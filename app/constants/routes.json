@@ -1,12 +1,17 @@
 {
-    "HOME": "/",
+    "DATABASE_CHOOSE": "/database-choose",
+    "DATABASE_PASSWORD": "/database-password",
 
-    "CHOOSE_DATABASE": "/choose-database",
-    "PASSWORD_DATABASE": "/password-database",
+    "COMPANY_CREATE": "/company-create",
+    "COMPANY_DASHBOARD": "/company-dashboard",
+    "COMPANY_EDIT": "/company-edit",
+    "COMPANY_SELECT": "/company-select",
 
-    "CREATE_COMPANY": "/create-company",
+    "CLIENT_CREATE": "/client-create",
+    "CLIENT_EDIT": "/client-edit",
 
-    "CREATE_CLIENT": "/create-client",
+    "INVOICE_CREATE": "/invoice-create",
+    "INVOICE_EDIT": "/invoice-edit",
 
-    "CREATE_INVOICE": "/create-invoice"
+    "HOME": "/"
 }

@@ -3,11 +3,11 @@ import { Component } from 'react';
 
 
 
-export default class PasswordDatabase extends Component {
+export default class InvoiceCreate extends Component {
     render() {
         return (
             <div>
-                PasswordDatabase
+                Create Invoice
             </div>
         );
     }
