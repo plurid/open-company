@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component } from 'react';
 
 const styles = require('./Header.css');
-
+const logoImage = require('../../assets/images/logo.png');
 
 
 export default class Header extends Component {
@@ -10,7 +10,7 @@ export default class Header extends Component {
         return (
             <div className={styles.headerContainer}>
                 <div className={styles.header}>
-                    <img src="./assets/images/logo.png" height="100px" />
+                    <img src={logoImage} height="100px" />
                     <span>Open Invoice</span>
                 </div>
             </div>
