@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Component } from 'react';
 
-const styles = require('./Header.css');
+const styles = require('./Header.scss');
 const logoImage = require('../../assets/images/logo.png');
+
 
 
 export default class Header extends Component {

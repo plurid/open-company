@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-const styles = require('./TitleBar.css');
+const styles = require('./TitleBar.scss');
 
 
 

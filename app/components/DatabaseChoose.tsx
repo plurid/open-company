@@ -16,8 +16,6 @@ import { history } from '../store/configureStore';
 type Props = {};
 
 export default class DatabaseChoose extends Component<Props> {
-    props: Props;
-
     constructor(props: Props) {
         super(props);
 
