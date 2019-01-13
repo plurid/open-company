@@ -11,14 +11,20 @@
 
 Open Source, [Electron-React-Typescript-boilerplate](https://github.com/electron-react-boilerplate/examples/tree/master/examples/typescript)-based application for invoicing.
 
+## Install
+
+Download the application for the specific operating system.
+
+## App
+
 <div style="text-align: center;">
     <img style="height: 600px" src="./about/identity/home-page.png">
 </div>
 
-Home
+<p style="text-align: center;">Home</p>
 
 <div style="text-align: center;">
     <img style="height: 600px" src="./about/identity/database-choose-page.png">
 </div>
 
-Choose Database
+<p style="text-align: center;">Choose Database</p>
