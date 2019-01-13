@@ -14,3 +14,11 @@ Open Source, [Electron-React-Typescript-boilerplate](https://github.com/electron
 <div style="text-align: center;">
     <img style="height: 600px" src="./about/identity/home-page.png">
 </div>
+
+Home
+
+<div style="text-align: center;">
+    <img style="height: 600px" src="./about/identity/database-choose-page.png">
+</div>
+
+Choose Database
