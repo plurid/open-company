@@ -21,10 +21,10 @@ Download the application for the specific operating system.
     <img style="height: 600px" src="./about/identity/home-page.png">
 </div>
 
-<p style="text-align: center;">Home</p>
+<p align="center">Home</p>
 
 <div style="text-align: center;">
     <img style="height: 600px" src="./about/identity/database-choose-page.png">
 </div>
 
-<p style="text-align: center;">Choose Database</p>
+<p align="center">Choose Database</p>
