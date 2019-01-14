@@ -18,13 +18,25 @@ Download the application for the specific operating system.
 ## App
 
 <div style="text-align: center;">
-    <img style="height: 600px" src="./about/identity/home-page.png">
+    <img style="height: 600px" src="./about/app/page-home.png">
 </div>
 
 <p align="center">Home</p>
 
 <div style="text-align: center;">
-    <img style="height: 600px" src="./about/identity/database-choose-page.png">
+    <img style="height: 600px" src="./about/app/page-database-choose.png">
 </div>
 
 <p align="center">Choose Database</p>
+
+<div style="text-align: center;">
+    <img style="height: 600px" src="./about/app/page-database-create.png">
+</div>
+
+<p align="center">Create Database</p>
+
+<div style="text-align: center;">
+    <img style="height: 600px" src="./about/app/page-database-select.png">
+</div>
+
+<p align="center">Select Database</p>
