@@ -63,10 +63,10 @@ export default class Home extends Component<Props> {
         return (
             <div style={ {height: '100%', display: 'grid', gridTemplateRows: '200px auto' } }>
                 <Header />
-                <div className={styles.mainContainer}>
-                    <div className={styles.container}>
-                        <Link to={routes.DATABASE_CHOOSE}>
-                            <button className={styles.btn}>
+                <div className={ styles.mainContainer }>
+                    <div className={ styles.container }>
+                        <Link className={ styles.link } to={ routes.DATABASE_CHOOSE }>
+                            <button className={ styles.btn }>
                                 Choose Database
                             </button>
                         </Link>
