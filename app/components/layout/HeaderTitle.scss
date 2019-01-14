@@ -11,9 +11,17 @@
 
 .header {
     display: grid;
-    grid-template-columns: 60px auto;
+    grid-template-columns: 30px auto;
     justify-content: center;
     justify-items: center;
     align-items: center;
     font-size: 14px;
+}
+
+.header img {
+    margin-right: 10px;
+}
+
+.header span {
+    margin-left: 10px;
 }
