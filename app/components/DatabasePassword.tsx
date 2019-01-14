@@ -6,19 +6,28 @@ const styles = require('./DatabasePassword.scss');
 
 
 
-export default class DatabasePassword extends Component {
-    render() {
+type Props = {
+    dbChoice: string;
+    dbPath: string
+};
+
+export default class DatabasePassword extends Component<Props> {
+    constructor(props: Props) {
+        super(props);
+    }
+
+    create() {
         return (
             <div style={ {height: '100%' } }>
                 <HeaderTitle title="Database Password" />
                 <div className={styles.mainContainer}>
-                    <div className={styles.container}>
+                    <div className={ `${styles.container} ${styles.containerCreate}` }>
                         <h1>
                             Set Password for the Database
                         </h1>
 
                         <code>
-                            /openinvoice.db
+                            { this.props.dbPath }
                         </code>
 
                         <div style={{ width: '100%'}}>
@@ -46,6 +55,49 @@ export default class DatabasePassword extends Component {
                     </div>
                 </div>
             </div>
+        );
+    }
+
+    select() {
+        return (
+            <div style={ {height: '100%' } }>
+                <HeaderTitle title="Database Password" />
+                <div className={styles.mainContainer}>
+                    <div className={ `${styles.container} ${styles.containerSelect}` }>
+                        <h1>
+                            Enter Password for the Database
+                        </h1>
+
+                        <code>
+                            { this.props.dbPath }
+                        </code>
+
+                        <div style={{ width: '100%'}}>
+                            <h3>
+                                Password
+                            </h3>
+                            <input className={styles.input} type="password" />
+                        </div>
+
+                        <button className={styles.btn}>
+                            Enter Password
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    render() {
+        return (
+            <React.Fragment>
+                { this.props.dbChoice === 'createDb'
+                    ? this.create()
+                    : this.props.dbChoice === 'selectDb'
+                        ? this.select()
+                        : ''
+                }
+            </React.Fragment>
         );
     }
 }

@@ -13,7 +13,10 @@ import { history } from '../store/configureStore';
 
 
 
-type Props = {};
+type Props = {
+    dbChoice: (choice: string) => void;
+    dbPath: (path: string) => void;
+};
 
 export default class DatabaseChoose extends Component<Props> {
     constructor(props: Props) {
@@ -23,7 +26,9 @@ export default class DatabaseChoose extends Component<Props> {
     }
 
     handleClick(event) {
-        if (event.target.name === "createDb") {
+        const dbChoice: string = event.target.name;
+
+        if (dbChoice === "createDb") {
             dialog.showSaveDialog({ defaultPath: 'open-invoice.db' }, (fileName) => {
                 if (fileName === undefined){
                     console.log("file not saved");
@@ -39,23 +44,30 @@ export default class DatabaseChoose extends Component<Props> {
                     console.log('written file ', fileName);
                 });
 
+                this.props.dbChoice(dbChoice);
+                this.props.dbPath(fileName);
+
                 history.push('/database-password');
             });
         }
 
-
-        if (event.target.name === "selectDb") {
+        if (dbChoice === "selectDb") {
             dialog.showOpenDialog({properties: ['openFile']}, (filePaths) => {
                 if (filePaths) {
-                    const file = filePaths[0];
-                    console.log(file);
+                    const fileName = filePaths[0];
+                    console.log(fileName);
 
-                    fs.readFile(file, 'utf8', (err, data) => {
+                    fs.readFile(fileName, 'utf8', (err, data) => {
                         if (err) {
                             throw err;
                         }
                         console.log(data);
                     });
+
+                    this.props.dbChoice(dbChoice);
+                    this.props.dbPath(fileName);
+
+                    history.push('/database-password');
                 }
             });
         }
