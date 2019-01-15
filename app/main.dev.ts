@@ -1,19 +1,19 @@
 /* eslint global-require: off */
 
 /**
-* This module executes inside of electron's main process. You can start
-* electron renderer process from here and communicate with the other processes
-* through IPC.
-*
-* When running `yarn build` or `yarn build-main`, this file is compiled to
-* `./app/main.prod.js` using webpack. This gives us some performance wins.
-*/
+ * This module executes inside of electron's main process. You can start
+ * electron renderer process from here and communicate with the other processes
+ * through IPC.
+ *
+ * When running `yarn build` or `yarn build-main`, this file is compiled to
+ * `./app/main.prod.js` using webpack. This gives us some performance wins.
+ */
 import { app, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 
-
+import LocalStore from './db/LocalStore';
 
 export default class AppUpdater {
     constructor() {
@@ -23,15 +23,24 @@ export default class AppUpdater {
     }
 }
 
-
 export let mainWindow = null;
 
+const localStore = new LocalStore({
+    configName: 'user-preferences',
+    defaults: {
+        windowBounds: {
+            width: 1024,
+            height: 728,
+            x: 500,
+            y: 500
+        }
+    }
+});
 
 if (process.env.NODE_ENV === 'production') {
     const sourceMapSupport = require('source-map-support');
     sourceMapSupport.install();
 }
-
 
 if (
     process.env.NODE_ENV === 'development' ||
@@ -46,13 +55,15 @@ const installExtensions = async () => {
     const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
 
     return Promise.all(
-        extensions.map(name => installer.default(installer[name], forceDownload))
+        extensions.map(name =>
+            installer.default(installer[name], forceDownload)
+        )
     ).catch(console.log);
 };
 
 /**
-* Add event listeners...
-*/
+ * Add event listeners...
+ */
 
 app.on('window-all-closed', () => {
     // Respect the OSX convention of having the application in memory even
@@ -70,23 +81,29 @@ app.on('ready', async () => {
         await installExtensions();
     }
 
-    // mainWindow = new BrowserWindow({
-    //     show: false,
-    //     width: 1024,
-    //     height: 728
-    // });
+    let { width, height, x, y } = localStore.get('windowBounds');
+    // let { x, y } = localStore.get('windowCoords');
 
     mainWindow = new BrowserWindow({
-        width: 1024,
-        height: 728,
+        width,
+        height,
+        x,
+        y,
         icon: '../resources/icon.png',
         minHeight: 500,
         minWidth: 300,
         title: 'Open Invoice',
         titleBarStyle: 'hiddenInset',
+        backgroundColor: '#404040',
+        darkTheme: true
         // webPreferences: {
         //     nodeIntegration: false,
         // },
+    });
+
+    mainWindow.on('resize', () => {
+        let { width, height, x, y } = mainWindow.getBounds();
+        localStore.set('windowBounds', { width, height, x, y });
     });
 
     mainWindow.loadURL(`file://${__dirname}/app.html`);
