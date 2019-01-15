@@ -31,8 +31,8 @@ const localStore = new LocalStore({
         windowBounds: {
             width: 1024,
             height: 728,
-            x: 500,
-            y: 500
+            x: 100,
+            y: 100
         }
     }
 });
@@ -82,7 +82,6 @@ app.on('ready', async () => {
     }
 
     let { width, height, x, y } = localStore.get('windowBounds');
-    // let { x, y } = localStore.get('windowCoords');
 
     mainWindow = new BrowserWindow({
         width,
@@ -94,7 +93,7 @@ app.on('ready', async () => {
         minWidth: 300,
         title: 'Open Invoice',
         titleBarStyle: 'hiddenInset',
-        backgroundColor: '#404040',
+        backgroundColor: '#262626',
         darkTheme: true
         // webPreferences: {
         //     nodeIntegration: false,
@@ -102,9 +101,17 @@ app.on('ready', async () => {
     });
 
     mainWindow.on('resize', () => {
+        setBounds();
+    });
+
+    mainWindow.on('moved', () => {
+        setBounds();
+    });
+
+    const setBounds = () => {
         let { width, height, x, y } = mainWindow.getBounds();
         localStore.set('windowBounds', { width, height, x, y });
-    });
+    };
 
     mainWindow.loadURL(`file://${__dirname}/app.html`);
 
