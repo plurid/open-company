@@ -69,7 +69,7 @@ class DatabasePassword extends Component<Props, any> {
                         </div>
 
                         <h2>
-                            The password cannot be reset.
+                            The password can be changed, but not reset.
                             <br />Be careful. Use a password manager.
                         </h2>
 
