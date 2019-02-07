@@ -11,6 +11,7 @@ import styles from './styles.module.scss';
 // const Datastore = require('nedb');
 
 import Header from '../../layout/Header';
+import LanguageSelector from '../../layout/LanguageSelector';
 
 import { history } from '../../../store/configureStore';
 
@@ -142,6 +143,10 @@ class DatabaseChoose extends Component<Props> {
                         >
                             Select Database
                         </button>
+
+                        <div className={ cx(styles.languageSelector) }>
+                            <LanguageSelector />
+                        </div>
                     </div>
                 </div>
             </div>

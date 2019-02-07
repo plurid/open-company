@@ -10,6 +10,8 @@ import styles from './styles.module.scss';
 import * as routes from '../../../constants/routes.json';
 
 import Header from '../../layout/Header';
+import LanguageSelector from '../../layout/LanguageSelector';
+
 
 
 const { dialog } = require('electron').remote;
@@ -17,7 +19,6 @@ const { dialog } = require('electron').remote;
 const cx = classNames.bind(styles);
 
 type Props = {};
-
 
 
 class Intro extends Component<Props> {
@@ -77,6 +78,10 @@ class Intro extends Component<Props> {
                                 Choose Database
                             </button>
                         </Link>
+
+                        <div>
+                            <LanguageSelector />
+                        </div>
                     </div>
                 </div>
             </div>
