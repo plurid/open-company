@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import DatabasePassword from '../components/DatabasePassword';
+import DatabasePassword from '../components/pages/DatabasePassword';
 
 
 

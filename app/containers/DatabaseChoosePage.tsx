@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import DatabaseChoose from '../components/DatabaseChoose';
+import DatabaseChoose from '../components/pages/DatabaseChoose';
 import DatabaseChooseActions from '../actions/databaseChoose';
 
 

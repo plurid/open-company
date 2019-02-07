@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Switch, Route } from 'react-router';
-const routes = require('./constants/routes.json');
 import App from './containers/App';
+
+import * as routes from './constants/routes.json';
 
 
 import ClientCreatePage from './containers/ClientCreatePage';
@@ -18,7 +19,7 @@ import DatabasePasswordPage from './containers/DatabasePasswordPage';
 import InvoiceCreatePage from './containers/InvoiceCreatePage';
 import InvoiceEditPage from './containers/InvoiceEditPage';
 
-import HomePage from './containers/HomePage';
+import IntroPage from './containers/IntroPage';
 
 
 
@@ -39,7 +40,7 @@ export default () => (
             <Route path={routes.INVOICE_CREATE} component={InvoiceCreatePage} />
             <Route path={routes.INVOICE_EDIT} component={InvoiceEditPage} />
 
-            <Route path={routes.HOME} component={HomePage} />
+            <Route path={routes.INTRO} component={IntroPage} />
         </Switch>
     </App>
 );

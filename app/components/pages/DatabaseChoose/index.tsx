@@ -1,30 +1,37 @@
-import * as React from 'react';
-import { Component } from 'react';
-// import { Link } from 'react-router-dom';
-// const routes = require('../constants/routes.json');
-import Header from './layout/Header';
-
-const styles = require('./DatabaseChoose.scss');
-// const Datastore = require('nedb');
-
-const { dialog } = require('electron').remote;
 import * as fs from 'fs';
 
-import { history } from '../store/configureStore';
+import * as React from 'react';
+import { Component } from 'react';
+import * as classNames from 'classnames/bind';
+// import { Link } from 'react-router-dom';
+// const routes = require('../constants/routes.json');
+
+import styles from './styles.module.scss';
+
+// const Datastore = require('nedb');
+
+import Header from '../../layout/Header';
+
+import { history } from '../../../store/configureStore';
+
+
+const { dialog } = require('electron').remote;
+
+const cx = classNames.bind(styles);
 
 type Props = {
     dbChoice: (choice: string) => void;
     dbPath: (path: string) => void;
 };
 
-export default class DatabaseChoose extends Component<Props> {
+
+
+class DatabaseChoose extends Component<Props> {
     constructor(props: Props) {
         super(props);
-
-        this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(event) {
+    handleClick = (event: any) => {
         const dbChoice: string = event.target.name;
 
         if (dbChoice === 'createDb') {
@@ -118,12 +125,12 @@ export default class DatabaseChoose extends Component<Props> {
                 }}
             >
                 <Header />
-                <div className={styles.mainContainer}>
-                    <div className={styles.container}>
+                <div className={ cx(styles.mainContainer) }>
+                    <div className={ cx(styles.container) }>
                         <button
                             name="createDb"
                             onClick={this.handleClick}
-                            className={styles.btn}
+                            className={ cx(styles.btn) }
                         >
                             Create Database
                         </button>
@@ -131,7 +138,7 @@ export default class DatabaseChoose extends Component<Props> {
                         <button
                             name="selectDb"
                             onClick={this.handleClick}
-                            className={styles.btn}
+                            className={ cx(styles.btn) }
                         >
                             Select Database
                         </button>
@@ -141,3 +148,5 @@ export default class DatabaseChoose extends Component<Props> {
         );
     }
 }
+
+export default DatabaseChoose;

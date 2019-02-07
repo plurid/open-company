@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-import CompanySelect from '../components/CompanySelect';
+import CompanySelect from '../components/pages/CompanySelect';
 
 
 

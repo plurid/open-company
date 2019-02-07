@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-import ClientCreate from '../components/ClientCreate';
+import ClientCreate from '../components/pages/ClientCreate';
 
 
 

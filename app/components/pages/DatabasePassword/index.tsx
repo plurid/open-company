@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { Component } from 'react';
-import HeaderTitle from './layout/HeaderTitle';
+import * as classNames from 'classnames/bind';
 
-const styles = require('./DatabasePassword.scss');
+import * as Crypto from 'crypto-js';
 
-const Crypto = require('crypto-js')
+import styles from './styles.module.scss';
 
+import HeaderTitle from '../../layout/HeaderTitle';
+
+
+const cx = classNames.bind(styles);
 
 
 type Props = {
@@ -13,7 +17,9 @@ type Props = {
     dbPath: string;
 };
 
-export default class DatabasePassword extends Component<Props, any> {
+
+
+class DatabasePassword extends Component<Props, any> {
     constructor(props: Props) {
         super(props);
 
@@ -22,17 +28,14 @@ export default class DatabasePassword extends Component<Props, any> {
             retype: '',
             similar: false,
         }
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSave = this.handleSave.bind(this);
     }
 
-    create() {
+    create = () => {
         return (
             <div style={ {height: '100%' } }>
                 <HeaderTitle title="Database Password" />
-                <div className={ styles.mainContainer }>
-                    <div className={ `${styles.container} ${styles.containerCreate}` }>
+                <div className={ cx(styles.mainContainer) }>
+                    <div className={ cx(styles.container, styles.containerCreate) }>
                         <h1>
                             Set Password for the Database
                         </h1>
@@ -46,7 +49,7 @@ export default class DatabasePassword extends Component<Props, any> {
                                 Password
                             </h3>
                             <input
-                                className={ styles.input }
+                                className={ cx(styles.input) }
                                 type="password"
                                 name="password"
                                 onChange={ this.handleChange }
@@ -58,7 +61,7 @@ export default class DatabasePassword extends Component<Props, any> {
                                 Retype Password
                             </h3>
                             <input
-                                className={ styles.input }
+                                className={ cx(styles.input) }
                                 type="password"
                                 name="retype"
                                 onChange={ this.handleChange }
@@ -70,7 +73,7 @@ export default class DatabasePassword extends Component<Props, any> {
                             <br />Be careful. Use a password manager.
                         </h2>
 
-                        <button onClick={ this.handleSave } className={ styles.btn }>
+                        <button onClick={ this.handleSave } className={ cx(styles.btn) }>
                             Save Password
                         </button>
                     </div>
@@ -79,12 +82,12 @@ export default class DatabasePassword extends Component<Props, any> {
         );
     }
 
-    select() {
+    select = () => {
         return (
             <div style={ {height: '100%' } }>
                 <HeaderTitle title="Database Password" />
-                <div className={ styles.mainContainer }>
-                    <div className={ `${styles.container} ${styles.containerSelect}` }>
+                <div className={ cx(styles.mainContainer) }>
+                    <div className={ cx(styles.container, styles.containerSelect) }>
                         <h1>
                             Enter Password for the Database
                         </h1>
@@ -98,14 +101,14 @@ export default class DatabasePassword extends Component<Props, any> {
                                 Password
                             </h3>
                             <input
-                                className={ styles.input }
+                                className={ cx(styles.input) }
                                 type="password"
                                 name="password"
                                 onChange={ this.handleChange }
                             />
                         </div>
 
-                        <button onClick={ this.handleSave } className={ styles.btn }>
+                        <button onClick={ this.handleSave } className={ cx(styles.btn) }>
                             Enter Password
                         </button>
                     </div>
@@ -114,8 +117,7 @@ export default class DatabasePassword extends Component<Props, any> {
         );
     }
 
-
-    handleChange = async (event) => {
+    handleChange = async (event: any) => {
         const value = event.target.name;
 
         this.setState({
@@ -194,3 +196,5 @@ export default class DatabasePassword extends Component<Props, any> {
         );
     }
 }
+
+export default DatabasePassword;

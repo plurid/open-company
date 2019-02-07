@@ -13,5 +13,5 @@
     "INVOICE_CREATE": "/invoice-create",
     "INVOICE_EDIT": "/invoice-edit",
 
-    "HOME": "/"
+    "INTRO": "/"
 }

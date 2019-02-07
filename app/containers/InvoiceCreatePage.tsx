@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-import InvoiceCreate from '../components/InvoiceCreate';
+import InvoiceCreate from '../components/pages/InvoiceCreate';
 
 
 

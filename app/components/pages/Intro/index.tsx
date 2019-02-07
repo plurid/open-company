@@ -1,19 +1,26 @@
+import * as fs from 'fs';
+
 import * as React from 'react';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
-const routes = require('../constants/routes.json');
-import Header from './layout/Header';
+import * as classNames from 'classnames/bind';
 
-const styles = require('./Home.scss');
+import styles from './styles.module.scss';
+
+import * as routes from '../../../constants/routes.json';
+
+import Header from '../../layout/Header';
+
 
 const { dialog } = require('electron').remote;
-import * as fs from 'fs';
 
-
+const cx = classNames.bind(styles);
 
 type Props = {};
 
-export default class Home extends Component<Props> {
+
+
+class Intro extends Component<Props> {
     props: Props;
 
     constructor(props: Props) {
@@ -22,7 +29,7 @@ export default class Home extends Component<Props> {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(event) {
+    handleClick(event: any) {
         if (event.target.name === "createDb") {
             dialog.showSaveDialog({ defaultPath: 'open-invoice.db' }, (fileName) => {
                 if (fileName === undefined){
@@ -63,10 +70,10 @@ export default class Home extends Component<Props> {
         return (
             <div style={ {height: '100%', display: 'grid', gridTemplateRows: '200px auto' } }>
                 <Header />
-                <div className={ styles.mainContainer }>
-                    <div className={ styles.container }>
-                        <Link className={ styles.link } to={ routes.DATABASE_CHOOSE }>
-                            <button className={ styles.btn }>
+                <div className={ cx(styles.mainContainer) }>
+                    <div className={ cx(styles.container) }>
+                        <Link className={ cx(styles.link) } to={ routes.DATABASE_CHOOSE }>
+                            <button className={ cx(styles.btn) }>
                                 Choose Database
                             </button>
                         </Link>
@@ -76,3 +83,5 @@ export default class Home extends Component<Props> {
         );
     }
 }
+
+export default Intro;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-import ClientEdit from '../components/ClientEdit';
+import ClientEdit from '../components/pages/ClientEdit';
 
 
 
