@@ -4,8 +4,10 @@ import CompanySelect from '../components/pages/CompanySelect';
 
 
 
-export default class CompanySelectPage extends Component {
+class CompanySelectPage extends Component {
     render() {
         return <CompanySelect />;
     }
 }
+
+export default CompanySelectPage;

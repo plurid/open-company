@@ -4,8 +4,10 @@ import InvoiceEdit from '../components/pages/InvoiceEdit';
 
 
 
-export default class InvoiceEditPage extends Component {
+class InvoiceEditPage extends Component {
     render() {
         return <InvoiceEdit />;
     }
 }
+
+export default InvoiceEditPage;

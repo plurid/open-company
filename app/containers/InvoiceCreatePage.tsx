@@ -4,8 +4,10 @@ import InvoiceCreate from '../components/pages/InvoiceCreate';
 
 
 
-export default class InvoiceCreatePage extends Component {
+class InvoiceCreatePage extends Component {
     render() {
         return <InvoiceCreate />;
     }
 }
+
+export default InvoiceCreatePage;

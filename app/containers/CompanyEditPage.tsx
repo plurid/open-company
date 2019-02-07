@@ -4,8 +4,10 @@ import CompanyEdit from '../components/pages/CompanyEdit';
 
 
 
-export default class CompanyEditPage extends Component {
+class CompanyEditPage extends Component {
     render() {
         return <CompanyEdit />;
     }
 }
+
+export default CompanyEditPage;

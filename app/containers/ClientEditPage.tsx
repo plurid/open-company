@@ -4,8 +4,10 @@ import ClientEdit from '../components/pages/ClientEdit';
 
 
 
-export default class ClientEditPage extends Component {
+class ClientEditPage extends Component {
     render() {
         return <ClientEdit />;
     }
 }
+
+export default ClientEditPage;

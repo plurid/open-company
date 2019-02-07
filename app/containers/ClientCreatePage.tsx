@@ -4,8 +4,10 @@ import ClientCreate from '../components/pages/ClientCreate';
 
 
 
-export default class CreateClientPage extends Component {
+class CreateClientPage extends Component {
     render() {
         return <ClientCreate />;
     }
 }
+
+export default CreateClientPage;

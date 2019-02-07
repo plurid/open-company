@@ -2,8 +2,9 @@ import * as React from 'react';
 import { Component } from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import Routes from '../Routes';
 import { History } from 'history';
+
+import Routes from '../Routes';
 
 
 
@@ -12,7 +13,8 @@ type Props = {
     history: History<any>;
 };
 
-export default class Root extends Component<Props> {
+
+class Root extends Component<Props> {
     render() {
         const { store, history } = this.props;
         return (
@@ -24,3 +26,5 @@ export default class Root extends Component<Props> {
         );
     }
 }
+
+export default Root;

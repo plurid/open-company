@@ -4,8 +4,10 @@ import CompanyCreate from '../components/pages/CompanyCreate';
 
 
 
-export default class CompanyCreatePage extends Component {
+class CompanyCreatePage extends Component {
     render() {
         return <CompanyCreate />;
     }
 }
+
+export default CompanyCreatePage;
