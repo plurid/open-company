@@ -1,8 +1,8 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/caveljan/open-invoice/master/about/identity/oi-white-shadow.png" height="250px">
+    <img src="https://raw.githubusercontent.com/plurid/open-company/packages/open-invoice/master/about/identity/oi-white-shadow.png" height="250px">
     <br />
     <img src="https://img.shields.io/badge/version-0.1.0-blue.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
-    <a target="_blank" href="https://github.com/caveljan/open-invoice/blob/master/LICENSE">
+    <a target="_blank" href="https://github.com/plurid/open-invoice/blob/master/LICENSE">
         <img src="https://img.shields.io/badge/license-MIT-blue.svg?colorB=1380C3&style=for-the-badge" alt="License: MIT">
     </a>
 </p>
