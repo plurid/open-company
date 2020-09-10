@@ -4,14 +4,14 @@
     "description": "Open Source, Electron-based Invoicing Application",
     "license": "MIT",
     "productName": "Open Invoice",
-    "author": "Jan Cavel <mail@caveljan.com> (https://caveljan.com/)",
-    "homepage": "https://github.com/caveljan/open-invoice#readme",
+    "author": "ly3xqhl8g9 <ly3xqhl8g9@plurid.com> (https://plurid.com)",
+    "homepage": "https://github.com/plurid/open-company#readme",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/caveljan/open-invoice.git"
+        "url": "git+https://github.com/plurid/open-company.git"
     },
     "bugs": {
-        "url": "https://github.com/caveljan/open-invoice/issues"
+        "url": "https://github.com/plurid/open-company/issues"
     },
     "scripts": {
         "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
