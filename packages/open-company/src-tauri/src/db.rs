@@ -27,6 +27,7 @@ pub fn establish_db_connection() -> SqliteConnection {
         .unwrap_or_else(|_| panic!("Error connecting to {}", db_path))
 }
 
+
 fn run_migrations() {
     let mut connection = establish_connection();
     connection.run_pending_migrations(MIGRATIONS).unwrap();

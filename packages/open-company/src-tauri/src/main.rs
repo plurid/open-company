@@ -4,27 +4,15 @@
 
 #[allow(dead_code)]
 #[allow(unused_variables)]
+#[allow(unused_mut)]
 
 
 mod db;
+mod user;
+mod models;
+mod schema;
+mod commands;
 
-
-
-#[tauri::command]
-fn start_database(
-    name: &str,
-    location: &str,
-) {
-    println!("generating database: {} {}", name, location);
-}
-
-#[tauri::command]
-fn generate_new_user(
-    username: &str,
-    password: &str,
-) {
-    println!("generate_new_user: {} {}", username, password);
-}
 
 
 fn setup_app() {
@@ -32,19 +20,15 @@ fn setup_app() {
 }
 
 
-
 fn main() {
     tauri::Builder::default()
-        // .setup::<_, Box<dyn std::error::Error>>(setup_app_function)
-        // .setup(setup_app)
         .setup(|_app| {
             setup_app();
-
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            start_database,
-            generate_new_user,
+            commands::start_database,
+            commands::generate_new_user,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
