@@ -1,4 +1,5 @@
 use diesel::prelude::*;
+use pwhash::bcrypt;
 
 use crate::models::{
     User,
@@ -14,9 +15,11 @@ pub fn create_user(
 ) -> User {
     use crate::schema::users;
 
+    let hash = bcrypt::hash(password).unwrap();
+
     let new_user = NewUser {
         username,
-        password,
+        password: hash.as_str(),
     };
 
     diesel::insert_into(users::table)
