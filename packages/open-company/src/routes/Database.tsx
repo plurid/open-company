@@ -5,6 +5,10 @@ import { A, useNavigate } from '@solidjs/router';
 
 import './Database.css';
 
+import {
+    PureResponse,
+} from '../data';
+
 
 
 function Database() {
@@ -25,10 +29,13 @@ function Database() {
             return;
         }
 
-        await invoke('start_database', {
+        const response = await invoke<PureResponse>('start_database', {
             name: newDatabase(),
             location: directory + `/${newDatabase()}.sqlite`,
         });
+        if (!response.status) {
+            return;
+        }
 
         navigate('/');
     }

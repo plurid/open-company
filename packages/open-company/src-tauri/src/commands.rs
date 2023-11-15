@@ -1,3 +1,5 @@
+use serde;
+
 use crate::database;
 use crate::models;
 use crate::crud::{
@@ -11,17 +13,27 @@ use crate::crud::{
 
 
 
+#[derive(serde::Serialize)]
+pub struct PureResponse {
+    status: bool,
+}
+
+
 #[tauri::command]
 pub fn start_database(
     name: &str,
     location: &str,
     state: tauri::State<database::DatabaseState>,
-) {
+) -> PureResponse {
     println!("generating database: {} {}", name, location);
     let mut state_guard = state.0.lock().unwrap();
 
     state_guard.update_location(location);
     state_guard.run_migrations();
+
+    PureResponse {
+        status: true,
+    }
 }
 
 

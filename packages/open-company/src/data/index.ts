@@ -1,3 +1,9 @@
+export interface PureResponse {
+    status: boolean;
+}
+
+
+
 export interface Address {
     id: string;
     value: string;
