@@ -39,6 +39,8 @@
         "windows": [
             {
                 "title": "open company",
+                "label": "main",
+                "visible": false,
                 "fullscreen": false,
                 "resizable": true,
                 "maximized": true,

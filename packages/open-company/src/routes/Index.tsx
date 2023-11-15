@@ -1,3 +1,6 @@
+import { invoke } from '@tauri-apps/api';
+
+import { onMount } from 'solid-js';
 import { A } from '@solidjs/router';
 
 import './Index.css';
@@ -5,6 +8,15 @@ import './Index.css';
 
 
 function App() {
+    onMount(() => {
+        const TIME_TO_LOAD_MS = 300;
+
+        setTimeout(() => {
+            invoke('show_main_window');
+        }, TIME_TO_LOAD_MS);
+    });
+
+
     return (
         <div class="container"
         >
