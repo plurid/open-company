@@ -15,8 +15,13 @@ use crate::crud::{
 pub fn start_database(
     name: &str,
     location: &str,
+    state: tauri::State<database::DatabaseState>,
 ) {
     println!("generating database: {} {}", name, location);
+    let mut state_guard = state.0.lock().unwrap();
+
+    state_guard.update_location(location);
+    state_guard.run_migrations();
 }
 
 
@@ -24,8 +29,10 @@ pub fn start_database(
 pub fn generate_new_user(
     username: &str,
     password: &str,
+    state: tauri::State<database::DatabaseState>,
 ) -> models::User {
-    let connection = &mut database::establish_db_connection();
+    let mut state_guard = state.0.lock().unwrap();
+    let connection = &mut state_guard.get_connection();
 
     let user = user::create_user(connection, username, password);
 
@@ -38,8 +45,10 @@ pub fn generate_new_address(
     value: &str,
     country: &str,
     location: &str,
+    state: tauri::State<database::DatabaseState>,
 ) -> models::Address {
-    let connection = &mut database::establish_db_connection();
+    let mut state_guard = state.0.lock().unwrap();
+    let connection = &mut state_guard.get_connection();
 
     let address = address::create_address(connection, value, country, location);
 
@@ -52,8 +61,10 @@ pub fn generate_new_contact(
     name: &str,
     phone: &str,
     email: &str,
+    state: tauri::State<database::DatabaseState>,
 ) -> models::Contact {
-    let connection = &mut database::establish_db_connection();
+    let mut state_guard = state.0.lock().unwrap();
+    let connection = &mut state_guard.get_connection();
 
     let contact = contact::create_contact(connection, name, phone, email);
 
@@ -64,8 +75,10 @@ pub fn generate_new_contact(
 #[tauri::command]
 pub fn generate_new_company(
     name: &str,
+    state: tauri::State<database::DatabaseState>,
 ) -> models::Company {
-    let connection = &mut database::establish_db_connection();
+    let mut state_guard = state.0.lock().unwrap();
+    let connection = &mut state_guard.get_connection();
 
     let company = company::create_company(connection, name);
 
@@ -76,8 +89,10 @@ pub fn generate_new_company(
 #[tauri::command]
 pub fn generate_new_item(
     name: &str,
+    state: tauri::State<database::DatabaseState>,
 ) -> models::Item {
-    let connection = &mut database::establish_db_connection();
+    let mut state_guard = state.0.lock().unwrap();
+    let connection = &mut state_guard.get_connection();
 
     let item = item::create_item(connection, name);
 
@@ -89,8 +104,10 @@ pub fn generate_new_item(
 pub fn generate_new_invoice(
     invoice_from: &str,
     invoice_to: &str,
+    state: tauri::State<database::DatabaseState>,
 ) -> models::Invoice {
-    let connection = &mut database::establish_db_connection();
+    let mut state_guard = state.0.lock().unwrap();
+    let connection = &mut state_guard.get_connection();
 
     let invoice = invoice::create_invoice(connection, invoice_from, invoice_to);
 

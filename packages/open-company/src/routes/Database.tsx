@@ -1,4 +1,5 @@
 import { invoke } from '@tauri-apps/api/tauri';
+import { open } from '@tauri-apps/api/dialog';
 import { createSignal } from 'solid-js';
 import { A } from '@solidjs/router';
 
@@ -19,14 +20,28 @@ function Database() {
                     placeholder="database name"
                     required
                     value={newDatabase()}
-                    onInput={(e) => setNewDatabase(e.currentTarget.value)}
+                    onInput={(e) => {
+                        setNewDatabase(
+                            e.currentTarget.value
+                                .replace(/\s+/g, '')
+                                .trim()
+                        );
+                    }}
                 />
 
                 <button
-                    onClick={() => {
+                    onClick={async () => {
+                        if (!newDatabase()) {
+                            return;
+                        }
+
+                        const directory = await open({
+                            directory: true,
+                        });
+
                         invoke('start_database', {
                             name: newDatabase(),
-                            location: '/foo',
+                            location: directory + `/${newDatabase()}.sqlite`,
                         });
                     }}
                 >

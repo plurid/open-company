@@ -7,6 +7,10 @@
 #![allow(unused_mut)]
 
 
+// use std::sync::RwLock;
+use std::sync::Mutex;
+
+
 mod database;
 mod crud {
     pub mod user;
@@ -23,7 +27,7 @@ mod commands;
 
 
 fn setup_app() {
-    database::init();
+    // database::init();
 }
 
 
@@ -33,6 +37,11 @@ fn main() {
             setup_app();
             Ok(())
         })
+        .manage(database::DatabaseState(
+            Mutex::new(
+                database::Database::new("")
+            )
+        ))
         .invoke_handler(tauri::generate_handler![
             commands::start_database,
             commands::generate_new_user,
