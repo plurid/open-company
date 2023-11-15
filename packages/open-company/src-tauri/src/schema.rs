@@ -1,9 +1,58 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
+    addresses (id) {
+        id -> Integer,
+        value -> Text,
+        country -> Text,
+        location -> Text,
+    }
+}
+
+diesel::table! {
+    companies (id) {
+        id -> Integer,
+        name -> Text,
+    }
+}
+
+diesel::table! {
+    contacts (id) {
+        id -> Integer,
+        name -> Text,
+        phone -> Text,
+        email -> Text,
+    }
+}
+
+diesel::table! {
+    invoices (id) {
+        id -> Integer,
+        invoice_from -> Text,
+        invoice_to -> Text,
+    }
+}
+
+diesel::table! {
+    items (id) {
+        id -> Integer,
+        name -> Text,
+    }
+}
+
+diesel::table! {
     users (id) {
         id -> Integer,
         username -> Text,
         password -> Text,
     }
 }
+
+diesel::allow_tables_to_appear_in_same_query!(
+    addresses,
+    companies,
+    contacts,
+    invoices,
+    items,
+    users,
+);
