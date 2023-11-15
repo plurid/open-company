@@ -6,7 +6,7 @@ import './NewCompany.css';
 
 
 
-function Database() {
+function NewCompany() {
     const [companyName, setCompanyName] = createSignal('');
 
 
@@ -25,7 +25,7 @@ function Database() {
                 <button
                     onClick={() => {
                         invoke('generate_new_company', {
-                            name: companyName,
+                            name: companyName(),
                         });
                     }}
                 >
@@ -39,4 +39,4 @@ function Database() {
 }
 
 
-export default Database;
+export default NewCompany;

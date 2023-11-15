@@ -25,7 +25,7 @@ function Database() {
                 <button
                     onClick={() => {
                         invoke('start_database', {
-                            name: newDatabase,
+                            name: newDatabase(),
                             location: '/foo',
                         });
                     }}

@@ -18,6 +18,14 @@ fn start_database(
     println!("generating database: {} {}", name, location);
 }
 
+#[tauri::command]
+fn generate_new_user(
+    username: &str,
+    password: &str,
+) {
+    println!("generate_new_user: {} {}", username, password);
+}
+
 
 fn setup_app() {
     db::init();
@@ -34,7 +42,10 @@ fn main() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![start_database])
+        .invoke_handler(tauri::generate_handler![
+            start_database,
+            generate_new_user,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

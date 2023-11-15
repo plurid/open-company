@@ -12,6 +12,7 @@ function App() {
 
             <div class="flex flex-col gap-2">
                 <A href="/database">database</A>
+                <A href="/new-user">new user</A>
                 <A href="/new-company">new company</A>
                 <A href="/new-invoice">new invoice</A>
             </div>
