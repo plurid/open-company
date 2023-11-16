@@ -54,6 +54,7 @@ export const commands = {
     check_users_exist: 'check_users_exist',
     start_database: 'start_database',
     generate_new_user: 'generate_new_user',
+    login_user: 'login_user',
     generate_new_address: 'generate_new_address',
     generate_new_contact: 'generate_new_contact',
     generate_new_company: 'generate_new_company',
@@ -66,6 +67,16 @@ export const routes = {
     index: "/",
     new_database: "/new-database",
     new_user: "/new-user",
+    login_user: "/login_user",
     new_company: "/new-company",
     new_invoice: "/new-invoice",
 } as const;
+
+
+export const localStore = {
+    loggedIn: 'loggedIn',
+} as const;
+
+
+
+export * from './styles';

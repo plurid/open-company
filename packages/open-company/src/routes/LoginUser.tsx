@@ -1,39 +1,47 @@
 import { invoke } from '@tauri-apps/api/tauri';
 import { createSignal } from 'solid-js';
-import { A, useNavigate } from '@solidjs/router';
+import { useNavigate } from '@solidjs/router';
 
-import './NewUser.css';
+import './LoginUser.css';
 
 import {
     PureResponse,
     commands,
     routes,
+    localStore,
 
     disabledButton,
 } from '../data';
 
 
 
-function NewUser() {
+function LoginUser() {
     const [username, setUsername] = createSignal('');
     const [password, setPassword] = createSignal('');
+    const [error, setError] = createSignal(false);
 
     const navigate = useNavigate();
 
 
-    const generateUser = async () => {
+    const loginUser = async () => {
+        setError(false);
+
         if (!username() || !password()) {
+            setError(true);
             return;
         }
 
-        const generatedUser = await invoke<PureResponse>(commands.generate_new_user, {
+        const loggedIn = await invoke<PureResponse>(commands.login_user, {
             username: username(),
             password: password(),
         });
 
-        if (!generatedUser) {
+        if (!loggedIn.status) {
+            setError(true);
             return;
         }
+
+        localStorage.setItem(localStore.loggedIn, username());
 
         navigate(routes.index);
     }
@@ -41,7 +49,7 @@ function NewUser() {
 
     return (
         <div class="p-8 flex flex-col items-center content-center">
-            <h1 class="mb-8">new user</h1>
+            <h1 class="mb-8">login</h1>
 
             <div class="grid gap-4 place-content-center justify-items-center w-[300px]">
                 <input
@@ -61,7 +69,7 @@ function NewUser() {
                     onInput={(e) => setPassword(e.currentTarget.value)}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            generateUser();
+                            loginUser();
                         }
                     }}
                 />
@@ -70,17 +78,21 @@ function NewUser() {
                     class={`w-[300px] ${disabledButton}`}
                     disabled={!username() || !password()}
                     onClick={() => {
-                        generateUser();
+                        loginUser();
                     }}
                 >
-                    Generate User
+                    Login
                 </button>
 
-                <A href="/">back</A>
+                {error() && (
+                    <div>
+                        invalid username or password
+                    </div>
+                )}
             </div>
         </div>
     );
 }
 
 
-export default NewUser;
+export default LoginUser;

@@ -111,13 +111,41 @@ pub fn generate_new_user(
     username: &str,
     password: &str,
     state: tauri::State<database::DatabaseState>,
-) -> models::User {
+) -> PureResponse {
     let mut state_guard = state.0.lock().unwrap();
     let connection = &mut state_guard.get_connection();
 
-    let user = user::create_user(connection, username, password);
+    let _ = user::create_user(connection, username, password);
 
-    user
+    PureResponse {
+        status: true,
+    }
+}
+
+
+#[tauri::command]
+pub fn login_user(
+    username: &str,
+    password: &str,
+    state: tauri::State<database::DatabaseState>,
+) -> PureResponse {
+    let mut state_guard = state.0.lock().unwrap();
+    let connection = &mut state_guard.get_connection();
+
+    let logged_in = user::login_user(connection, username, password);
+
+    match logged_in {
+        Some(_) => {
+            return PureResponse {
+                status: true,
+            };
+        }
+        None => {
+            return PureResponse {
+                status: false,
+            };
+        }
+    }
 }
 
 

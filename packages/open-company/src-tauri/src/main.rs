@@ -49,6 +49,7 @@ fn main() {
             commands::check_users_exist,
             commands::start_database,
             commands::generate_new_user,
+            commands::login_user,
             commands::generate_new_address,
             commands::generate_new_contact,
             commands::generate_new_company,

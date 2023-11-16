@@ -67,6 +67,10 @@ button {
     outline: none;
 }
 
+button {
+    user-select: none;
+}
+
 
 @media (prefers-color-scheme: dark) {
     :root {

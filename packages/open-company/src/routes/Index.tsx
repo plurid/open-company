@@ -10,6 +10,7 @@ import {
     PureResponse,
     commands,
     routes,
+    localStore,
 } from '../data';
 
 
@@ -29,10 +30,17 @@ function App() {
             navigate(routes.new_user);
             return;
         }
+
+        const loggedIn = localStorage.getItem(localStore.loggedIn);
+        if (!loggedIn) {
+            navigate(routes.login_user);
+            return;
+        }
+
     });
 
     onMount(() => {
-        const TIME_TO_LOAD_MS = 300;
+        const TIME_TO_LOAD_MS = 200;
 
         setTimeout(() => {
             invoke(commands.show_main_window);
