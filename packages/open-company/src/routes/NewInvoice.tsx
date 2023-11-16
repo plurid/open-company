@@ -1,4 +1,4 @@
-import { createSignal } from 'solid-js';
+import { createSignal, For } from 'solid-js';
 import { A } from '@solidjs/router';
 
 import './NewInvoice.css';
@@ -6,14 +6,30 @@ import './NewInvoice.css';
 
 
 function NewInvoice() {
-    const [items, setItems] = createSignal('');
+    const [items, setItems] = createSignal<string[]>([]);
 
 
     return (
-        <div class="container">
+        <div class={`
+            h-full p-8
+        `}>
             <h1>new invoice</h1>
 
-            <A href="/">back</A>
+            <div>
+                new item
+            </div>
+
+            <For each={items()}>
+                {(item, i) =>
+                    <li>
+                        {i() + 1}: {item}
+                    </li>
+                }
+            </For>
+
+            <A href="/">
+                back
+            </A>
         </div>
     );
 }

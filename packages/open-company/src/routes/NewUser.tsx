@@ -38,6 +38,9 @@ function NewUser() {
         }
 
         localStorage.setItem(localStore.loggedIn, username());
+
+        // check company owned by user exists
+
         navigate(routes.index);
     }
 

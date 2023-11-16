@@ -52,6 +52,8 @@ function App() {
             navigate(routes.login_user);
             return;
         }
+
+        // check company owned by user exists
     });
 
     onMount(() => {
@@ -68,16 +70,28 @@ function App() {
             h-full p-8 w-[400px] mx-auto text-center
             grid gap-4 content-center place-content-center
         `}>
-            <h1 class="text-3xl mb-24">open company</h1>
+            <h1 class="text-3xl mb-12">open company</h1>
 
             <div class="flex flex-col gap-2">
                 <A href="/new-database">change database ({getFileNameFromPath(activeDatabase)})</A>
+
+                <div class="mb-4" />
+
+                <A href="/users">users</A>
+                <A href="/companies">companies</A>
+                <A href="/contacts">contacts</A>
+                <A href="/contracts">contracts</A>
+                <A href="/items">items</A>
+                <A href="/invoices">invoices</A>
+
+                <div class="mb-4" />
+
                 <A href="/new-user">new user</A>
                 <A href="/new-company">new company</A>
                 <A href="/new-invoice">new invoice</A>
 
                 <button
-                    class="mt-24"
+                    class="mt-20"
                     onClick={() => {
                         logout();
                         navigate(routes.login_user);
