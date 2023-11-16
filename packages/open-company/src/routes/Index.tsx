@@ -18,25 +18,34 @@ import {
 function App() {
     const navigate = useNavigate();
 
+
+    const logout = () => {
+        localStorage.setItem(localStore.loggedIn, '');
+    }
+
     onMount(async () => {
         const database = await invoke<StringResponse>(commands.check_database_exists);
         if (!database.status) {
+            logout();
+            localStorage.setItem(localStore.activeDatabase, '');
             navigate(routes.new_database);
             return;
         }
+        localStorage.setItem(localStore.activeDatabase, database.data);
 
         const users = await invoke<PureResponse>(commands.check_users_exist);
         if (!users.status) {
+            logout();
             navigate(routes.new_user);
             return;
         }
 
         const loggedIn = localStorage.getItem(localStore.loggedIn);
         if (!loggedIn) {
+            logout();
             navigate(routes.login_user);
             return;
         }
-
     });
 
     onMount(() => {

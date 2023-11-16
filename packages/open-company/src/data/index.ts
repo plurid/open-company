@@ -75,6 +75,7 @@ export const routes = {
 
 export const localStore = {
     loggedIn: 'loggedIn',
+    activeDatabase: 'activeDatabase',
 } as const;
 
 
