@@ -7,10 +7,11 @@
 #![allow(unused_mut)]
 
 
-// use std::sync::RwLock;
 use std::sync::Mutex;
+use std::path::PathBuf;
 
 
+mod config;
 mod database;
 mod crud {
     pub mod user;
@@ -26,21 +27,21 @@ mod commands;
 
 
 
-fn setup_app() {
-    // database::init();
+fn setup_app(
+    config_dir: PathBuf,
+) {
 }
 
 
 fn main() {
     tauri::Builder::default()
-        .setup(|_app| {
-            setup_app();
+        .setup(|app| {
+            let config_dir = app.path_resolver().app_config_dir().unwrap();
+            setup_app(config_dir);
             Ok(())
         })
         .manage(database::DatabaseState(
-            Mutex::new(
-                database::Database::new("")
-            )
+            Mutex::new(database::Database::new(""))
         ))
         .invoke_handler(tauri::generate_handler![
             commands::show_main_window,

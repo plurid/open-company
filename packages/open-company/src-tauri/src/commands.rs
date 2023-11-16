@@ -1,6 +1,7 @@
 use serde;
 use tauri::Manager;
 
+use crate::config;
 use crate::database;
 use crate::models;
 use crate::crud::{
@@ -19,11 +20,40 @@ pub struct PureResponse {
     status: bool,
 }
 
+#[derive(serde::Serialize)]
+pub struct StringResponse {
+    status: bool,
+    data: String,
+}
+
 
 
 #[tauri::command]
 pub async fn show_main_window(window: tauri::Window) {
     window.get_window("main").unwrap().show().unwrap();
+}
+
+
+#[tauri::command]
+pub fn check_database_exists(
+    app_handle: tauri::AppHandle,
+) -> StringResponse {
+    let config = config::get_config(app_handle);
+
+    match config {
+        Some(config) => {
+            return StringResponse {
+                status: true,
+                data: config.database_location,
+            };
+        }
+        None => {
+            return StringResponse {
+                status: false,
+                data: "".to_string(),
+            };
+        }
+    }
 }
 
 
