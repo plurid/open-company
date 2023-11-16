@@ -35,14 +35,13 @@ function LoginUser() {
             username: username(),
             password: password(),
         });
-
         if (!loggedIn.status) {
+            localStorage.setItem(localStore.loggedIn, '');
             setError(true);
             return;
         }
 
         localStorage.setItem(localStore.loggedIn, username());
-
         navigate(routes.index);
     }
 
