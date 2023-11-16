@@ -20,6 +20,7 @@ import {
 
 function Database() {
     const [newDatabase, setNewDatabase] = createSignal('');
+    const [loading, setLoading] = createSignal(false);
 
     const navigate = useNavigate();
 
@@ -54,9 +55,12 @@ function Database() {
             return;
         }
 
+        setLoading(true);
         const directory = await open({
             directory: true,
+            title: 'Select Database Directory',
         });
+        setLoading(false);
         if (typeof directory !== 'string') {
             return;
         }
@@ -68,6 +72,7 @@ function Database() {
     }
 
     const selectDatabase = async () => {
+        setLoading(true);
         const file = await open({
             multiple: false,
             title: 'Open .sqlite Database',
@@ -76,6 +81,7 @@ function Database() {
                 name: 'sqlite',
             }],
         });
+        setLoading(false);
         if (typeof file !== 'string') {
             return;
         }
@@ -91,6 +97,7 @@ function Database() {
         <div class={`
             h-full p-8 w-[300px] mx-auto text-center
             grid gap-4 content-center
+            ${loading() ? 'opacity-40' : ''}
         `}>
             <h1>generate new database</h1>
 
