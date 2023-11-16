@@ -2,6 +2,11 @@ export interface PureResponse {
     status: boolean;
 }
 
+export interface StringResponse {
+    status: boolean;
+    data: string;
+}
+
 
 
 export interface Address {
@@ -40,3 +45,26 @@ export interface Invoice {
     items: Item[];
     total: number;
 }
+
+
+
+export const commands = {
+    show_main_window: 'show_main_window',
+    check_database_exists: 'check_database_exists',
+    start_database: 'start_database',
+    generate_new_user: 'generate_new_user',
+    generate_new_address: 'generate_new_address',
+    generate_new_contact: 'generate_new_contact',
+    generate_new_company: 'generate_new_company',
+    generate_new_item: 'generate_new_item',
+    generate_new_invoice: 'generate_new_invoice',
+} as const;
+
+
+export const routes = {
+    index: "/",
+    new_database: "/new-database",
+    new_user: "/new-user",
+    new_company: "/new-company",
+    new_invoice: "/new-invoice",
+} as const;

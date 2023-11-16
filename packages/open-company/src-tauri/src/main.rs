@@ -45,6 +45,7 @@ fn main() {
         ))
         .invoke_handler(tauri::generate_handler![
             commands::show_main_window,
+            commands::check_database_exists,
             commands::start_database,
             commands::generate_new_user,
             commands::generate_new_address,

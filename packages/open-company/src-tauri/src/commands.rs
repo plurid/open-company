@@ -29,7 +29,9 @@ pub struct StringResponse {
 
 
 #[tauri::command]
-pub async fn show_main_window(window: tauri::Window) {
+pub async fn show_main_window(
+    window: tauri::Window,
+) {
     window.get_window("main").unwrap().show().unwrap();
 }
 
@@ -37,11 +39,15 @@ pub async fn show_main_window(window: tauri::Window) {
 #[tauri::command]
 pub fn check_database_exists(
     app_handle: tauri::AppHandle,
+    state: tauri::State<database::DatabaseState>,
 ) -> StringResponse {
     let config = config::get_config(app_handle);
 
     match config {
         Some(config) => {
+            let mut state_guard = state.0.lock().unwrap();
+            state_guard.update_location(config.database_location.as_str());
+
             return StringResponse {
                 status: true,
                 data: config.database_location,
@@ -62,12 +68,16 @@ pub fn start_database(
     name: &str,
     location: &str,
     state: tauri::State<database::DatabaseState>,
+    app_handle: tauri::AppHandle,
 ) -> PureResponse {
-    println!("generating database: {} {}", name, location);
     let mut state_guard = state.0.lock().unwrap();
 
     state_guard.update_location(location);
     state_guard.run_migrations();
+
+    config::update_config(app_handle, config::Config {
+        database_location: location.to_string(),
+    });
 
     PureResponse {
         status: true,

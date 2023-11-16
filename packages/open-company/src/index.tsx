@@ -17,7 +17,7 @@ render(
         <Router>
             <Routes>
                 <Route path="/" component={Index} />
-                <Route path="/database" component={Database} />
+                <Route path="/new-database" component={Database} />
                 <Route path="/new-user" component={NewUser} />
                 <Route path="/new-company" component={NewCompany} />
                 <Route path="/new-invoice" component={NewInvoice} />
