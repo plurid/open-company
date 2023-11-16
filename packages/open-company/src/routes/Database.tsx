@@ -7,6 +7,8 @@ import './Database.css';
 
 import {
     PureResponse,
+    commands,
+    routes,
 } from '../data';
 
 
@@ -29,7 +31,7 @@ function Database() {
             return;
         }
 
-        const response = await invoke<PureResponse>('start_database', {
+        const response = await invoke<PureResponse>(commands.start_database, {
             name: newDatabase(),
             location: directory + `/${newDatabase()}.sqlite`,
         });
@@ -37,7 +39,13 @@ function Database() {
             return;
         }
 
-        navigate('/');
+        const users = await invoke<PureResponse>(commands.check_users_exist);
+        if (!users.status) {
+            navigate(routes.new_user);
+            return;
+        }
+
+        navigate(routes.index);
     }
 
 

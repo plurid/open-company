@@ -28,3 +28,15 @@ pub fn create_user(
         .get_result(conn)
         .expect("Error saving new user")
 }
+
+
+pub fn get_all_users(
+    conn: &mut SqliteConnection,
+) -> Vec<User> {
+    use crate::schema::users;
+
+    let users: Vec<User> = users::table.load(conn)
+        .expect("Error loading users");
+
+    users
+}

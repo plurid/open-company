@@ -64,6 +64,27 @@ pub fn check_database_exists(
 
 
 #[tauri::command]
+pub fn check_users_exist(
+    state: tauri::State<database::DatabaseState>,
+) -> PureResponse {
+    let mut state_guard = state.0.lock().unwrap();
+    let connection = &mut state_guard.get_connection();
+
+    let users = user::get_all_users(connection);
+
+    if users.len() == 0 {
+        return PureResponse {
+            status: false,
+        };
+    }
+
+    PureResponse {
+        status: true,
+    }
+}
+
+
+#[tauri::command]
 pub fn start_database(
     name: &str,
     location: &str,

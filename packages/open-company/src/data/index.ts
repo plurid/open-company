@@ -51,6 +51,7 @@ export interface Invoice {
 export const commands = {
     show_main_window: 'show_main_window',
     check_database_exists: 'check_database_exists',
+    check_users_exist: 'check_users_exist',
     start_database: 'start_database',
     generate_new_user: 'generate_new_user',
     generate_new_address: 'generate_new_address',

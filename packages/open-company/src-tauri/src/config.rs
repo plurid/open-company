@@ -68,12 +68,21 @@ pub fn update_config(
 pub fn get_config(
     app_handle: tauri::AppHandle,
 ) -> Option<Config> {
-    let config_path = get_config_path(app_handle);
+    let config_path = get_config_path(app_handle.clone());
 
     if let Ok(mut file) = File::open(config_path) {
         let mut file_content = String::new();
         if let Ok(_) = file.read_to_string(&mut file_content) {
             if let Ok(config) = serde_json::from_str::<Config>(&file_content) {
+                let config_path = PathBuf::from(config.database_location.clone());
+                if !config_path.exists() {
+                    update_config(app_handle, Config {
+                        database_location: String::new(),
+                    });
+
+                    return None;
+                }
+
                 return Some(config);
             }
         }

@@ -7,6 +7,7 @@ import './Index.css';
 
 import {
     StringResponse,
+    PureResponse,
     commands,
     routes,
 } from '../data';
@@ -20,6 +21,12 @@ function App() {
         const database = await invoke<StringResponse>(commands.check_database_exists);
         if (!database.status) {
             navigate(routes.new_database);
+            return;
+        }
+
+        const users = await invoke<PureResponse>(commands.check_users_exist);
+        if (!users.status) {
+            navigate(routes.new_user);
             return;
         }
     });
