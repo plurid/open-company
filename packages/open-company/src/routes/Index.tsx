@@ -13,10 +13,16 @@ import {
     localStore,
 } from '../data';
 
+import {
+    getFileNameFromPath,
+} from '../utilities';
+
 
 
 function App() {
     const navigate = useNavigate();
+
+    const activeDatabase = localStorage.getItem(localStore.activeDatabase) || '';
 
 
     const logout = () => {
@@ -58,15 +64,27 @@ function App() {
 
 
     return (
-        <div class="container"
-        >
-            <h1>open company</h1>
+        <div class={`
+            h-full p-8 w-[400px] mx-auto text-center
+            grid gap-4 content-center place-content-center
+        `}>
+            <h1 class="text-3xl mb-24">open company</h1>
 
             <div class="flex flex-col gap-2">
-                <A href="/new-database">database</A>
+                <A href="/new-database">change database ({getFileNameFromPath(activeDatabase)})</A>
                 <A href="/new-user">new user</A>
                 <A href="/new-company">new company</A>
                 <A href="/new-invoice">new invoice</A>
+
+                <button
+                    class="mt-24"
+                    onClick={() => {
+                        logout();
+                        navigate(routes.login_user);
+                    }}
+                >
+                    Logout
+                </button>
             </div>
         </div>
     );

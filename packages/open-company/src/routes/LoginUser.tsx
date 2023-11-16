@@ -47,9 +47,10 @@ function LoginUser() {
 
 
     return (
-        <div class="p-8 flex flex-col items-center content-center">
-            <h1 class="mb-8">login</h1>
-
+        <div class={`
+            h-full p-8 w-[400px] mx-auto text-center
+            grid gap-4 content-center place-content-center
+        `}>
             <div class="grid gap-4 place-content-center justify-items-center w-[300px]">
                 <input
                     class="w-[300px]"

@@ -11,29 +11,35 @@ function NewCompany() {
 
 
     return (
-        <div class="container">
+        <div class={`
+            h-full p-8 w-[400px] mx-auto text-center
+            grid gap-4 content-center place-content-center
+        `}>
             <h1>new company</h1>
 
-            <div class="flex gap-2 items-center">
-                <input
-                    placeholder="company name"
-                    required
-                    value={companyName()}
-                    onInput={(e) => setCompanyName(e.currentTarget.value)}
-                />
+            <input
+                placeholder="company name"
+                required
+                value={companyName()}
+                onInput={(e) => setCompanyName(e.currentTarget.value)}
+            />
 
-                <button
-                    onClick={() => {
-                        invoke('generate_new_company', {
-                            name: companyName(),
-                        });
-                    }}
-                >
-                    Generate Company
-                </button>
+            <button
+                onClick={() => {
+                    invoke('generate_new_company', {
+                        name: companyName(),
+                    });
+                }}
+            >
+                Generate Company
+            </button>
 
-                <A href="/">back</A>
-            </div>
+            <A
+                href="/"
+                class="mt-12"
+            >
+                back
+            </A>
         </div>
     );
 }
