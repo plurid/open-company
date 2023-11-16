@@ -65,6 +65,11 @@ button:active {
 input,
 button {
     outline: none;
+    border: 3px solid transparent;
+}
+
+input:focus {
+    border: 3px solid #373737;
 }
 
 button {

@@ -95,8 +95,8 @@ function Database() {
 
     return (
         <div class={`
-            h-full p-8 w-[300px] mx-auto text-center
-            grid gap-4 content-center
+            h-full p-8 w-[400px] mx-auto text-center
+            grid gap-4 content-center place-content-center
             ${loading() ? 'opacity-40' : ''}
         `}>
             <h1>generate new database</h1>

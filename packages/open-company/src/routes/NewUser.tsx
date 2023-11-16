@@ -8,6 +8,7 @@ import {
     PureResponse,
     commands,
     routes,
+    localStore,
 
     disabledButton,
 } from '../data';
@@ -20,6 +21,8 @@ function NewUser() {
 
     const navigate = useNavigate();
 
+    const loggedIn = !!localStorage.getItem(localStore.loggedIn);
+
 
     const generateUser = async () => {
         if (!username() || !password()) {
@@ -30,18 +33,21 @@ function NewUser() {
             username: username(),
             password: password(),
         });
-
         if (!generatedUser) {
             return;
         }
 
+        localStorage.setItem(localStore.loggedIn, username());
         navigate(routes.index);
     }
 
 
     return (
-        <div class="p-8 flex flex-col items-center content-center">
-            <h1 class="mb-8">new user</h1>
+        <div class={`
+            h-full p-8 w-[400px] mx-auto text-center
+            grid gap-4 content-center place-content-center
+        `}>
+            <h1>new user</h1>
 
             <div class="grid gap-4 place-content-center justify-items-center w-[300px]">
                 <input
@@ -76,7 +82,14 @@ function NewUser() {
                     Generate User
                 </button>
 
-                <A href="/">back</A>
+                {loggedIn && (
+                    <A
+                        href="/"
+                        class="mt-12"
+                    >
+                        back
+                    </A>
+                )}
             </div>
         </div>
     );
