@@ -10,6 +10,7 @@
 use std::sync::Mutex;
 use std::path::PathBuf;
 
+use tauri::Invoke;
 
 mod config;
 mod database;
@@ -32,8 +33,32 @@ fn setup_app(
 ) {
 }
 
+fn commands_handler() -> impl Fn(Invoke) {
+    tauri::generate_handler![
+        commands::show_main_window,
+        commands::check_database_exists,
+        commands::check_users_exist,
+        commands::start_database,
+        commands::generate_new_user,
+        commands::login_user,
+        commands::generate_new_address,
+        commands::generate_new_contact,
+        commands::generate_new_company,
+        commands::generate_new_item,
+        commands::generate_new_invoice,
+        // commands::edit_company,
+        // commands::delete_company,
+        // commands::edit_invoice,
+        // commands::delete_invoice,
+        // commands::edit_item,
+        // commands::delete_item,
+    ]
+}
+
 
 fn main() {
+    let commands = commands_handler();
+
     tauri::Builder::default()
         .setup(|app| {
             let config_dir = app.path_resolver().app_config_dir().unwrap();
@@ -43,19 +68,7 @@ fn main() {
         .manage(database::DatabaseState(
             Mutex::new(database::Database::new(""))
         ))
-        .invoke_handler(tauri::generate_handler![
-            commands::show_main_window,
-            commands::check_database_exists,
-            commands::check_users_exist,
-            commands::start_database,
-            commands::generate_new_user,
-            commands::login_user,
-            commands::generate_new_address,
-            commands::generate_new_contact,
-            commands::generate_new_company,
-            commands::generate_new_item,
-            commands::generate_new_invoice,
-        ])
+        .invoke_handler(commands)
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
