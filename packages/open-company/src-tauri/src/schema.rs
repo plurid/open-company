@@ -12,7 +12,13 @@ diesel::table! {
 diesel::table! {
     companies (id) {
         id -> Integer,
+        owned_by -> Text,
         name -> Text,
+        identification -> Text,
+        address -> Text,
+        country -> Text,
+        contact -> Text,
+        use_for_invoicing -> Bool,
     }
 }
 

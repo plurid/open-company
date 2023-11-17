@@ -14,7 +14,13 @@ pub fn create_company(
     use crate::schema::companies;
 
     let new_company = NewCompany {
-        name,
+        owned_by: "",
+        name: "",
+        identification: "",
+        address: "",
+        country: "",
+        contact: "",
+        use_for_invoicing: false,
     };
 
     diesel::insert_into(companies::table)

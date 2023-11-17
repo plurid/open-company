@@ -81,13 +81,25 @@ pub struct NewContact<'a> {
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Company {
     pub id: i32,
+    pub owned_by: String,
     pub name: String,
+    pub identification: String,
+    pub address: String,
+    pub country: String,
+    pub contact: String,
+    pub use_for_invoicing: bool,
 }
 
 #[derive(Insertable)]
 #[diesel(table_name = companies)]
 pub struct NewCompany<'a> {
+    pub owned_by: &'a str,
     pub name: &'a str,
+    pub identification: &'a str,
+    pub address: &'a str,
+    pub country: &'a str,
+    pub contact: &'a str,
+    pub use_for_invoicing: bool,
 }
 
 
