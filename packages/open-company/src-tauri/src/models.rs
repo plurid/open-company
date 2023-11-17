@@ -21,6 +21,12 @@ pub struct User {
     pub password: String,
 }
 
+#[derive(serde::Serialize)]
+pub struct PublicUser {
+    pub id: i32,
+    pub username: String,
+}
+
 #[derive(Insertable)]
 #[diesel(table_name = users)]
 pub struct NewUser<'a> {

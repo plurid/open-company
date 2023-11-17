@@ -60,6 +60,8 @@ export const commands = {
     generate_new_company: 'generate_new_company',
     generate_new_item: 'generate_new_item',
     generate_new_invoice: 'generate_new_invoice',
+
+    get_users: 'get_users',
 } as const;
 
 

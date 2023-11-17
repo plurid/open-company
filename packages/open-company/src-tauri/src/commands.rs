@@ -1,5 +1,6 @@
 use serde;
 use tauri::Manager;
+use diesel::sqlite::SqliteConnection;
 
 use crate::config;
 use crate::database;
@@ -63,12 +64,21 @@ pub fn check_database_exists(
 }
 
 
+
+fn get_connection(
+    state: tauri::State<database::DatabaseState>,
+) -> SqliteConnection {
+    let mut state_guard = state.0.lock().unwrap();
+
+    state_guard.get_connection()
+}
+
+
 #[tauri::command]
 pub fn check_users_exist(
     state: tauri::State<database::DatabaseState>,
 ) -> PureResponse {
-    let mut state_guard = state.0.lock().unwrap();
-    let connection = &mut state_guard.get_connection();
+    let connection = &mut get_connection(state);
 
     let users = user::get_all_users(connection);
 
@@ -112,8 +122,7 @@ pub fn generate_new_user(
     password: &str,
     state: tauri::State<database::DatabaseState>,
 ) -> PureResponse {
-    let mut state_guard = state.0.lock().unwrap();
-    let connection = &mut state_guard.get_connection();
+    let connection = &mut get_connection(state);
 
     let _ = user::create_user(connection, username, password);
 
@@ -124,13 +133,31 @@ pub fn generate_new_user(
 
 
 #[tauri::command]
+pub fn get_users(
+    state: tauri::State<database::DatabaseState>,
+) -> Vec<models::PublicUser> {
+    let connection = &mut get_connection(state);
+
+    let users = user::get_all_users(connection);
+
+    let public_users = users.iter().map(|user| {
+        models::PublicUser {
+            id: user.id,
+            username: user.username.clone(),
+        }
+    }).collect();
+
+    public_users
+}
+
+
+#[tauri::command]
 pub fn login_user(
     username: &str,
     password: &str,
     state: tauri::State<database::DatabaseState>,
 ) -> PureResponse {
-    let mut state_guard = state.0.lock().unwrap();
-    let connection = &mut state_guard.get_connection();
+    let connection = &mut get_connection(state);
 
     let logged_in = user::login_user(connection, username, password);
 
@@ -156,8 +183,7 @@ pub fn generate_new_address(
     location: &str,
     state: tauri::State<database::DatabaseState>,
 ) -> models::Address {
-    let mut state_guard = state.0.lock().unwrap();
-    let connection = &mut state_guard.get_connection();
+    let connection = &mut get_connection(state);
 
     let address = address::create_address(connection, value, country, location);
 
@@ -172,8 +198,7 @@ pub fn generate_new_contact(
     email: &str,
     state: tauri::State<database::DatabaseState>,
 ) -> models::Contact {
-    let mut state_guard = state.0.lock().unwrap();
-    let connection = &mut state_guard.get_connection();
+    let connection = &mut get_connection(state);
 
     let contact = contact::create_contact(connection, name, phone, email);
 
@@ -186,8 +211,7 @@ pub fn generate_new_company(
     name: &str,
     state: tauri::State<database::DatabaseState>,
 ) -> models::Company {
-    let mut state_guard = state.0.lock().unwrap();
-    let connection = &mut state_guard.get_connection();
+    let connection = &mut get_connection(state);
 
     let company = company::create_company(connection, name);
 
@@ -200,8 +224,7 @@ pub fn generate_new_item(
     name: &str,
     state: tauri::State<database::DatabaseState>,
 ) -> models::Item {
-    let mut state_guard = state.0.lock().unwrap();
-    let connection = &mut state_guard.get_connection();
+    let connection = &mut get_connection(state);
 
     let item = item::create_item(connection, name);
 
@@ -215,8 +238,7 @@ pub fn generate_new_invoice(
     invoice_to: &str,
     state: tauri::State<database::DatabaseState>,
 ) -> models::Invoice {
-    let mut state_guard = state.0.lock().unwrap();
-    let connection = &mut state_guard.get_connection();
+    let connection = &mut get_connection(state);
 
     let invoice = invoice::create_invoice(connection, invoice_from, invoice_to);
 
