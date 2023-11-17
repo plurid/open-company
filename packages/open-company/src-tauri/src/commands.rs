@@ -208,12 +208,27 @@ pub fn generate_new_contact(
 
 #[tauri::command]
 pub fn generate_new_company(
+    owned_by: &str,
     name: &str,
+    identification: &str,
+    address: &str,
+    country: &str,
+    contact: &str,
+    use_for_invoicing: bool,
     state: tauri::State<database::DatabaseState>,
 ) -> models::Company {
     let connection = &mut get_connection(state);
 
-    let company = company::create_company(connection, name);
+    let company = company::create_company(
+        connection,
+        owned_by,
+        name,
+        identification,
+        address,
+        country,
+        contact,
+        use_for_invoicing,
+    );
 
     company
 }

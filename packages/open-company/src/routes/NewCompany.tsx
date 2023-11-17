@@ -1,7 +1,13 @@
 import { invoke } from '@tauri-apps/api/tauri';
 import { createSignal } from 'solid-js';
+import { useNavigate } from '@solidjs/router';
 
 import './NewCompany.css';
+
+import {
+    localStore,
+    routes,
+} from '../data';
 
 import BackHomeButton from '../components/BackHomeButton';
 import Toggle from '../components/Toggle';
@@ -16,6 +22,24 @@ function NewCompany() {
     const [companyContact, setCompanyContact] = createSignal('');
     const [useForInvoicing, setUseForInvoicing] = createSignal(false);
 
+    const loggedInUsername = localStorage.getItem(localStore.loggedIn);
+
+    const navigate = useNavigate();
+
+
+    const generateCompany = async () => {
+        await invoke('generate_new_company', {
+            ownedBy: loggedInUsername,
+            name: companyName(),
+            identification: companyID(),
+            address: companyAddress(),
+            country: companyCountry(),
+            contact: companyContact(),
+            useForInvoicing: useForInvoicing(),
+        });
+
+        navigate(routes.index);
+    }
 
     return (
         <div class={`
@@ -69,14 +93,7 @@ function NewCompany() {
 
             <button
                 onClick={() => {
-                    invoke('generate_new_company', {
-                        name: companyName(),
-                        identification: companyID(),
-                        address: companyAddress(),
-                        country: companyCountry(),
-                        contact: companyContact(),
-                        useForInvoicing: useForInvoicing(),
-                    });
+                    generateCompany();
                 }}
             >
                 Generate Company
