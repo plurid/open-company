@@ -1,8 +1,9 @@
 import { invoke } from '@tauri-apps/api/tauri';
 import { createSignal } from 'solid-js';
-import { A } from '@solidjs/router';
 
 import './NewCompany.css';
+
+import BackHomeButton from '../components/BackHomeButton';
 
 
 
@@ -34,12 +35,7 @@ function NewCompany() {
                 Generate Company
             </button>
 
-            <A
-                href="/"
-                class="mt-12"
-            >
-                back
-            </A>
+            <BackHomeButton />
         </div>
     );
 }

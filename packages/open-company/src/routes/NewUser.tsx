@@ -1,6 +1,6 @@
 import { invoke } from '@tauri-apps/api/tauri';
 import { createSignal } from 'solid-js';
-import { A, useNavigate } from '@solidjs/router';
+import { useNavigate } from '@solidjs/router';
 
 import './NewUser.css';
 
@@ -12,6 +12,8 @@ import {
 
     disabledButton,
 } from '../data';
+
+import BackHomeButton from '../components/BackHomeButton';
 
 
 
@@ -86,12 +88,7 @@ function NewUser() {
                 </button>
 
                 {loggedIn && (
-                    <A
-                        href="/"
-                        class="mt-12"
-                    >
-                        back
-                    </A>
+                    <BackHomeButton />
                 )}
             </div>
         </div>

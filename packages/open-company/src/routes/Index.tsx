@@ -80,8 +80,8 @@ function App() {
                 <A href="/users">users</A>
                 <A href="/companies">companies</A>
                 <A href="/contacts">contacts</A>
-                <A href="/contracts">contracts</A>
                 <A href="/items">items</A>
+                <A href="/contracts">contracts</A>
                 <A href="/invoices">invoices</A>
 
                 <div class="mb-4" />

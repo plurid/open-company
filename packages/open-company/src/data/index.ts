@@ -64,12 +64,19 @@ export const commands = {
 
 
 export const routes = {
-    index: "/",
-    new_database: "/new-database",
-    new_user: "/new-user",
-    login_user: "/login_user",
-    new_company: "/new-company",
-    new_invoice: "/new-invoice",
+    index: '/',
+    new_database: '/new-database',
+    new_user: '/new-user',
+    login_user: '/login_user',
+    new_company: '/new-company',
+    new_invoice: '/new-invoice',
+
+    users: '/users',
+    companies: '/companies',
+    contacts: '/contacts',
+    items: '/items',
+    contracts: '/contracts',
+    invoices: '/invoices',
 } as const;
 
 

@@ -1,7 +1,8 @@
 import { createSignal, For } from 'solid-js';
-import { A } from '@solidjs/router';
 
 import './NewInvoice.css';
+
+import BackHomeButton from '../components/BackHomeButton';
 
 
 
@@ -27,9 +28,7 @@ function NewInvoice() {
                 }
             </For>
 
-            <A href="/">
-                back
-            </A>
+            <BackHomeButton />
         </div>
     );
 }

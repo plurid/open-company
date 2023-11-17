@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/tauri';
 import { open } from '@tauri-apps/api/dialog';
 import { createSignal } from 'solid-js';
-import { A, useNavigate } from '@solidjs/router';
+import { useNavigate } from '@solidjs/router';
 
 import './Database.css';
 
@@ -15,6 +15,8 @@ import {
 import {
     getFileNameFromPath,
 } from '../utilities';
+
+import BackHomeButton from '../components/BackHomeButton';
 
 
 
@@ -144,12 +146,7 @@ function Database() {
             </button>
 
             {loggedIn && (
-                <A
-                    href="/"
-                    class="mt-12"
-                >
-                    back
-                </A>
+                <BackHomeButton />
             )}
         </div>
     );
