@@ -1,5 +1,9 @@
 import { invoke } from '@tauri-apps/api/tauri';
-import { createSignal } from 'solid-js';
+import {
+    createSignal,
+    For,
+} from 'solid-js';
+import { createStore } from "solid-js/store";
 import { useNavigate } from '@solidjs/router';
 
 import './NewCompany.css';
@@ -14,12 +18,40 @@ import Toggle from '../components/Toggle';
 
 
 
+export interface CompanyFields {
+    template: string;
+    data: CompanyField[];
+}
+
+export interface CompanyField {
+    name: string;
+    type: string;
+    value: string | number | boolean;
+    required: boolean;
+}
+
+
 function NewCompany() {
     const [companyName, setCompanyName] = createSignal('');
-    const [companyID, setCompanyID] = createSignal('');
-    const [companyAddress, setCompanyAddress] = createSignal('');
-    const [companyCountry, setCompanyCountry] = createSignal('');
-    const [companyContact, setCompanyContact] = createSignal('');
+    const [companyTemplate, setCompanyTemplate] = createSignal('');
+    const [companyFields, setCompanyFields] = createStore<CompanyField[]>([
+        {
+            name: 'id',
+            type: 'string',
+            value: '',
+            required: true,
+        },
+        {
+            name: 'address',
+            type: 'string',
+            value: '',
+            required: true,
+        },
+    ]);
+    // const [companyID, setCompanyID] = createSignal('');
+    // const [companyAddress, setCompanyAddress] = createSignal('');
+    // const [companyCountry, setCompanyCountry] = createSignal('');
+    // const [companyContact, setCompanyContact] = createSignal('');
     const [useForInvoicing, setUseForInvoicing] = createSignal(false);
 
     const loggedInUsername = localStorage.getItem(localStore.loggedIn);
@@ -31,15 +63,27 @@ function NewCompany() {
         await invoke('generate_new_company', {
             ownedBy: loggedInUsername,
             name: companyName(),
-            identification: companyID(),
-            address: companyAddress(),
-            country: companyCountry(),
-            contact: companyContact(),
+            fields: JSON.stringify({
+                template: companyTemplate(),
+                data: companyFields,
+            }),
+            // identification: companyID(),
+            // address: companyAddress(),
+            // country: companyCountry(),
+            // contact: companyContact(),
             useForInvoicing: useForInvoicing(),
         });
 
         navigate(routes.index);
     }
+
+    const updateField = (
+        name: string,
+        value: string,
+    ) => {
+        setCompanyFields(field => field.name === name, 'value', value);
+    }
+
 
     return (
         <div class={`
@@ -55,7 +99,30 @@ function NewCompany() {
                 onInput={(e) => setCompanyName(e.currentTarget.value)}
             />
 
-            <input
+            <For each={companyFields}>
+                {(field) => {
+                    const {
+                        name,
+                        value,
+                    } = field;
+
+                    return (
+                        <input
+                            placeholder={name}
+                            required
+                            value={value + ''}
+                            onInput={(event) => {
+                                updateField(
+                                    name,
+                                    event?.target.value,
+                                );
+                            }}
+                        />
+                    );
+                }}
+            </For>
+
+            {/* <input
                 placeholder="id"
                 required
                 value={companyID()}
@@ -81,7 +148,7 @@ function NewCompany() {
                 required
                 value={companyContact()}
                 onInput={(e) => setCompanyContact(e.currentTarget.value)}
-            />
+            /> */}
 
             <Toggle
                 text="use for invoicing"
