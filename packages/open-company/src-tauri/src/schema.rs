@@ -14,11 +14,17 @@ diesel::table! {
         id -> Integer,
         owned_by -> Text,
         name -> Text,
-        identification -> Text,
-        address -> Text,
-        country -> Text,
-        contact -> Text,
+        fields -> Text,
         use_for_invoicing -> Bool,
+    }
+}
+
+diesel::table! {
+    company_templates (id) {
+        id -> Integer,
+        owned_by -> Text,
+        name -> Text,
+        fields -> Text,
     }
 }
 
@@ -57,6 +63,7 @@ diesel::table! {
 diesel::allow_tables_to_appear_in_same_query!(
     addresses,
     companies,
+    company_templates,
     contacts,
     invoices,
     items,

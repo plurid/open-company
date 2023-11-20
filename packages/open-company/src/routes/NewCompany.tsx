@@ -47,11 +47,19 @@ function NewCompany() {
             value: '',
             required: true,
         },
+        {
+            name: 'contact',
+            type: 'string',
+            value: '',
+            required: true,
+        },
+        {
+            name: 'country',
+            type: 'string',
+            value: '',
+            required: true,
+        },
     ]);
-    // const [companyID, setCompanyID] = createSignal('');
-    // const [companyAddress, setCompanyAddress] = createSignal('');
-    // const [companyCountry, setCompanyCountry] = createSignal('');
-    // const [companyContact, setCompanyContact] = createSignal('');
     const [useForInvoicing, setUseForInvoicing] = createSignal(false);
 
     const loggedInUsername = localStorage.getItem(localStore.loggedIn);
@@ -67,10 +75,6 @@ function NewCompany() {
                 template: companyTemplate(),
                 data: companyFields,
             }),
-            // identification: companyID(),
-            // address: companyAddress(),
-            // country: companyCountry(),
-            // contact: companyContact(),
             useForInvoicing: useForInvoicing(),
         });
 
@@ -121,34 +125,6 @@ function NewCompany() {
                     );
                 }}
             </For>
-
-            {/* <input
-                placeholder="id"
-                required
-                value={companyID()}
-                onInput={(e) => setCompanyID(e.currentTarget.value)}
-            />
-
-            <input
-                placeholder="address"
-                required
-                value={companyAddress()}
-                onInput={(e) => setCompanyAddress(e.currentTarget.value)}
-            />
-
-            <input
-                placeholder="country"
-                required
-                value={companyCountry()}
-                onInput={(e) => setCompanyCountry(e.currentTarget.value)}
-            />
-
-            <input
-                placeholder="contact"
-                required
-                value={companyContact()}
-                onInput={(e) => setCompanyContact(e.currentTarget.value)}
-            /> */}
 
             <Toggle
                 text="use for invoicing"

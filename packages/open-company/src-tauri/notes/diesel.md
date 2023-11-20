@@ -7,6 +7,7 @@ diesel migration generate create_invoices
 diesel migration generate create_addresses
 diesel migration generate create_contacts
 diesel migration generate create_items
+diesel migration generate create_company_templates
 
 
 

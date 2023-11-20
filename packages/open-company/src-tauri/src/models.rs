@@ -1,18 +1,19 @@
 use diesel::prelude::*;
-use serde;
+use serde::{Deserialize, Serialize};
 
 use crate::schema::{
     users,
     addresses,
     contacts,
     companies,
+    company_templates,
     items,
     invoices,
 };
 
 
 
-#[derive(Queryable, Selectable, serde::Serialize)]
+#[derive(Queryable, Selectable, Serialize)]
 #[diesel(table_name = crate::schema::users)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct User {
@@ -21,7 +22,7 @@ pub struct User {
     pub password: String,
 }
 
-#[derive(serde::Serialize)]
+#[derive(Serialize)]
 pub struct PublicUser {
     pub id: i32,
     pub username: String,
@@ -36,7 +37,7 @@ pub struct NewUser<'a> {
 
 
 
-#[derive(Queryable, Selectable, serde::Serialize)]
+#[derive(Queryable, Selectable, Serialize)]
 #[diesel(table_name = crate::schema::addresses)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Address {
@@ -56,7 +57,7 @@ pub struct NewAddress<'a> {
 
 
 
-#[derive(Queryable, Selectable, serde::Serialize)]
+#[derive(Queryable, Selectable, Serialize)]
 #[diesel(table_name = crate::schema::contacts)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Contact {
@@ -76,18 +77,32 @@ pub struct NewContact<'a> {
 
 
 
-#[derive(Queryable, Selectable, serde::Serialize)]
+#[derive(Queryable, Selectable, Serialize)]
 #[diesel(table_name = crate::schema::companies)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Company {
     pub id: i32,
     pub owned_by: String,
     pub name: String,
-    pub identification: String,
-    pub address: String,
-    pub country: String,
-    pub contact: String,
+    pub fields: String,
     pub use_for_invoicing: bool,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct CompanyField {
+    name: String,
+    #[serde(rename = "type")]
+    field_type: String,
+    value: CompanyFieldValue,
+    required: bool,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+#[serde(untagged)]
+enum CompanyFieldValue {
+    StringValue(String),
+    NumberValue(i64),
+    BooleanValue(bool),
 }
 
 #[derive(Insertable)]
@@ -95,16 +110,33 @@ pub struct Company {
 pub struct NewCompany<'a> {
     pub owned_by: &'a str,
     pub name: &'a str,
-    pub identification: &'a str,
-    pub address: &'a str,
-    pub country: &'a str,
-    pub contact: &'a str,
+    pub fields: &'a str,
     pub use_for_invoicing: bool,
 }
 
 
 
-#[derive(Queryable, Selectable, serde::Serialize)]
+#[derive(Queryable, Selectable, Serialize)]
+#[diesel(table_name = crate::schema::company_templates)]
+#[diesel(check_for_backend(diesel::sqlite::Sqlite))]
+pub struct CompanyTemplate {
+    pub id: i32,
+    pub owned_by: String,
+    pub name: String,
+    pub fields: String,
+}
+
+#[derive(Insertable)]
+#[diesel(table_name = company_templates)]
+pub struct NewCompanyTemplate<'a> {
+    pub owned_by: &'a str,
+    pub name: &'a str,
+    pub fields: &'a str,
+}
+
+
+
+#[derive(Queryable, Selectable, Serialize)]
 #[diesel(table_name = crate::schema::items)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Item {
@@ -120,7 +152,7 @@ pub struct NewItem<'a> {
 
 
 
-#[derive(Queryable, Selectable, serde::Serialize)]
+#[derive(Queryable, Selectable, Serialize)]
 #[diesel(table_name = crate::schema::invoices)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Invoice {
