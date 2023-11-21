@@ -2,6 +2,7 @@ import { invoke } from '@tauri-apps/api/tauri';
 import {
     createSignal,
     For,
+    onMount,
 } from 'solid-js';
 import { createStore } from "solid-js/store";
 import { useNavigate } from '@solidjs/router';
@@ -11,6 +12,7 @@ import './NewCompany.css';
 import {
     localStore,
     routes,
+    commands,
 } from '../data';
 
 import BackHomeButton from '../components/BackHomeButton';
@@ -34,6 +36,7 @@ export interface CompanyField {
 function NewCompany() {
     const [companyName, setCompanyName] = createSignal('');
     const [companyTemplate, setCompanyTemplate] = createSignal('');
+    const [companyTemplateFields, setCompanyTemplateFields] = createStore<CompanyField[]>([]);
     const [companyFields, setCompanyFields] = createStore<CompanyField[]>([
         {
             name: 'id',
@@ -89,11 +92,84 @@ function NewCompany() {
     }
 
 
+    const newTemplateField = () => {
+        setCompanyTemplateFields([
+            ...companyTemplateFields,
+            {
+                name: '',
+                type: 'text',
+                value: '',
+                required: true,
+            },
+        ]);
+
+        console.log('companyTemplateFields', companyTemplateFields);
+    }
+
+    const updateTemplateField = (
+        idx: number,
+        value: string,
+    ) => {
+        setCompanyTemplateFields(idx, 'name', value);
+    }
+
+    const generateNewCompanyTemplate = async () => {
+        await invoke<any[]>(commands.generate_new_company_template, {
+            ownedBy: loggedInUsername,
+            fields: companyTemplateFields,
+        });
+    }
+
+
+    onMount(async () => {
+        const templates = await invoke<any[]>(commands.get_company_templates, {
+            ownedBy: loggedInUsername,
+        });
+    });
+
+
     return (
         <div class={`
             h-full p-8 w-[400px] mx-auto text-center
             grid gap-4 content-center place-content-center
         `}>
+            <For each={companyTemplateFields}>
+                {(field, idx) => {
+                    const {
+                        name,
+                    } = field;
+
+                    return (
+                        <div>
+                            <input
+                                placeholder={"name"}
+                                required
+                                value={name + ''}
+                                onInput={(event) => {
+                                    updateTemplateField(idx(), event?.target.value);
+                                }}
+                            />
+                        </div>
+                    );
+                }}
+            </For>
+
+            <button
+                onClick={() => {
+                    newTemplateField();
+                }}
+            >
+                Add Template Field
+            </button>
+
+            <button
+                onClick={() => {
+                    generateNewCompanyTemplate();
+                }}
+            >
+                New Company Template
+            </button>
+
             <h1>new company</h1>
 
             <input
