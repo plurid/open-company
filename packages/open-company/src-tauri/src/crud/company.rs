@@ -48,6 +48,14 @@ pub fn create_company_template(
         as_default,
     };
 
+    if as_default {
+        diesel::update(company_templates::table)
+            .filter(company_templates::owned_by.eq(owned_by))
+            .set(company_templates::as_default.eq(false))
+            .execute(connection)
+            .expect("Error setting company template as default");
+    }
+
     diesel::insert_into(company_templates::table)
         .values(&new_company_template)
         .returning(CompanyTemplate::as_returning())
