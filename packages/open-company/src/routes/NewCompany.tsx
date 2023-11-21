@@ -34,6 +34,8 @@ export interface CompanyField {
 
 
 function NewCompany() {
+    const [view, setView] = createSignal<'new-company' | 'new-company-template'>('new-company');
+
     const [companyTemplateName, setCompanyTemplateName] = createSignal('');
     const [companyTemplateDefault, setCompanyTemplateDefault] = createSignal(false);
     const [companyTemplateFields, setCompanyTemplateFields] = createStore<CompanyField[]>([]);
@@ -109,14 +111,10 @@ function NewCompany() {
     onMount(async () => {
         const templates = await invoke<any[]>(commands.get_company_templates, {
             ownedBy: loggedInUsername,
-        });
-        console.log({templates});
-        if (templates.length < 0) {
-            return;
-        }
-
+        }) || [];
         const defaultTemplate = templates.find(template => template.as_default) || templates[0];
         if (!defaultTemplate) {
+            setView('new-company-template');
             return;
         }
 
@@ -125,11 +123,8 @@ function NewCompany() {
     });
 
 
-    return (
-        <div class={`
-            h-full p-8 w-[400px] mx-auto text-center
-            grid gap-4 content-center place-content-center
-        `}>
+    const newCompanyTemplate = (
+        <>
             <input
                 placeholder={"template name"}
                 required
@@ -146,13 +141,26 @@ function NewCompany() {
                     } = field;
 
                     return (
-                        <div>
-                            <div>
-                                field {idx()}
+                        <div class="mb-6">
+                            <div class="flex justify-between">
+                                <div class="text-left mb-2">
+                                    field {idx()}
+                                </div>
+
+                                <div
+                                    class="select-none cursor-pointer"
+                                    onClick={() => {
+                                        setCompanyTemplateFields(
+                                            companyTemplateFields.filter((_, i) => i !== idx()),
+                                        );
+                                    }}
+                                >
+                                    &#10005;
+                                </div>
                             </div>
 
                             <input
-                                placeholder={"name"}
+                                placeholder={"field name"}
                                 required
                                 value={name + ''}
                                 onInput={(event) => {
@@ -188,9 +196,23 @@ function NewCompany() {
                 New Company Template
             </button>
 
+            <BackHomeButton />
+        </>
+    );
+
+    const newCompany = (
+        <>
             <h1>new company</h1>
 
             using template {companyTemplate()}
+
+            <button
+                onClick={() => {
+                    setView('new-company-template');
+                }}
+            >
+                Generate New Company Template
+            </button>
 
             <input
                 placeholder="name"
@@ -239,6 +261,21 @@ function NewCompany() {
             </button>
 
             <BackHomeButton />
+        </>
+    );
+
+    return (
+        <div class={`
+            h-full p-8 w-[400px] mx-auto text-center
+            grid gap-4 content-center place-content-center
+        `}>
+            {view() === 'new-company-template' && (
+                <>{newCompanyTemplate}</>
+            )}
+
+            {view() === 'new-company' && (
+                <>{newCompany}</>
+            )}
         </div>
     );
 }
