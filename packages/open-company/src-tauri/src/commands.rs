@@ -249,6 +249,22 @@ pub fn generate_new_company_template(
 
 
 #[tauri::command]
+pub fn get_company_templates(
+    owned_by: &str,
+    state: tauri::State<database::DatabaseState>,
+) -> Vec<models::CompanyTemplate> {
+    let connection = &mut get_connection(state);
+
+    let company_templates = company::get_company_templates(
+        connection,
+        owned_by,
+    );
+
+    company_templates
+}
+
+
+#[tauri::command]
 pub fn generate_new_item(
     name: &str,
     state: tauri::State<database::DatabaseState>,

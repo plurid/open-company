@@ -6,6 +6,10 @@ use crate::models::{
     CompanyTemplate,
     NewCompanyTemplate,
 };
+use crate::schema::{
+    companies,
+    company_templates,
+};
 
 
 
@@ -16,8 +20,6 @@ pub fn create_company(
     fields: &str,
     use_for_invoicing: bool,
 ) -> Company {
-    use crate::schema::companies;
-
     let new_company = NewCompany {
         owned_by,
         name,
@@ -38,8 +40,6 @@ pub fn create_company_template(
     name: &str,
     fields: &str,
 ) -> CompanyTemplate {
-    use crate::schema::company_templates;
-
     let new_company_template = NewCompanyTemplate {
         owned_by,
         name,
@@ -51,4 +51,19 @@ pub fn create_company_template(
         .returning(CompanyTemplate::as_returning())
         .get_result(connection)
         .expect("Error saving new company template")
+}
+
+
+pub fn get_company_templates(
+    connection: &mut SqliteConnection,
+    user_id: &str,
+) -> Vec<CompanyTemplate> {
+    use crate::schema::company_templates::owned_by;
+
+    let company_templates = company_templates::table
+        .filter(owned_by.eq(user_id))
+        .load(connection)
+        .expect("Error loading company templates");
+
+    company_templates
 }
