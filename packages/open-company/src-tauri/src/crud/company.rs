@@ -39,11 +39,13 @@ pub fn create_company_template(
     owned_by: &str,
     name: &str,
     fields: &str,
+    as_default: bool,
 ) -> CompanyTemplate {
     let new_company_template = NewCompanyTemplate {
         owned_by,
         name,
         fields,
+        as_default,
     };
 
     diesel::insert_into(company_templates::table)

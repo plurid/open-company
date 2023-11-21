@@ -233,6 +233,7 @@ pub fn generate_new_company_template(
     owned_by: &str,
     name: &str,
     fields: &str,
+    as_default: bool,
     state: tauri::State<database::DatabaseState>,
 ) -> models::CompanyTemplate {
     let connection = &mut get_connection(state);
@@ -242,6 +243,7 @@ pub fn generate_new_company_template(
         owned_by,
         name,
         fields,
+        as_default,
     );
 
     company_template

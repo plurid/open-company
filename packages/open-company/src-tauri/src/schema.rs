@@ -25,6 +25,7 @@ diesel::table! {
         owned_by -> Text,
         name -> Text,
         fields -> Text,
+        as_default -> Bool,
     }
 }
 

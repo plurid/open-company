@@ -124,6 +124,7 @@ pub struct CompanyTemplate {
     pub owned_by: String,
     pub name: String,
     pub fields: String,
+    pub as_default: bool,
 }
 
 #[derive(Insertable)]
@@ -132,6 +133,7 @@ pub struct NewCompanyTemplate<'a> {
     pub owned_by: &'a str,
     pub name: &'a str,
     pub fields: &'a str,
+    pub as_default: bool,
 }
 
 
