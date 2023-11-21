@@ -94,8 +94,9 @@ function NewCompany() {
             ownedBy: loggedInUsername,
             name: companyTemplateName(),
             fields: JSON.stringify(companyTemplateFields),
-            default: companyTemplateDefault(),
+            asDefault: companyTemplateDefault(),
         });
+        console.log({template});
         if (!template) {
             return;
         }
@@ -109,11 +110,12 @@ function NewCompany() {
         const templates = await invoke<any[]>(commands.get_company_templates, {
             ownedBy: loggedInUsername,
         });
+        console.log({templates});
         if (templates.length < 0) {
             return;
         }
 
-        const defaultTemplate = templates.find(template => template.default) || templates[0];
+        const defaultTemplate = templates.find(template => template.as_default) || templates[0];
         if (!defaultTemplate) {
             return;
         }
