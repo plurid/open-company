@@ -34,35 +34,13 @@ export interface CompanyField {
 
 
 function NewCompany() {
+    const [companyTemplateName, setCompanyTemplateName] = createSignal('');
+    const [companyTemplateDefault, setCompanyTemplateDefault] = createSignal(false);
+    const [companyTemplateFields, setCompanyTemplateFields] = createStore<CompanyField[]>([]);
+
     const [companyName, setCompanyName] = createSignal('');
     const [companyTemplate, setCompanyTemplate] = createSignal('');
-    const [companyTemplateFields, setCompanyTemplateFields] = createStore<CompanyField[]>([]);
-    const [companyFields, setCompanyFields] = createStore<CompanyField[]>([
-        {
-            name: 'id',
-            type: 'string',
-            value: '',
-            required: true,
-        },
-        {
-            name: 'address',
-            type: 'string',
-            value: '',
-            required: true,
-        },
-        {
-            name: 'contact',
-            type: 'string',
-            value: '',
-            required: true,
-        },
-        {
-            name: 'country',
-            type: 'string',
-            value: '',
-            required: true,
-        },
-    ]);
+    const [companyFields, setCompanyFields] = createStore<CompanyField[]>([]);
     const [useForInvoicing, setUseForInvoicing] = createSignal(false);
 
     const loggedInUsername = localStorage.getItem(localStore.loggedIn);
@@ -102,8 +80,6 @@ function NewCompany() {
                 required: true,
             },
         ]);
-
-        console.log('companyTemplateFields', companyTemplateFields);
     }
 
     const updateTemplateField = (
@@ -114,10 +90,18 @@ function NewCompany() {
     }
 
     const generateNewCompanyTemplate = async () => {
-        await invoke<any[]>(commands.generate_new_company_template, {
+        const template = await invoke<any>(commands.generate_new_company_template, {
             ownedBy: loggedInUsername,
-            fields: companyTemplateFields,
+            name: companyTemplateName(),
+            fields: JSON.stringify(companyTemplateFields),
+            default: companyTemplateDefault(),
         });
+        if (!template) {
+            return;
+        }
+
+        setCompanyTemplate(template.name);
+        setCompanyFields(JSON.parse(template.fields));
     }
 
 
@@ -125,6 +109,17 @@ function NewCompany() {
         const templates = await invoke<any[]>(commands.get_company_templates, {
             ownedBy: loggedInUsername,
         });
+        if (templates.length < 0) {
+            return;
+        }
+
+        const defaultTemplate = templates.find(template => template.default) || templates[0];
+        if (!defaultTemplate) {
+            return;
+        }
+
+        setCompanyTemplate(defaultTemplate.name);
+        setCompanyFields(JSON.parse(defaultTemplate.fields));
     });
 
 
@@ -133,6 +128,15 @@ function NewCompany() {
             h-full p-8 w-[400px] mx-auto text-center
             grid gap-4 content-center place-content-center
         `}>
+            <input
+                placeholder={"template name"}
+                required
+                value={companyTemplateName()}
+                onInput={(event) => {
+                    setCompanyTemplateName(event?.target.value);
+                }}
+            />
+
             <For each={companyTemplateFields}>
                 {(field, idx) => {
                     const {
@@ -141,6 +145,10 @@ function NewCompany() {
 
                     return (
                         <div>
+                            <div>
+                                field {idx()}
+                            </div>
+
                             <input
                                 placeholder={"name"}
                                 required
@@ -153,6 +161,14 @@ function NewCompany() {
                     );
                 }}
             </For>
+
+            <Toggle
+                text="default template"
+                value={companyTemplateDefault()}
+                toggle={() => {
+                    setCompanyTemplateDefault(!companyTemplateDefault());
+                }}
+            />
 
             <button
                 onClick={() => {
@@ -171,6 +187,8 @@ function NewCompany() {
             </button>
 
             <h1>new company</h1>
+
+            using template {companyTemplate()}
 
             <input
                 placeholder="name"
