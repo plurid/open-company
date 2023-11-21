@@ -126,6 +126,7 @@ function NewCompany() {
     const newCompanyTemplate = (
         <>
             <input
+                class="mb-8"
                 placeholder={"template name"}
                 required
                 value={companyTemplateName()}
@@ -172,6 +173,14 @@ function NewCompany() {
                 }}
             </For>
 
+            <button
+                onClick={() => {
+                    newTemplateField();
+                }}
+            >
+                Add Template Field
+            </button>
+
             <Toggle
                 text="default template"
                 value={companyTemplateDefault()}
@@ -181,14 +190,7 @@ function NewCompany() {
             />
 
             <button
-                onClick={() => {
-                    newTemplateField();
-                }}
-            >
-                Add Template Field
-            </button>
-
-            <button
+                class="mt-8"
                 onClick={() => {
                     generateNewCompanyTemplate();
                 }}
