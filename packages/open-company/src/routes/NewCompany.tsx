@@ -98,13 +98,13 @@ function NewCompany() {
             fields: JSON.stringify(companyTemplateFields),
             asDefault: companyTemplateDefault(),
         });
-        console.log({template});
         if (!template) {
             return;
         }
 
         setCompanyTemplate(template.name);
         setCompanyFields(JSON.parse(template.fields));
+        setView('new-company');
     }
 
 
@@ -206,18 +206,27 @@ function NewCompany() {
         <>
             <h1>new company</h1>
 
-            using template {companyTemplate()}
-
-            <button
-                onClick={() => {
-                    setView('new-company-template');
-                }}
+            <div
+                class="my-8"
             >
-                Generate New Company Template
-            </button>
+                <div
+                    class="mb-4"
+                >
+                    using template {companyTemplate()}
+                </div>
+
+                <button
+                    onClick={() => {
+                        setView('new-company-template');
+                    }}
+                >
+                    New Company Template
+                </button>
+            </div>
 
             <input
-                placeholder="name"
+                class="mb-4"
+                placeholder="company name"
                 required
                 value={companyName()}
                 onInput={(e) => setCompanyName(e.currentTarget.value)}
