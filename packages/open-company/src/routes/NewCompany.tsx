@@ -35,7 +35,7 @@ export interface CompanyField {
 
 
 function NewCompany() {
-    const [view, setView] = createSignal<'new-company' | 'new-company-template'>('new-company');
+    const [view, setView] = createSignal<'new-company' | 'new-company-template' | 'edit-templates'>('new-company');
 
     const [companyTemplateName, setCompanyTemplateName] = createSignal('');
     const [companyTemplateDefault, setCompanyTemplateDefault] = createSignal(false);
@@ -116,6 +116,17 @@ function NewCompany() {
         setCompanyTemplate(template.name);
         setCompanyFields(JSON.parse(template.fields));
         setView('new-company');
+    }
+
+    const deleteCompanyTemplate = async (
+        name: string,
+    ) => {
+        setCompanyTemplates((prevTemplates) => prevTemplates.filter(template => template.name !== name));
+
+        await invoke(commands.delete_company_template, {
+            ownedBy: loggedInUsername,
+            name,
+        });
     }
 
 
@@ -222,6 +233,36 @@ function NewCompany() {
         </>
     );
 
+    const editTemplates = (
+        <>
+            <For each={companyTemplates()}>
+                {(template) => {
+                    return (
+                        <div class="flex justify-between">
+                            <div>
+                                {template.name}
+                            </div>
+
+                            <div
+                                onClick={() => {
+                                    deleteCompanyTemplate(template.name);
+                                }}
+                            >
+                                delete
+                            </div>
+                        </div>
+                    );
+                }}
+            </For>
+
+            <BackHomeButton
+                atClick={() => {
+                    setView('new-company');
+                }}
+            />
+        </>
+    );
+
     const newCompany = (
         <>
             <h1>new company</h1>
@@ -264,6 +305,15 @@ function NewCompany() {
                 >
                     New Company Template
                 </button>
+
+                <div
+                    class="mt-4 cursor-pointer select-none"
+                    onClick={() => {
+                        setView('edit-templates');
+                    }}
+                >
+                    edit templates
+                </div>
             </div>
 
             <input
@@ -325,6 +375,10 @@ function NewCompany() {
         `}>
             {view() === 'new-company-template' && (
                 <>{newCompanyTemplate}</>
+            )}
+
+            {view() === 'edit-templates' && (
+                <>{editTemplates}</>
             )}
 
             {view() === 'new-company' && (
