@@ -251,6 +251,26 @@ pub fn generate_new_company_template(
 
 
 #[tauri::command]
+pub fn delete_company_template(
+    owned_by: &str,
+    id: i32,
+    state: tauri::State<database::DatabaseState>,
+) -> PureResponse {
+    let connection = &mut get_connection(state);
+
+    company::delete_company_template(
+        connection,
+        owned_by,
+        id,
+    );
+
+    PureResponse {
+        status: true,
+    }
+}
+
+
+#[tauri::command]
 pub fn get_company_templates(
     owned_by: &str,
     state: tauri::State<database::DatabaseState>,

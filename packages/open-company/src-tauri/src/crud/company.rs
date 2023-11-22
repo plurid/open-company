@@ -77,3 +77,17 @@ pub fn get_company_templates(
 
     company_templates
 }
+
+
+pub fn delete_company_template(
+    connection: &mut SqliteConnection,
+    owned_by: &str,
+    id: i32,
+) {
+    diesel::delete(company_templates::table
+        .filter(company_templates::owned_by.eq(owned_by))
+        .filter(company_templates::id.eq(id))
+    )
+        .execute(connection)
+        .expect("Error deleting company template");
+}
