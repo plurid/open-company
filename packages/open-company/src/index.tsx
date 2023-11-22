@@ -26,23 +26,27 @@ import {
 
 render(
     () => (
-        <Router>
-            <Routes>
-                <Route path={routes.index} component={Index} />
-                <Route path={routes.new_database} component={Database} />
-                <Route path={routes.new_user} component={NewUser} />
-                <Route path={routes.login_user} component={LoginUser} />
-                <Route path={routes.new_company} component={NewCompany} />
-                <Route path={routes.new_invoice} component={NewInvoice} />
+        <div class="flex h-full w-full flex-col">
+            <div class="flex flex-1 min-h-0 overflow-auto">
+                <Router>
+                    <Routes>
+                        <Route path={routes.index} component={Index} />
+                        <Route path={routes.new_database} component={Database} />
+                        <Route path={routes.new_user} component={NewUser} />
+                        <Route path={routes.login_user} component={LoginUser} />
+                        <Route path={routes.new_company} component={NewCompany} />
+                        <Route path={routes.new_invoice} component={NewInvoice} />
 
-                <Route path={routes.users} component={Users} />
-                <Route path={routes.companies} component={Companies} />
-                <Route path={routes.contacts} component={Contacts} />
-                <Route path={routes.items} component={Items} />
-                <Route path={routes.contracts} component={Contracts} />
-                <Route path={routes.invoices} component={Invoices} />
-            </Routes>
-        </Router>
+                        <Route path={routes.users} component={Users} />
+                        <Route path={routes.companies} component={Companies} />
+                        <Route path={routes.contacts} component={Contacts} />
+                        <Route path={routes.items} component={Items} />
+                        <Route path={routes.contracts} component={Contracts} />
+                        <Route path={routes.invoices} component={Invoices} />
+                    </Routes>
+                </Router>
+            </div>
+        </div>
     ),
     document.getElementById('root') as HTMLElement,
 );

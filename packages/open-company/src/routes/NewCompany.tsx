@@ -93,7 +93,15 @@ function NewCompany() {
         setCompanyTemplateFields(idx, 'name', value);
     }
 
+    const invalidNewCompanyTemplate = () => {
+        return !companyTemplateName() || companyTemplateFields.length === 0;
+    }
+
     const generateNewCompanyTemplate = async () => {
+        if (invalidNewCompanyTemplate()) {
+            return;
+        }
+
         const template = await invoke<any>(commands.generate_new_company_template, {
             ownedBy: loggedInUsername,
             name: companyTemplateName(),
@@ -300,8 +308,8 @@ function NewCompany() {
 
     return (
         <div class={`
-            h-full p-8 w-[400px] mx-auto text-center
-            grid gap-4 content-center place-content-center
+            p-8 w-[400px] mx-auto text-center
+            grid gap-4
         `}>
             {view() === 'new-company-template' && (
                 <>{newCompanyTemplate}</>
