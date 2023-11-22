@@ -74,6 +74,12 @@ function NewCompany() {
     }
 
 
+    const resetTemplateData = () => {
+        setCompanyTemplateName('');
+        setCompanyTemplateDefault(false);
+        setCompanyTemplateFields([]);
+    }
+
     const newTemplateField = () => {
         setCompanyTemplateFields([
             ...companyTemplateFields,
@@ -116,16 +122,30 @@ function NewCompany() {
         setCompanyTemplate(template.name);
         setCompanyFields(JSON.parse(template.fields));
         setView('new-company');
+
+        resetTemplateData();
     }
 
     const deleteCompanyTemplate = async (
-        name: string,
+        id: number,
     ) => {
-        setCompanyTemplates((prevTemplates) => prevTemplates.filter(template => template.name !== name));
+        resetTemplateData();
+
+        const template = companyTemplates().find(template => template.id === id);
+        if (!template) {
+            return;
+        }
+
+        if (companyTemplate() === template.name) {
+            setCompanyTemplate('');
+            setCompanyFields([]);
+        }
+
+        setCompanyTemplates((prevTemplates) => prevTemplates.filter(template => template.id !== id));
 
         await invoke(commands.delete_company_template, {
             ownedBy: loggedInUsername,
-            name,
+            id,
         });
     }
 
@@ -245,7 +265,7 @@ function NewCompany() {
 
                             <div
                                 onClick={() => {
-                                    deleteCompanyTemplate(template.name);
+                                    deleteCompanyTemplate(template.id);
                                 }}
                             >
                                 delete
@@ -257,6 +277,11 @@ function NewCompany() {
 
             <BackHomeButton
                 atClick={() => {
+                    if (!companyTemplate()) {
+                        setView('new-company-template');
+                        return;
+                    }
+
                     setView('new-company');
                 }}
             />
