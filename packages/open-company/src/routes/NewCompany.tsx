@@ -108,6 +108,7 @@ function NewCompany() {
             fields: JSON.stringify(companyTemplateFields),
             asDefault: companyTemplateDefault(),
         });
+        setCompanyTemplates((prevTemplates) => [...prevTemplates, template]);
         if (!template) {
             return;
         }
@@ -209,11 +210,15 @@ function NewCompany() {
                 Generate Company Template
             </button>
 
-            <BackHomeButton
-                atClick={() => {
-                    setView('new-company');
-                }}
-            />
+            {companyTemplate() ? (
+                <BackHomeButton
+                    atClick={() => {
+                        setView('new-company');
+                    }}
+                />
+            ) : (
+                <BackHomeButton />
+            )}
         </>
     );
 
@@ -225,24 +230,30 @@ function NewCompany() {
                 class="my-8"
             >
                 <div
-                    class="mb-4 flex items-center justify-center"
+                    class="mb-4 flex items-center justify-center gap-1"
                 >
                     <div>
                         using template
                     </div>
 
-                    <Dropdown
-                        selected={companyTemplate}
-                        select={(selection) => {
-                            const template = companyTemplates().find(template => template.name === selection);
-                            if (!template) {
-                                return;
-                            }
-                            setCompanyTemplate(template.name);
-                            setCompanyFields(JSON.parse(template.fields));
-                        }}
-                        selectables={() => companyTemplates().map(template => template.name)}
-                    />
+                    {companyTemplates().length === 1 ? (
+                        <div>
+                            {companyTemplate()}
+                        </div>
+                    ) : (
+                        <Dropdown
+                            selected={companyTemplate}
+                            select={(selection) => {
+                                const template = companyTemplates().find(template => template.name === selection);
+                                if (!template) {
+                                    return;
+                                }
+                                setCompanyTemplate(template.name);
+                                setCompanyFields(JSON.parse(template.fields));
+                            }}
+                            selectables={() => companyTemplates().map(template => template.name)}
+                        />
+                    )}
                 </div>
 
                 <button
@@ -310,6 +321,7 @@ function NewCompany() {
         <div class={`
             p-8 w-[400px] mx-auto text-center
             grid gap-4
+            items-center
         `}>
             {view() === 'new-company-template' && (
                 <>{newCompanyTemplate}</>
