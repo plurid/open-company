@@ -8,6 +8,7 @@ import NewUser from './routes/NewUser';
 import LoginUser from './routes/LoginUser';
 import NewCompany from './routes/NewCompany';
 import NewInvoice from './routes/NewInvoice';
+import NewItem from './routes/NewItem';
 
 import Users from './routes/Users';
 import Companies from './routes/Companies';
@@ -37,6 +38,7 @@ render(
                         <Route path={routes.new_company} component={NewCompany} />
                         <Route path={routes.edit_company} component={NewCompany} />
                         <Route path={routes.new_invoice} component={NewInvoice} />
+                        <Route path={routes.new_item} component={NewItem} />
 
                         <Route path={routes.users} component={Users} />
                         <Route path={routes.companies} component={Companies} />
