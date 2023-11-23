@@ -168,6 +168,7 @@ pub fn get_company(
     company
 }
 
+
 #[tauri::command]
 pub fn get_companies(
     owned_by: &str,
@@ -252,6 +253,30 @@ pub fn generate_new_company(
     let company = company::create_company(
         connection,
         owned_by,
+        name,
+        fields,
+        use_for_invoicing,
+    );
+
+    company
+}
+
+
+#[tauri::command]
+pub fn update_company(
+    id: i32,
+    owned_by: &str,
+    name: &str,
+    fields: &str,
+    use_for_invoicing: bool,
+    state: tauri::State<database::DatabaseState>,
+) -> models::Company {
+    let connection = &mut get_connection(state);
+
+    let company = company::update_company(
+        connection,
+        owned_by,
+        id,
         name,
         fields,
         use_for_invoicing,

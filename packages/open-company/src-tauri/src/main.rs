@@ -44,6 +44,7 @@ fn commands_handler() -> impl Fn(Invoke) {
         commands::generate_new_address,
         commands::generate_new_contact,
         commands::generate_new_company,
+        commands::update_company,
         commands::generate_new_company_template,
         commands::delete_company_template,
         commands::get_company_templates,

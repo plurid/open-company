@@ -34,6 +34,37 @@ pub fn create_company(
         .expect("Error saving new company")
 }
 
+
+pub fn update_company(
+    connection: &mut SqliteConnection,
+    owned_by: &str,
+    id: i32,
+    name: &str,
+    fields: &str,
+    use_for_invoicing: bool,
+) -> Company {
+    diesel::update(companies::table
+        .filter(companies::owned_by.eq(owned_by))
+        .filter(companies::id.eq(id))
+    )
+        .set((
+            companies::name.eq(name),
+            companies::fields.eq(fields),
+            companies::use_for_invoicing.eq(use_for_invoicing),
+        ))
+        .execute(connection)
+        .expect("Error updating company");
+
+    let company = companies::table
+        .filter(companies::owned_by.eq(owned_by))
+        .filter(companies::id.eq(id))
+        .first(connection)
+        .expect("Error loading company");
+
+    company
+}
+
+
 pub fn create_company_template(
     connection: &mut SqliteConnection,
     owned_by: &str,
