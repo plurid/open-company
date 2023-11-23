@@ -10,6 +10,8 @@ import { useNavigate } from '@solidjs/router';
 import './NewCompany.css';
 
 import {
+    PureResponse,
+
     localStore,
     routes,
     commands,
@@ -141,12 +143,15 @@ function NewCompany() {
             setCompanyFields([]);
         }
 
-        setCompanyTemplates((prevTemplates) => prevTemplates.filter(template => template.id !== id));
-
-        await invoke(commands.delete_company_template, {
+        const response = await invoke<PureResponse>(commands.delete_company_template, {
             ownedBy: loggedInUsername,
             id,
         });
+        if (!response.status) {
+            return;
+        }
+
+        setCompanyTemplates((prevTemplates) => prevTemplates.filter(template => template.id !== id));
     }
 
 
