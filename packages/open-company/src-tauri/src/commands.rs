@@ -152,6 +152,22 @@ pub fn get_users(
 
 
 #[tauri::command]
+pub fn get_companies(
+    owned_by: &str,
+    state: tauri::State<database::DatabaseState>,
+) -> Vec<models::Company> {
+    let connection = &mut get_connection(state);
+
+    let companies = company::get_user_companies(
+        connection,
+        owned_by,
+    );
+
+    companies
+}
+
+
+#[tauri::command]
 pub fn login_user(
     username: &str,
     password: &str,

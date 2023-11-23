@@ -52,7 +52,7 @@ pub fn login_user(
 pub fn get_all_users(
     conn: &mut SqliteConnection,
 ) -> Vec<User> {
-    let users: Vec<User> = users::table.load(conn)
+    let users = users::table.load(conn)
         .expect("Error loading users");
 
     users

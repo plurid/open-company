@@ -91,3 +91,16 @@ pub fn delete_company_template(
         .execute(connection)
         .expect("Error deleting company template");
 }
+
+
+pub fn get_user_companies(
+    connection: &mut SqliteConnection,
+    owned_by: &str,
+) -> Vec<Company> {
+    let companies = companies::table
+        .filter(companies::owned_by.eq(owned_by))
+        .load(connection)
+        .expect("Error loading companies");
+
+    companies
+}
