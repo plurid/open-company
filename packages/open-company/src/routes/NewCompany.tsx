@@ -42,7 +42,13 @@ export interface CompanyField {
 
 
 function NewCompany() {
-    const [view, setView] = createSignal<'new-company' | 'new-company-template' | 'edit-templates'>('new-company');
+    const [view, setView] = createSignal<
+        | ''
+        | 'new-company'
+        | 'new-company-template'
+        | 'edit-templates'
+        | 'delete-company'
+    >('new-company');
 
     const [companyTemplateName, setCompanyTemplateName] = createSignal('');
     const [companyTemplateDefault, setCompanyTemplateDefault] = createSignal(false);
@@ -161,7 +167,7 @@ function NewCompany() {
         setCompanyTemplates((prevTemplates) => prevTemplates.filter(template => template.id !== id));
     }
 
-    const updateCompany = async () => {
+    const handleEditCompany = async () => {
         await invoke(commands.update_company, {
             ownedBy: loggedInUsername,
             id: editingCompany().id,
@@ -171,6 +177,15 @@ function NewCompany() {
                 data: companyFields,
             }),
             useForInvoicing: useForInvoicing(),
+        });
+
+        navigate(routes.companies);
+    }
+
+    const handleDeleteCompany = async () => {
+        await invoke(commands.delete_company, {
+            ownedBy: loggedInUsername,
+            id: editingCompany().id,
         });
 
         navigate(routes.companies);
@@ -513,7 +528,7 @@ function NewCompany() {
 
             <button
                 onClick={() => {
-                    updateCompany();
+                    handleEditCompany();
                 }}
                 class="disabled:opacity-50 disabled:pointer-events-none"
                 disabled={!companyName()}
@@ -521,11 +536,43 @@ function NewCompany() {
                 Edit Company
             </button>
 
+            <div
+                class="mt-4 cursor-pointer select-none font-bold"
+                onClick={() => {
+                    setView('delete-company');
+                }}
+            >
+                delete company
+            </div>
+
             <BackHomeButton
                 atClick={() => {
                     navigate(routes.companies);
                 }}
             />
+        </>
+    );
+
+    const deleteCompany = (
+        <>
+            <h1>delete company {editingCompany() ? editingCompany().name : ''}?</h1>
+
+            <button
+                onClick={() => {
+                    handleDeleteCompany();
+                }}
+            >
+                Delete Company
+            </button>
+
+            <div
+                class="mt-4 cursor-pointer select-none font-bold"
+                onClick={() => {
+                    setView('');
+                }}
+            >
+                cancel
+            </div>
         </>
     );
 
@@ -538,8 +585,11 @@ function NewCompany() {
             <Switch
                 fallback={matchFallback}
             >
-                <Match when={params.id}>
+                <Match when={params.id && view() !== 'delete-company'}>
                     {editCompany}
+                </Match>
+                <Match when={params.id && view() === 'delete-company'}>
+                    {deleteCompany}
                 </Match>
 
                 <Match when={view() === 'new-company-template'}>

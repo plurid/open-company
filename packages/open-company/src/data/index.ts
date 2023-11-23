@@ -59,6 +59,7 @@ export const commands = {
     generate_new_contact: 'generate_new_contact',
     generate_new_company: 'generate_new_company',
     update_company: 'update_company',
+    delete_company: 'delete_company',
     generate_new_company_template: 'generate_new_company_template',
     delete_company_template: 'delete_company_template',
     generate_new_item: 'generate_new_item',
