@@ -93,6 +93,21 @@ pub fn delete_company_template(
 }
 
 
+pub fn get_company(
+    connection: &mut SqliteConnection,
+    owned_by: &str,
+    id: i32,
+) -> Company {
+    let company = companies::table
+        .filter(companies::owned_by.eq(owned_by))
+        .filter(companies::id.eq(id))
+        .first(connection)
+        .expect("Error loading company");
+
+    company
+}
+
+
 pub fn get_user_companies(
     connection: &mut SqliteConnection,
     owned_by: &str,

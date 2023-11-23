@@ -152,6 +152,23 @@ pub fn get_users(
 
 
 #[tauri::command]
+pub fn get_company(
+    owned_by: &str,
+    id: i32,
+    state: tauri::State<database::DatabaseState>,
+) -> models::Company {
+    let connection = &mut get_connection(state);
+
+    let company = company::get_company(
+        connection,
+        owned_by,
+        id,
+    );
+
+    company
+}
+
+#[tauri::command]
 pub fn get_companies(
     owned_by: &str,
     state: tauri::State<database::DatabaseState>,
