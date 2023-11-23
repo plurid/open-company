@@ -3,6 +3,7 @@ import {
     onMount,
     createSignal,
     For,
+    Show,
     Switch,
     Match,
 } from 'solid-js';
@@ -22,6 +23,7 @@ import {
 
 function Companies() {
     const [companies, setCompanies] = createSignal<any[]>([]);
+    const [search, setSearch] = createSignal('');
 
     const navigate = useNavigate();
 
@@ -57,20 +59,28 @@ function Companies() {
         } = company;
 
         return (
-            <div class="flex justify-between">
-                <div>
-                    {name} {use_for_invoicing ? '(invoicing)' : ''}
-                </div>
+            <Show
+                when={!(
+                    search()
+                    && !name.toLowerCase().includes(search().toLowerCase())
+                )}
+                keyed
+            >
+                <div class="flex justify-between m-2">
+                    <div>
+                        {name} {use_for_invoicing ? '(invoicing)' : ''}
+                    </div>
 
-                <div
-                    class="select-none cursor-pointer font-bold"
-                    onClick={() => {
-                        editCompany(id);
-                    }}
-                >
-                    edit
+                    <div
+                        class="select-none cursor-pointer font-bold"
+                        onClick={() => {
+                            editCompany(id);
+                        }}
+                    >
+                        edit
+                    </div>
                 </div>
-            </div>
+            </Show>
         );
     }
 
@@ -88,9 +98,22 @@ function Companies() {
                     <>
                         <h1>companies</h1>
 
-                        <For each={companies()}>
-                            {companyRender}
-                        </For>
+                        <input
+                            type="text"
+                            placeholder="search"
+                            value={search()}
+                            onInput={(e) => {
+                                setSearch(e.currentTarget.value);
+                            }}
+                        />
+
+                        <div
+                            class="h-[400px] max-h-[400px] overflow-y-auto"
+                        >
+                            <For each={companies()}>
+                                {companyRender}
+                            </For>
+                        </div>
                     </>
                 </Match>
             </Switch>
