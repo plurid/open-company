@@ -17,10 +17,6 @@ function Dropdown({
 }) {
     const [show, setShow] = createSignal(false);
 
-    console.log({
-        selectables,
-    });
-
     return (
         <div
             class="relative"

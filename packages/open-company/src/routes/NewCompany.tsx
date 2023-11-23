@@ -184,7 +184,7 @@ function NewCompany() {
 
         const company = await invoke<any>(commands.get_company, {
             ownedBy: loggedInUsername,
-            id: params.id,
+            id: parseInt(params.id),
         });
         if (!company) {
             return;
