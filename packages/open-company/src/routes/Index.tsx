@@ -88,8 +88,8 @@ function App() {
 
                 <A href={routes.new_user}>new user</A>
                 <A href={routes.new_company}>new company</A>
-                <A href={routes.new_invoice}>new invoice</A>
                 <A href={routes.new_item}>new item</A>
+                <A href={routes.new_invoice}>new invoice</A>
 
                 <button
                     class="mt-20"

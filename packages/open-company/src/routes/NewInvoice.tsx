@@ -43,10 +43,10 @@ function NewInvoice() {
         });
         setCompanies(companies);
 
-        // const items = await invoke<any[]>(commands.get_items, {
-        //     ownedBy: loggedInUsername,
-        // });
-        // setItems(items);
+        const items = await invoke<any[]>(commands.get_items, {
+            ownedBy: loggedInUsername,
+        });
+        setItems(items);
     });
 
 

@@ -116,6 +116,11 @@ function Database() {
                 onKeyPress={event => {
                     if (event.code === 'Space' || event.key === ' ') {
                         event.preventDefault();
+                        return;
+                    }
+
+                    if (event.code === 'Enter' || event.key === 'Enter') {
+                        generateNewDatabase();
                     }
                 }}
                 spellcheck={false}

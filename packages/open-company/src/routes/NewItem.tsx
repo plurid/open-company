@@ -23,7 +23,7 @@ function NewItem() {
     const loggedInUsername = localStorage.getItem(localStore.loggedIn);
 
 
-    const addItem = async () => {
+    const generateItem = async () => {
         if (!name() || !price()) {
             return;
         }
@@ -32,10 +32,10 @@ function NewItem() {
             return;
         }
 
-        await invoke(commands.add_item, {
+        await invoke(commands.generate_new_item, {
+            ownedBy: loggedInUsername,
             name: name(),
             price: price(),
-            ownedBy: loggedInUsername,
         });
 
         navigate(routes.index);
@@ -70,10 +70,10 @@ function NewItem() {
             <button
                 class="h-[50px]"
                 onClick={() => {
-                    addItem();
+                    generateItem();
                 }}
             >
-                Add Item
+                Generate Item
             </button>
 
             <BackHomeButton />
