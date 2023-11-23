@@ -2,7 +2,10 @@ import { invoke } from '@tauri-apps/api/tauri';
 import {
     createSignal,
 } from 'solid-js';
-import { useNavigate } from '@solidjs/router';
+import {
+    useNavigate,
+    useParams,
+} from '@solidjs/router';
 
 import BackHomeButton from '../components/BackHomeButton';
 
@@ -19,6 +22,7 @@ function NewItem() {
     const [price, setPrice] = createSignal(0);
 
     const navigate = useNavigate();
+    const params = useParams();
 
     const loggedInUsername = localStorage.getItem(localStore.loggedIn);
 

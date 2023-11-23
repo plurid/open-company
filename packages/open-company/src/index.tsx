@@ -49,6 +49,7 @@ render(
                         <Route path={routes.new_company} component={NewCompany} />
                         <Route path={routes.edit_company} component={NewCompany} />
                         <Route path={routes.new_item} component={NewItem} />
+                        <Route path={routes.edit_item} component={NewItem} />
                         <Route path={routes.new_invoice} component={NewInvoice} />
                     </Routes>
                 </Router>

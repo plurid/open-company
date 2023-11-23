@@ -82,6 +82,7 @@ export const routes = {
     edit_company: '/edit-company/:id',
     new_invoice: '/new-invoice',
     new_item: '/new-item',
+    edit_item: '/edit-item/:id',
 
     users: '/users',
     companies: '/companies',

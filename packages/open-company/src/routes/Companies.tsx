@@ -29,9 +29,9 @@ function Companies() {
 
 
     const editCompany = (
-        id: string,
+        id: number,
     ) => {
-        navigate(routes.edit_company.replace(':id', id));
+        navigate(routes.edit_company.replace(':id', id + ''));
     }
 
 
