@@ -164,6 +164,7 @@ function NewCompany() {
     const updateCompany = async () => {
         await invoke(commands.update_company, {
             ownedBy: loggedInUsername,
+            id: editingCompany().id,
             name: companyName(),
             fields: JSON.stringify({
                 template: companyTemplate(),
