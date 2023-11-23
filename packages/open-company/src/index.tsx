@@ -35,6 +35,7 @@ render(
                         <Route path={routes.new_user} component={NewUser} />
                         <Route path={routes.login_user} component={LoginUser} />
                         <Route path={routes.new_company} component={NewCompany} />
+                        <Route path={routes.edit_company} component={NewCompany} />
                         <Route path={routes.new_invoice} component={NewInvoice} />
 
                         <Route path={routes.users} component={Users} />

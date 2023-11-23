@@ -1,11 +1,16 @@
 import { invoke } from '@tauri-apps/api/tauri';
 import {
     createSignal,
-    For,
     onMount,
+    For,
+    Switch,
+    Match,
 } from 'solid-js';
 import { createStore } from "solid-js/store";
-import { useNavigate } from '@solidjs/router';
+import {
+    useNavigate,
+    useParams,
+} from '@solidjs/router';
 
 import './NewCompany.css';
 
@@ -49,10 +54,12 @@ function NewCompany() {
     const [companyFields, setCompanyFields] = createStore<CompanyField[]>([]);
     const [useForInvoicing, setUseForInvoicing] = createSignal(false);
 
+    const [editingCompany, setEditingCompany] = createSignal<any>(undefined);
+
     const loggedInUsername = localStorage.getItem(localStore.loggedIn);
 
     const navigate = useNavigate();
-
+    const params = useParams();
 
     const generateCompany = async () => {
         await invoke('generate_new_company', {
@@ -170,6 +177,31 @@ function NewCompany() {
         setCompanyFields(JSON.parse(defaultTemplate.fields));
     });
 
+    onMount(async () => {
+        if (!params.id) {
+            return;
+        }
+
+        const company = await invoke<any>(commands.get_company, {
+            ownedBy: loggedInUsername,
+            id: params.id,
+        });
+        if (!company) {
+            return;
+        }
+        setEditingCompany(company);
+    });
+
+
+    const matchFallback = (
+        <>
+            <div>
+                something went wrong
+            </div>
+
+            <BackHomeButton />
+        </>
+    );
 
     const newCompanyTemplate = (
         <>
@@ -404,23 +436,45 @@ function NewCompany() {
         </>
     );
 
+    const editCompany = (
+        <>
+            <h1>edit company</h1>
+
+            <div>
+                {editingCompany() ? editingCompany().name : ''}
+            </div>
+
+            <BackHomeButton
+                atClick={() => {
+                    navigate(routes.companies);
+                }}
+            />
+        </>
+    );
+
     return (
         <div class={`
             p-8 w-[400px] mx-auto text-center
             grid gap-4
             items-center
         `}>
-            {view() === 'new-company-template' && (
-                <>{newCompanyTemplate}</>
-            )}
+            <Switch
+                fallback={matchFallback}
+            >
+                <Match when={params.id}>
+                    {editCompany}
+                </Match>
 
-            {view() === 'edit-templates' && (
-                <>{editTemplates}</>
-            )}
-
-            {view() === 'new-company' && (
-                <>{newCompany}</>
-            )}
+                <Match when={view() === 'new-company-template'}>
+                    {newCompanyTemplate}
+                </Match>
+                <Match when={view() === 'edit-templates'}>
+                    {editTemplates}
+                </Match>
+                <Match when={view() === 'new-company'}>
+                    {newCompany}
+                </Match>
+            </Switch>
         </div>
     );
 }

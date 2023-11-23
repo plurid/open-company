@@ -65,6 +65,8 @@ export const commands = {
 
     get_users: 'get_users',
     get_company_templates: 'get_company_templates',
+    get_company: 'get_company',
+    get_companies: 'get_companies',
 } as const;
 
 
@@ -74,6 +76,7 @@ export const routes = {
     new_user: '/new-user',
     login_user: '/login_user',
     new_company: '/new-company',
+    edit_company: '/edit-company/:id',
     new_invoice: '/new-invoice',
 
     users: '/users',
