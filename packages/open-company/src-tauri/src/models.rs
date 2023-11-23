@@ -143,13 +143,17 @@ pub struct NewCompanyTemplate<'a> {
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Item {
     pub id: i32,
+    pub owned_by: String,
     pub name: String,
+    pub price: f32,
 }
 
 #[derive(Insertable)]
 #[diesel(table_name = items)]
 pub struct NewItem<'a> {
+    pub owned_by: &'a str,
     pub name: &'a str,
+    pub price: f32,
 }
 
 

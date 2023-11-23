@@ -186,6 +186,22 @@ pub fn get_companies(
 
 
 #[tauri::command]
+pub fn get_items(
+    owned_by: &str,
+    state: tauri::State<database::DatabaseState>,
+) -> Vec<models::Item> {
+    let connection = &mut get_connection(state);
+
+    let items = item::get_user_items(
+        connection,
+        owned_by,
+    );
+
+    items
+}
+
+
+#[tauri::command]
 pub fn login_user(
     username: &str,
     password: &str,
@@ -366,12 +382,19 @@ pub fn get_company_templates(
 
 #[tauri::command]
 pub fn generate_new_item(
+    owned_by: &str,
     name: &str,
+    price: f32,
     state: tauri::State<database::DatabaseState>,
 ) -> models::Item {
     let connection = &mut get_connection(state);
 
-    let item = item::create_item(connection, name);
+    let item = item::create_item(
+        connection,
+        owned_by,
+        name,
+        price,
+    );
 
     item
 }

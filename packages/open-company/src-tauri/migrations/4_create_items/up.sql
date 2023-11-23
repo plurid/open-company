@@ -1,4 +1,6 @@
 CREATE TABLE items (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL
+    owned_by TEXT NOT NULL,
+    name TEXT NOT NULL,
+    price REAL NOT NULL
 )

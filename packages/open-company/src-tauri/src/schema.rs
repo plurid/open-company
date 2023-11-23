@@ -49,7 +49,9 @@ diesel::table! {
 diesel::table! {
     items (id) {
         id -> Integer,
+        owned_by -> Text,
         name -> Text,
+        price -> Float,
     }
 }
 
