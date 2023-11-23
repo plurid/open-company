@@ -2,8 +2,6 @@ import { invoke } from '@tauri-apps/api/tauri';
 import {
     onMount,
     createSignal,
-    For,
-    Show,
     Switch,
     Match,
 } from 'solid-js';
@@ -11,6 +9,7 @@ import { useNavigate } from '@solidjs/router';
 
 import './Companies.css';
 
+import Selecter from '../components/Selecter';
 import BackHomeButton from '../components/BackHomeButton';
 
 import {
@@ -23,7 +22,6 @@ import {
 
 function Companies() {
     const [companies, setCompanies] = createSignal<any[]>([]);
-    const [search, setSearch] = createSignal('');
 
     const navigate = useNavigate();
 
@@ -59,28 +57,20 @@ function Companies() {
         } = company;
 
         return (
-            <Show
-                when={!(
-                    search()
-                    && !name.toLowerCase().includes(search().toLowerCase())
-                )}
-                keyed
-            >
-                <div class="flex justify-between m-2">
-                    <div>
-                        {name} {use_for_invoicing ? '(invoicing)' : ''}
-                    </div>
-
-                    <div
-                        class="select-none cursor-pointer font-bold"
-                        onClick={() => {
-                            editCompany(id);
-                        }}
-                    >
-                        edit
-                    </div>
+            <div class="flex justify-between m-2">
+                <div>
+                    {name} {use_for_invoicing ? '(invoicing)' : ''}
                 </div>
-            </Show>
+
+                <div
+                    class="select-none cursor-pointer font-bold"
+                    onClick={() => {
+                        editCompany(id);
+                    }}
+                >
+                    edit
+                </div>
+            </div>
         );
     }
 
@@ -98,22 +88,10 @@ function Companies() {
                     <>
                         <h1>companies</h1>
 
-                        <input
-                            type="text"
-                            placeholder="search"
-                            value={search()}
-                            onInput={(e) => {
-                                setSearch(e.currentTarget.value);
-                            }}
+                        <Selecter
+                            data={companies()}
+                            renderItem={companyRender}
                         />
-
-                        <div
-                            class="h-[400px] max-h-[400px] overflow-y-auto"
-                        >
-                            <For each={companies()}>
-                                {companyRender}
-                            </For>
-                        </div>
                     </>
                 </Match>
             </Switch>

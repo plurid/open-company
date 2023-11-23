@@ -69,6 +69,7 @@ export const commands = {
     get_company_templates: 'get_company_templates',
     get_company: 'get_company',
     get_companies: 'get_companies',
+    get_items: 'get_items',
 } as const;
 
 
