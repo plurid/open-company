@@ -65,6 +65,20 @@ pub fn update_company(
 }
 
 
+pub fn delete_company(
+    connection: &mut SqliteConnection,
+    owned_by: &str,
+    id: i32,
+) {
+    diesel::delete(companies::table
+        .filter(companies::owned_by.eq(owned_by))
+        .filter(companies::id.eq(id))
+    )
+        .execute(connection)
+        .expect("Error deleting company");
+}
+
+
 pub fn create_company_template(
     connection: &mut SqliteConnection,
     owned_by: &str,

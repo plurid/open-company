@@ -287,6 +287,26 @@ pub fn update_company(
 
 
 #[tauri::command]
+pub fn delete_company(
+    owned_by: &str,
+    id: i32,
+    state: tauri::State<database::DatabaseState>,
+) -> PureResponse {
+    let connection = &mut get_connection(state);
+
+    company::delete_company(
+        connection,
+        owned_by,
+        id,
+    );
+
+    PureResponse {
+        status: true,
+    }
+}
+
+
+#[tauri::command]
 pub fn generate_new_company_template(
     owned_by: &str,
     name: &str,
