@@ -176,6 +176,7 @@ function NewCompany() {
                 onInput={(event) => {
                     setCompanyTemplateName(event?.target.value);
                 }}
+                spellcheck={false}
             />
 
             <For each={companyTemplateFields}>
@@ -204,12 +205,14 @@ function NewCompany() {
                             </div>
 
                             <input
+                                class="w-full"
                                 placeholder={"field name"}
                                 required
                                 value={name + ''}
                                 onInput={(event) => {
                                     updateTemplateField(idx(), event?.target.value);
                                 }}
+                                spellcheck={false}
                             />
                         </div>
                     );
@@ -233,10 +236,11 @@ function NewCompany() {
             />
 
             <button
-                class="mt-8"
+                class="mt-8 disabled:opacity-50 disabled:pointer-events-none"
                 onClick={() => {
                     generateNewCompanyTemplate();
                 }}
+                disabled={!companyTemplateName() || companyTemplateFields.length === 0}
             >
                 Generate Company Template
             </button>
@@ -264,6 +268,7 @@ function NewCompany() {
                             </div>
 
                             <div
+                                class="cursor-pointer select-none font-bold"
                                 onClick={() => {
                                     deleteCompanyTemplate(template.id);
                                 }}
@@ -323,7 +328,7 @@ function NewCompany() {
                 </div>
 
                 <button
-                    class="w-[280px]"
+                    class="w-full"
                     onClick={() => {
                         setView('new-company-template');
                     }}
@@ -332,7 +337,7 @@ function NewCompany() {
                 </button>
 
                 <div
-                    class="mt-4 cursor-pointer select-none"
+                    class="mt-4 cursor-pointer select-none font-bold"
                     onClick={() => {
                         setView('edit-templates');
                     }}
@@ -384,6 +389,8 @@ function NewCompany() {
                 onClick={() => {
                     generateCompany();
                 }}
+                class="disabled:opacity-50 disabled:pointer-events-none"
+                disabled={!companyName()}
             >
                 Generate Company
             </button>
