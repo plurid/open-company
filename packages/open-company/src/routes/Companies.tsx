@@ -3,6 +3,8 @@ import {
     onMount,
     createSignal,
     For,
+    Switch,
+    Match,
 } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 
@@ -45,39 +47,53 @@ function Companies() {
     });
 
 
+    const companyRender = (
+        company: any,
+    ) => {
+        const {
+            id,
+            name,
+            use_for_invoicing,
+        } = company;
+
+        return (
+            <div class="flex justify-between">
+                <div>
+                    {name} {use_for_invoicing ? '(invoicing)' : ''}
+                </div>
+
+                <div
+                    class="select-none cursor-pointer font-bold"
+                    onClick={() => {
+                        editCompany(id);
+                    }}
+                >
+                    edit
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div class={`
             h-full p-8 w-[400px] mx-auto text-center
             grid gap-4 content-center place-content-center
         `}>
-            <h1>companies</h1>
+            <Switch>
+                <Match when={companies().length === 0}>
+                    <div>no companies</div>
+                </Match>
 
-            <For each={companies()}>
-                {(company) => {
-                    const {
-                        id,
-                        name,
-                        use_for_invoicing,
-                    } = company;
+                <Match when={companies().length > 0}>
+                    <>
+                        <h1>companies</h1>
 
-                    return (
-                        <div class="flex justify-between">
-                            <div>
-                                {name} {use_for_invoicing ? '(invoicing)' : ''}
-                            </div>
-
-                            <div
-                                class="select-none cursor-pointer font-bold"
-                                onClick={() => {
-                                    editCompany(id);
-                                }}
-                            >
-                                edit
-                            </div>
-                        </div>
-                    );
-                }}
-            </For>
+                        <For each={companies()}>
+                            {companyRender}
+                        </For>
+                    </>
+                </Match>
+            </Switch>
 
             <div class="grid gap-4 place-content-center justify-items-center w-[300px]">
                 <BackHomeButton />
