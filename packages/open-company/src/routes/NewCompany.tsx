@@ -62,7 +62,7 @@ function NewCompany() {
     const params = useParams();
 
     const generateCompany = async () => {
-        await invoke('generate_new_company', {
+        await invoke(commands.generate_new_company, {
             ownedBy: loggedInUsername,
             name: companyName(),
             fields: JSON.stringify({
@@ -161,6 +161,20 @@ function NewCompany() {
         setCompanyTemplates((prevTemplates) => prevTemplates.filter(template => template.id !== id));
     }
 
+    const updateCompany = async () => {
+        await invoke(commands.update_company, {
+            ownedBy: loggedInUsername,
+            name: companyName(),
+            fields: JSON.stringify({
+                template: companyTemplate(),
+                data: companyFields,
+            }),
+            useForInvoicing: useForInvoicing(),
+        });
+
+        navigate(routes.companies);
+    }
+
 
     onMount(async () => {
         const templates = await invoke<any[]>(commands.get_company_templates, {
@@ -190,6 +204,11 @@ function NewCompany() {
             return;
         }
         setEditingCompany(company);
+
+        setCompanyTemplate(JSON.parse(company.fields).template);
+        setCompanyName(company.name);
+        setCompanyFields(JSON.parse(company.fields).data);
+        setUseForInvoicing(company.use_for_invoicing);
     });
 
 
@@ -438,11 +457,68 @@ function NewCompany() {
 
     const editCompany = (
         <>
-            <h1>edit company</h1>
+            <h1>edit company {editingCompany() ? editingCompany().name : ''}</h1>
 
-            <div>
-                {editingCompany() ? editingCompany().name : ''}
+            <div
+                class="my-8"
+            >
+                <div
+                    class="mb-4 flex items-center justify-center gap-1"
+                >
+                    <div>
+                        using template {companyTemplate()}
+                    </div>
+                </div>
             </div>
+
+            <input
+                class="mb-4"
+                placeholder="company name"
+                required
+                value={companyName()}
+                onInput={(e) => setCompanyName(e.currentTarget.value)}
+            />
+
+            <For each={companyFields}>
+                {(field) => {
+                    const {
+                        name,
+                        value,
+                    } = field;
+
+                    return (
+                        <input
+                            placeholder={name}
+                            required
+                            value={value + ''}
+                            onInput={(event) => {
+                                updateField(
+                                    name,
+                                    event?.target.value,
+                                );
+                            }}
+                        />
+                    );
+                }}
+            </For>
+
+            <Toggle
+                text="use for invoicing"
+                value={useForInvoicing()}
+                toggle={() => {
+                    setUseForInvoicing(!useForInvoicing());
+                }}
+            />
+
+            <button
+                onClick={() => {
+                    updateCompany();
+                }}
+                class="disabled:opacity-50 disabled:pointer-events-none"
+                disabled={!companyName()}
+            >
+                Edit Company
+            </button>
 
             <BackHomeButton
                 atClick={() => {
