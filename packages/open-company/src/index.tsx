@@ -17,6 +17,7 @@ import Invoices from './routes/Invoices';
 import NewUser from './routes/NewUser';
 import NewCompany from './routes/NewCompany';
 import NewItem from './routes/NewItem';
+import NewContract from './routes/NewContract';
 import NewInvoice from './routes/NewInvoice';
 
 import './styles.css';
@@ -50,6 +51,7 @@ render(
                         <Route path={routes.edit_company} component={NewCompany} />
                         <Route path={routes.new_item} component={NewItem} />
                         <Route path={routes.edit_item} component={NewItem} />
+                        <Route path={routes.new_contract} component={NewContract} />
                         <Route path={routes.new_invoice} component={NewInvoice} />
                     </Routes>
                 </Router>
