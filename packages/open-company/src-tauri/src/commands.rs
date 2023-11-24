@@ -225,8 +225,9 @@ pub fn update_item(
     id: i32,
     name: &str,
     display: &str,
-    currency: &str,
+    unit: &str,
     default_quantity: f32,
+    currency: &str,
     price: f32,
     state: tauri::State<database::DatabaseState>,
 ) -> models::Item {
@@ -238,8 +239,9 @@ pub fn update_item(
         id,
         name,
         display,
-        currency,
+        unit,
         default_quantity,
+        currency,
         price,
     );
 
@@ -431,8 +433,9 @@ pub fn generate_new_item(
     owned_by: &str,
     name: &str,
     display: &str,
-    currency: &str,
+    unit: &str,
     default_quantity: f32,
+    currency: &str,
     price: f32,
     state: tauri::State<database::DatabaseState>,
 ) -> models::Item {
@@ -443,8 +446,9 @@ pub fn generate_new_item(
         owned_by,
         name,
         display,
-        currency,
+        unit,
         default_quantity,
+        currency,
         price,
     );
 

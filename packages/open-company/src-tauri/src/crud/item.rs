@@ -13,16 +13,18 @@ pub fn create_item(
     owned_by: &str,
     name: &str,
     display: &str,
-    currency: &str,
+    unit: &str,
     default_quantity: f32,
+    currency: &str,
     price: f32,
 ) -> Item {
     let new_item = NewItem {
         owned_by,
         name,
         display,
-        currency,
+        unit,
         default_quantity,
+        currency,
         price,
     };
 
@@ -68,8 +70,9 @@ pub fn update_item(
     id: i32,
     name: &str,
     display: &str,
-    currency: &str,
+    unit: &str,
     default_quantity: f32,
+    currency: &str,
     price: f32,
 ) -> Item {
     let item = diesel::update(items::table)
@@ -78,8 +81,9 @@ pub fn update_item(
         .set((
             items::name.eq(name),
             items::display.eq(display),
-            items::currency.eq(currency),
+            items::unit.eq(unit),
             items::default_quantity.eq(default_quantity),
+            items::currency.eq(currency),
             items::price.eq(price),
         ))
         .get_result(connection)
