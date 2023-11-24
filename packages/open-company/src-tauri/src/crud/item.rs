@@ -54,3 +54,24 @@ pub fn get_item(
 
     item
 }
+
+
+pub fn update_item(
+    connection: &mut SqliteConnection,
+    owned_by: &str,
+    id: i32,
+    name: &str,
+    price: f32,
+) -> Item {
+    let item = diesel::update(items::table)
+        .filter(items::owned_by.eq(owned_by))
+        .filter(items::id.eq(id))
+        .set((
+            items::name.eq(name),
+            items::price.eq(price),
+        ))
+        .get_result(connection)
+        .expect("Error updating item");
+
+    item
+}

@@ -56,6 +56,7 @@ fn commands_handler() -> impl Fn(Invoke) {
         commands::get_companies,
         commands::get_items,
         commands::get_item,
+        commands::update_item,
     ]
 }
 
