@@ -2,6 +2,7 @@ import { invoke } from '@tauri-apps/api/tauri';
 import {
     createSignal,
     onMount,
+    Show,
 } from 'solid-js';
 import {
     useNavigate,
@@ -44,6 +45,7 @@ function Items() {
             ownedBy: loggedInUsername,
         });
         setItems(items);
+        console.log(items);
     });
 
 
@@ -80,11 +82,18 @@ function Items() {
         `}>
             <h1>items</h1>
 
-            <Selecter
-                data={items()}
-                renderItem={itemRender}
-                height={50}
-            />
+            <Show when={items().length === 0}>
+                <div>
+                    no items
+                </div>
+            </Show>
+
+            <Show when={items().length > 0}>
+                <Selecter
+                    data={items()}
+                    renderItem={itemRender}
+                />
+            </Show>
 
             <BackHomeButton />
         </div>

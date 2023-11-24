@@ -70,6 +70,7 @@ export const commands = {
     get_company: 'get_company',
     get_companies: 'get_companies',
     get_items: 'get_items',
+    get_item: 'get_item',
 } as const;
 
 
