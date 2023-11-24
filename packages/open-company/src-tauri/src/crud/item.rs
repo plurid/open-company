@@ -39,3 +39,18 @@ pub fn get_user_items(
 
     items
 }
+
+
+pub fn get_item(
+    connection: &mut SqliteConnection,
+    owned_by: &str,
+    id: i32,
+) -> Item {
+    let item = items::table
+        .filter(items::owned_by.eq(owned_by))
+        .filter(items::id.eq(id))
+        .first(connection)
+        .expect("Error loading item");
+
+    item
+}

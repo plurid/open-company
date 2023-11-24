@@ -202,6 +202,24 @@ pub fn get_items(
 
 
 #[tauri::command]
+pub fn get_item(
+    owned_by: &str,
+    id: i32,
+    state: tauri::State<database::DatabaseState>,
+) -> models::Item {
+    let connection = &mut get_connection(state);
+
+    let item = item::get_item(
+        connection,
+        owned_by,
+        id,
+    );
+
+    item
+}
+
+
+#[tauri::command]
 pub fn login_user(
     username: &str,
     password: &str,
