@@ -23,8 +23,9 @@ import {
 function NewItem() {
     const [name, setName] = createSignal('');
     const [display, setDisplay] = createSignal('');
-    const [currency, setCurrency] = createSignal('');
+    const [unit, setUnit] = createSignal('');
     const [defaultQuantity, setDefaultQuantity] = createSignal(1);
+    const [currency, setCurrency] = createSignal('');
     const [price, setPrice] = createSignal(0);
 
     const navigate = useNavigate();
@@ -38,8 +39,9 @@ function NewItem() {
             ownedBy: loggedInUsername,
             name: name(),
             display: display(),
-            currency: currency(),
+            unit: unit(),
             defaultQuantity: defaultQuantity(),
+            currency: currency(),
             price: price(),
         };
     }
@@ -131,6 +133,31 @@ function NewItem() {
 
             <input
                 class="w-[300px]"
+                placeholder="unit"
+                required
+                value={unit()}
+                onInput={(e) => setUnit(e.currentTarget.value)}
+            />
+
+            <input
+                class="w-[300px]"
+                placeholder="default quantity"
+                required
+                type="number"
+                value={defaultQuantity()}
+                onInput={(e) => {
+                    const value = parseFloat(e.currentTarget.value);
+                    if (isNaN(value) || value < 0) {
+                        e.currentTarget.value = defaultQuantity() + '';
+                        return;
+                    }
+
+                    setDefaultQuantity(value);
+                }}
+            />
+
+            <input
+                class="w-[300px]"
                 placeholder="currency"
                 required
                 value={currency()}
@@ -154,22 +181,6 @@ function NewItem() {
                 }}
             />
 
-            <input
-                class="w-[300px]"
-                placeholder="default quantity"
-                required
-                type="number"
-                value={defaultQuantity()}
-                onInput={(e) => {
-                    const value = parseFloat(e.currentTarget.value);
-                    if (isNaN(value) || value < 0) {
-                        e.currentTarget.value = defaultQuantity() + '';
-                        return;
-                    }
-
-                    setDefaultQuantity(value);
-                }}
-            />
 
             <Switch>
                 <Match when={params.id}>
