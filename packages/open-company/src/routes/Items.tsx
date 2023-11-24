@@ -45,7 +45,6 @@ function Items() {
             ownedBy: loggedInUsername,
         });
         setItems(items);
-        console.log(items);
     });
 
 
