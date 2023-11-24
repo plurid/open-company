@@ -64,7 +64,7 @@ function NewItem() {
             price: price(),
         });
 
-        navigate(routes.index);
+        navigate(routes.items);
     }
 
 
