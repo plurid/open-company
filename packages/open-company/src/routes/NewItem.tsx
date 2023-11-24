@@ -49,7 +49,22 @@ function NewItem() {
     }
 
     const editItem = async () => {
+        if (!name() || !price()) {
+            return;
+        }
 
+        if (!loggedInUsername) {
+            return;
+        }
+
+        await invoke(commands.update_item, {
+            ownedBy: loggedInUsername,
+            id: params.id,
+            name: name(),
+            price: price(),
+        });
+
+        navigate(routes.index);
     }
 
 
@@ -59,6 +74,7 @@ function NewItem() {
         }
 
         const item = await invoke<any>(commands.get_item, {
+            ownedBy: loggedInUsername,
             id: params.id,
         });
         if (!item) {
