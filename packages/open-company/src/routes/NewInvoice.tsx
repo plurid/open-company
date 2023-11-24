@@ -160,7 +160,6 @@ function NewInvoice() {
             </Show>
 
 
-
             <Show when={items().length === 0}>
                 <div>
                     no items found
@@ -253,7 +252,7 @@ function NewInvoice() {
             <For each={invoicingItems()}>
                 {(item, i) =>
                     <li>
-                        {i() + 1}: {item}
+                        {i() + 1}: {item.name} {item.price} {item.currency} {item.unit} {item.default_quantity}
                     </li>
                 }
             </For>
