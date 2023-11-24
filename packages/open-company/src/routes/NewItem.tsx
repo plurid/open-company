@@ -22,6 +22,9 @@ import {
 
 function NewItem() {
     const [name, setName] = createSignal('');
+    const [display, setDisplay] = createSignal('');
+    const [currency, setCurrency] = createSignal('');
+    const [defaultQuantity, setDefaultQuantity] = createSignal(1);
     const [price, setPrice] = createSignal(0);
 
     const navigate = useNavigate();
@@ -29,6 +32,17 @@ function NewItem() {
 
     const loggedInUsername = localStorage.getItem(localStore.loggedIn);
 
+
+    const collectItem = () => {
+        return {
+            ownedBy: loggedInUsername,
+            name: name(),
+            display: display(),
+            currency: currency(),
+            defaultQuantity: defaultQuantity(),
+            price: price(),
+        };
+    }
 
     const generateItem = async () => {
         if (!name() || !price()) {
@@ -40,9 +54,7 @@ function NewItem() {
         }
 
         await invoke(commands.generate_new_item, {
-            ownedBy: loggedInUsername,
-            name: name(),
-            price: price(),
+            ...collectItem(),
         });
 
         navigate(routes.index);
@@ -58,10 +70,8 @@ function NewItem() {
         }
 
         await invoke(commands.update_item, {
-            ownedBy: loggedInUsername,
             id: parseInt(params.id),
-            name: name(),
-            price: price(),
+            ...collectItem(),
         });
 
         navigate(routes.items);
@@ -82,6 +92,9 @@ function NewItem() {
         }
 
         setName(item.name);
+        setDisplay(item.display);
+        setCurrency(item.currency);
+        setDefaultQuantity(item.defaultQuantity);
         setPrice(item.price);
     });
 
@@ -110,10 +123,36 @@ function NewItem() {
 
             <input
                 class="w-[300px]"
+                placeholder="display"
+                required
+                value={display()}
+                onInput={(e) => setDisplay(e.currentTarget.value)}
+            />
+
+            <input
+                class="w-[300px]"
+                placeholder="currency"
+                required
+                value={currency()}
+                onInput={(e) => setCurrency(e.currentTarget.value)}
+            />
+
+            <input
+                class="w-[300px]"
                 placeholder="price"
                 required
                 value={price()}
                 onInput={(e) => setPrice(
+                    parseFloat(e.currentTarget.value),
+                )}
+            />
+
+            <input
+                class="w-[300px]"
+                placeholder="default quantity"
+                required
+                value={defaultQuantity()}
+                onInput={(e) => setDefaultQuantity(
                     parseFloat(e.currentTarget.value),
                 )}
             />
