@@ -51,6 +51,9 @@ diesel::table! {
         id -> Integer,
         owned_by -> Text,
         name -> Text,
+        display -> Text,
+        currency -> Text,
+        default_quantity -> Float,
         price -> Float,
     }
 }

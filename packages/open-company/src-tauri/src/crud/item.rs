@@ -12,11 +12,17 @@ pub fn create_item(
     connection: &mut SqliteConnection,
     owned_by: &str,
     name: &str,
+    display: &str,
+    currency: &str,
+    default_quantity: f32,
     price: f32,
 ) -> Item {
     let new_item = NewItem {
         owned_by,
         name,
+        display,
+        currency,
+        default_quantity,
         price,
     };
 
@@ -61,6 +67,9 @@ pub fn update_item(
     owned_by: &str,
     id: i32,
     name: &str,
+    display: &str,
+    currency: &str,
+    default_quantity: f32,
     price: f32,
 ) -> Item {
     let item = diesel::update(items::table)
@@ -68,6 +77,9 @@ pub fn update_item(
         .filter(items::id.eq(id))
         .set((
             items::name.eq(name),
+            items::display.eq(display),
+            items::currency.eq(currency),
+            items::default_quantity.eq(default_quantity),
             items::price.eq(price),
         ))
         .get_result(connection)

@@ -224,6 +224,9 @@ pub fn update_item(
     owned_by: &str,
     id: i32,
     name: &str,
+    display: &str,
+    currency: &str,
+    default_quantity: f32,
     price: f32,
     state: tauri::State<database::DatabaseState>,
 ) -> models::Item {
@@ -234,6 +237,9 @@ pub fn update_item(
         owned_by,
         id,
         name,
+        display,
+        currency,
+        default_quantity,
         price,
     );
 
@@ -424,6 +430,9 @@ pub fn get_company_templates(
 pub fn generate_new_item(
     owned_by: &str,
     name: &str,
+    display: &str,
+    currency: &str,
+    default_quantity: f32,
     price: f32,
     state: tauri::State<database::DatabaseState>,
 ) -> models::Item {
@@ -433,6 +442,9 @@ pub fn generate_new_item(
         connection,
         owned_by,
         name,
+        display,
+        currency,
+        default_quantity,
         price,
     );
 

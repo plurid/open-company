@@ -145,6 +145,9 @@ pub struct Item {
     pub id: i32,
     pub owned_by: String,
     pub name: String,
+    pub display: String,
+    pub currency: String,
+    pub default_quantity: f32,
     pub price: f32,
 }
 
@@ -153,6 +156,9 @@ pub struct Item {
 pub struct NewItem<'a> {
     pub owned_by: &'a str,
     pub name: &'a str,
+    pub display: &'a str,
+    pub currency: &'a str,
+    pub default_quantity: f32,
     pub price: f32,
 }
 
