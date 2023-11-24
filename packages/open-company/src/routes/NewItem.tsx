@@ -75,7 +75,7 @@ function NewItem() {
 
         const item = await invoke<any>(commands.get_item, {
             ownedBy: loggedInUsername,
-            id: params.id,
+            id: parseInt(params.id),
         });
         if (!item) {
             return;
