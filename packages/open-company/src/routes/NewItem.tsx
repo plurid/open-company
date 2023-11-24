@@ -141,20 +141,34 @@ function NewItem() {
                 class="w-[300px]"
                 placeholder="price"
                 required
+                type="number"
                 value={price()}
-                onInput={(e) => setPrice(
-                    parseFloat(e.currentTarget.value),
-                )}
+                onInput={(e) => {
+                    const value = parseFloat(e.currentTarget.value);
+                    if (isNaN(value) || value < 0) {
+                        e.currentTarget.value = price() + '';
+                        return;
+                    }
+
+                    setPrice(value);
+                }}
             />
 
             <input
                 class="w-[300px]"
                 placeholder="default quantity"
                 required
+                type="number"
                 value={defaultQuantity()}
-                onInput={(e) => setDefaultQuantity(
-                    parseFloat(e.currentTarget.value),
-                )}
+                onInput={(e) => {
+                    const value = parseFloat(e.currentTarget.value);
+                    if (isNaN(value) || value < 0) {
+                        e.currentTarget.value = defaultQuantity() + '';
+                        return;
+                    }
+
+                    setDefaultQuantity(value);
+                }}
             />
 
             <Switch>
