@@ -20,11 +20,32 @@ import {
 
 
 
+function FieldsRender({
+    company,
+} : {
+    company: any,
+}) {
+    const fields = JSON.parse(company.fields).data;
+
+    return (
+        <For each={fields}>
+            {(field) =>
+                <div>
+                    {field.name}: {field.value}
+                </div>
+            }
+        </For>
+    );
+}
+
+
 function NewInvoice() {
     const [companies, setCompanies] = createSignal<any[]>([]);
     const [items, setItems] = createSignal<any[]>([]);
     const [invoicingCompany, setInvoicingCompany] = createSignal<any>(null);
+    const [selectingInvoicingCompany, setSelectingInvoicingCompany] = createSignal(true);
     const [invoiceeCompany, setInvoiceeCompany] = createSignal<any>(null);
+    const [selectingInvoiceeCompany, setSelectingInvoiceeCompany] = createSignal(true);
     const [invoicingItems, setInvoicingItems] = createSignal<any[]>([]);
 
     const navigate = useNavigate();
@@ -77,9 +98,8 @@ function NewInvoice() {
                 </button>
             </Show>
 
-
             <Show when={companies().length > 0}>
-                <div>
+                <Show when={selectingInvoicingCompany()}>
                     <div
                         class="mb-2"
                     >
@@ -95,6 +115,7 @@ function NewInvoice() {
                                         class="select-none cursor-pointer font-bold"
                                         onClick={() => {
                                             setInvoicingCompany(company);
+                                            setSelectingInvoicingCompany(false);
                                         }}
                                     >
                                         {company.name}
@@ -104,9 +125,10 @@ function NewInvoice() {
                         }}
                         height={50}
                     />
-                </div>
+                </Show>
 
-                <div>
+
+                <Show when={selectingInvoiceeCompany()}>
                     <div
                         class="mb-2"
                     >
@@ -124,6 +146,7 @@ function NewInvoice() {
                                         class="select-none cursor-pointer font-bold"
                                         onClick={() => {
                                             setInvoiceeCompany(company);
+                                            setSelectingInvoiceeCompany(false);
                                         }}
                                     >
                                         {company.name}
@@ -133,9 +156,25 @@ function NewInvoice() {
                         }}
                         height={50}
                     />
-                </div>
+                </Show>
             </Show>
 
+
+
+            <Show when={items().length === 0}>
+                <div>
+                    no items found
+                </div>
+
+                <button
+                    class="h-[50px]"
+                    onClick={() => {
+                        navigate(routes.new_item);
+                    }}
+                >
+                    New Item
+                </button>
+            </Show>
 
             <Show when={items().length > 0}>
                 <div>
@@ -163,16 +202,50 @@ function NewInvoice() {
                 />
             </Show>
 
-            <div>
+            <div
+                class="grid gap-2"
+            >
                 <Show when={invoicingCompany()}>
+                    <Show when={!selectingInvoicingCompany()}>
+                        <div
+                            class="cursor-pointer select-none font-bold"
+                            onClick={() => {
+                                setInvoicingCompany(null);
+                                setSelectingInvoicingCompany(true);
+                            }}
+                        >
+                            change invoicing company
+                        </div>
+                    </Show>
+
                     <div>
                         {invoicingCompany().name}
+
+                        <FieldsRender
+                            company={invoicingCompany()}
+                        />
                     </div>
                 </Show>
 
                 <Show when={invoiceeCompany()}>
+                    <Show when={!selectingInvoiceeCompany()}>
+                        <div
+                            class="cursor-pointer select-none font-bold"
+                            onClick={() => {
+                                setInvoiceeCompany(null);
+                                setSelectingInvoiceeCompany(true);
+                            }}
+                        >
+                            change invoicee company
+                        </div>
+                    </Show>
+
                     <div>
                         {invoiceeCompany().name}
+
+                        <FieldsRender
+                            company={invoiceeCompany()}
+                        />
                     </div>
                 </Show>
             </div>
