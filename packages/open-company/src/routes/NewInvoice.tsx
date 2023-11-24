@@ -5,6 +5,7 @@ import {
     For,
     Show,
 } from 'solid-js';
+import { useNavigate } from '@solidjs/router';
 
 import './NewInvoice.css';
 
@@ -14,6 +15,7 @@ import BackHomeButton from '../components/BackHomeButton';
 import {
     localStore,
     commands,
+    routes,
 } from '../data';
 
 
@@ -24,6 +26,8 @@ function NewInvoice() {
     const [invoicingCompany, setInvoicingCompany] = createSignal<any>(null);
     const [invoiceeCompany, setInvoiceeCompany] = createSignal<any>(null);
     const [invoicingItems, setInvoicingItems] = createSignal<any[]>([]);
+
+    const navigate = useNavigate();
 
     const loggedInUsername = localStorage.getItem(localStore.loggedIn);
 
@@ -54,8 +58,25 @@ function NewInvoice() {
         <div class={`
             p-8 w-[400px] mx-auto
             grid gap-4
+            justify-items-center
         `}>
             <h1>new invoice</h1>
+
+            <Show when={companies().length === 0}>
+                <div>
+                    no companies found
+                </div>
+
+                <button
+                    class="h-[50px]"
+                    onClick={() => {
+                        navigate(routes.new_company);
+                    }}
+                >
+                    New Company
+                </button>
+            </Show>
+
 
             <Show when={companies().length > 0}>
                 <div>
