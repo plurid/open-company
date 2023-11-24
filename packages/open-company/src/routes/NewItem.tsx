@@ -59,7 +59,7 @@ function NewItem() {
 
         await invoke(commands.update_item, {
             ownedBy: loggedInUsername,
-            id: params.id,
+            id: parseInt(params.id),
             name: name(),
             price: price(),
         });
