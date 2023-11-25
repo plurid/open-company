@@ -66,6 +66,13 @@ function NewInvoice() {
     };
 
     const downloadPDF = async () => {
+        if (
+            !invoicingCompany()
+            || !invoiceeCompany()
+        ) {
+            return;
+        }
+
         const pdfBytes = await savePDF({
             invoicingCompany: invoicingCompany(),
             invoiceeCompany: invoiceeCompany(),
@@ -75,9 +82,13 @@ function NewInvoice() {
             return;
         }
 
-        await writeBinaryFile('foo.pdf', pdfBytes, {
-            dir: BaseDirectory.Desktop,
-        });
+        await writeBinaryFile(
+            `invoice-${invoicingCompany().name}-${invoiceeCompany().name}.pdf`,
+            pdfBytes,
+            {
+                dir: BaseDirectory.Desktop,
+            },
+        );
     }
 
 
