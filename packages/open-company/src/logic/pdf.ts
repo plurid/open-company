@@ -5,13 +5,47 @@ import fontkit from '@pdf-lib/fontkit';
 
 
 
+export interface InvoiceData {
+    // invoiceNumber: string;
+    invoicingCompany: any;
+    invoiceeCompany: any;
+    invoicingItems: any[];
+}
+
+
+const runPDFScript = async (
+    data: InvoiceData,
+    pdfDoc: PDFDocument,
+) => {
+    const url = 'https://pdf-lib.js.org/assets/ubuntu/Ubuntu-R.ttf';
+    const fontBytes = await fetch(url).then((res) => res.arrayBuffer());
+
+    const ubuntuFont = await pdfDoc.embedFont(fontBytes);
+
+    const page = pdfDoc.addPage();
+    page.drawText(
+        JSON.stringify(data.invoicingCompany),
+        {
+            x: 50,
+            y: 750,
+            size: 12,
+            // maxWidth: 50,
+            maxWidth: page.getWidth(),
+            wordBreaks: [" "],
+            // font: helveticaFont,
+            font: ubuntuFont,
+        },
+    );
+    const pdfBytes = await pdfDoc.save();
+
+    return pdfBytes;
+}
+
+
 export const savePDF = async (
-    data: any,
+    data: InvoiceData,
 ) => {
     try {
-        const url = 'https://pdf-lib.js.org/assets/ubuntu/Ubuntu-R.ttf';
-        const fontBytes = await fetch(url).then((res) => res.arrayBuffer());
-
         const pdfDoc = await PDFDocument.create();
 
         pdfDoc.setTitle('invoice');
@@ -22,24 +56,11 @@ export const savePDF = async (
         pdfDoc.setCreator('open company');
 
         pdfDoc.registerFontkit(fontkit);
-        const ubuntuFont = await pdfDoc.embedFont(fontBytes);
 
-        // const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-        const page = pdfDoc.addPage();
-        page.drawText(
-            JSON.stringify(data.invoicingCompany),
-            {
-                x: 50,
-                y: 750,
-                size: 12,
-                // maxWidth: 50,
-                maxWidth: page.getWidth(),
-                wordBreaks: [" "],
-                // font: helveticaFont,
-                font: ubuntuFont,
-            },
+        const pdfBytes = await runPDFScript(
+            data,
+            pdfDoc,
         );
-        const pdfBytes = await pdfDoc.save();
 
         return pdfBytes;
     } catch (error) {
