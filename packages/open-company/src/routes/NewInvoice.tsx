@@ -2,12 +2,6 @@ import {
     writeBinaryFile,
     BaseDirectory,
 } from '@tauri-apps/api/fs';
-import {
-    PDFDocument,
-    // StandardFonts,
-} from 'pdf-lib';
-import fontkit from '@pdf-lib/fontkit';
-
 import { invoke } from '@tauri-apps/api/tauri';
 import {
     createSignal,
@@ -17,8 +11,6 @@ import {
 } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 
-import './NewInvoice.css';
-
 import Selecter from '../components/Selecter';
 import BackHomeButton from '../components/BackHomeButton';
 
@@ -27,6 +19,12 @@ import {
     commands,
     routes,
 } from '../data';
+
+import {
+    savePDF,
+} from '../logic/pdf';
+
+import './NewInvoice.css';
 
 
 
@@ -68,37 +66,14 @@ function NewInvoice() {
     };
 
     const downloadPDF = async () => {
-        const url = 'https://pdf-lib.js.org/assets/ubuntu/Ubuntu-R.ttf';
-        const fontBytes = await fetch(url).then((res) => res.arrayBuffer());
-
-        const pdfDoc = await PDFDocument.create();
-
-        pdfDoc.setTitle('invoice');
-        pdfDoc.setAuthor('open company');
-        pdfDoc.setSubject('invoice');
-        pdfDoc.setKeywords(['invoice']);
-        pdfDoc.setProducer('open company');
-        pdfDoc.setCreator('open company');
-
-        pdfDoc.registerFontkit(fontkit);
-        const ubuntuFont = await pdfDoc.embedFont(fontBytes);
-
-        // const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-        const page = pdfDoc.addPage();
-        page.drawText(
-            JSON.stringify(invoicingCompany()),
-            {
-                x: 50,
-                y: 750,
-                size: 12,
-                // maxWidth: 50,
-                maxWidth: page.getWidth(),
-                wordBreaks: [" "],
-                // font: helveticaFont,
-                font: ubuntuFont,
-            },
-        );
-        const pdfBytes = await pdfDoc.save();
+        const pdfBytes = await savePDF({
+            invoicingCompany: invoicingCompany(),
+            invoiceeCompany: invoiceeCompany(),
+            invoicingItems: invoicingItems(),
+        });
+        if (!pdfBytes) {
+            return;
+        }
 
         await writeBinaryFile('foo.pdf', pdfBytes, {
             dir: BaseDirectory.Desktop,
