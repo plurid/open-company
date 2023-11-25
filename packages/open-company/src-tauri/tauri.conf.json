@@ -19,6 +19,12 @@
             "shell": {
                 "all": false,
                 "open": true
+            },
+            "fs": {
+                "writeFile": true,
+                "readDir": true,
+                "createDir": true,
+                "scope": ["**"]
             }
         },
         "bundle": {
