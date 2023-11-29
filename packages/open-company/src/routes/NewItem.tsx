@@ -11,6 +11,7 @@ import {
 } from '@solidjs/router';
 
 import BackHomeButton from '../components/BackHomeButton';
+import InputTitle from '../components/InputTitle';
 
 import {
     localStore,
@@ -115,36 +116,37 @@ function NewItem() {
                 </Match>
             </Switch>
 
-            <input
-                class="w-[300px]"
+            <InputTitle
+                title="name"
+                value={name}
+                atInput={(value) => setName(value)}
                 placeholder="name"
+                class="w-[300px]"
                 required
-                value={name()}
-                onInput={(e) => setName(e.currentTarget.value)}
             />
 
-            <input
-                class="w-[300px]"
+            <InputTitle
+                title="display"
+                value={display}
+                atInput={(value) => setDisplay(value)}
                 placeholder="display"
+                class="w-[300px]"
                 required
-                value={display()}
-                onInput={(e) => setDisplay(e.currentTarget.value)}
             />
 
-            <input
-                class="w-[300px]"
+            <InputTitle
+                title="unit"
+                value={unit}
+                atInput={(value) => setUnit(value)}
                 placeholder="unit"
+                class="w-[300px]"
                 required
-                value={unit()}
-                onInput={(e) => setUnit(e.currentTarget.value)}
             />
 
-            <input
-                class="w-[300px]"
-                placeholder="default quantity"
-                required
-                type="number"
-                value={defaultQuantity()}
+            <InputTitle
+                title="default quantity"
+                value={defaultQuantity}
+                atInput={() => {}}
                 onInput={(e) => {
                     const value = parseFloat(e.currentTarget.value);
                     if (isNaN(value) || value < 0) {
@@ -154,22 +156,25 @@ function NewItem() {
 
                     setDefaultQuantity(value);
                 }}
-            />
-
-            <input
-                class="w-[300px]"
-                placeholder="currency"
-                required
-                value={currency()}
-                onInput={(e) => setCurrency(e.currentTarget.value)}
-            />
-
-            <input
-                class="w-[300px]"
-                placeholder="price"
-                required
                 type="number"
-                value={price()}
+                placeholder="default quantity"
+                class="w-[300px]"
+                required
+            />
+
+            <InputTitle
+                title="currency"
+                value={currency}
+                atInput={(value) => setCurrency(value)}
+                placeholder="currency"
+                class="w-[300px]"
+                required
+            />
+
+            <InputTitle
+                title="price"
+                value={price}
+                atInput={() => {}}
                 onInput={(e) => {
                     const value = parseFloat(e.currentTarget.value);
                     if (isNaN(value) || value < 0) {
@@ -179,6 +184,10 @@ function NewItem() {
 
                     setPrice(value);
                 }}
+                type="number"
+                placeholder="price"
+                class="w-[300px]"
+                required
             />
 
 
