@@ -2,15 +2,18 @@ import { invoke } from '@tauri-apps/api/tauri';
 import {
     createSignal,
     onMount,
+    For,
     Switch,
     Match,
 } from 'solid-js';
+import { createStore } from "solid-js/store";
 import {
     useNavigate,
     useParams,
 } from '@solidjs/router';
 
 import BackHomeButton from '../components/BackHomeButton';
+import Toggle from '../components/Toggle';
 import InputTitle from '../components/InputTitle';
 
 import {
@@ -21,7 +24,36 @@ import {
 
 
 
+export interface ItemFields {
+    template: string;
+    data: ItemField[];
+}
+
+export interface ItemField {
+    name: string;
+    type: string;
+    value: string | number | boolean;
+    required: boolean;
+}
+
+
 function NewItem() {
+    const [view, setView] = createSignal<
+        | ''
+        | 'new-item-template'
+        | 'new-item'
+    >('new-item');
+
+    const [itemTemplateName, setItemTemplateName] = createSignal('');
+    const [itemTemplateDefault, setItemTemplateDefault] = createSignal(false);
+    const [itemTemplateFields, setItemTemplateFields] = createStore<ItemField[]>([]);
+
+    const [itemTemplates, setItemTemplates] = createSignal<any[]>([]);
+    const [itemTemplate, setItemTemplate] = createSignal('');
+    const [itemFields, setItemFields] = createStore<ItemField[]>([]);
+
+    const [editingItem, setEditingItem] = createSignal<any>(undefined);
+
     const [name, setName] = createSignal('');
     const [display, setDisplay] = createSignal('');
     const [unit, setUnit] = createSignal('');
@@ -29,10 +61,36 @@ function NewItem() {
     const [currency, setCurrency] = createSignal('');
     const [price, setPrice] = createSignal(0);
 
+    const loggedInUsername = localStorage.getItem(localStore.loggedIn);
+
     const navigate = useNavigate();
     const params = useParams();
 
-    const loggedInUsername = localStorage.getItem(localStore.loggedIn);
+
+
+    const newTemplateField = () => {
+        setItemTemplateFields([
+            ...itemTemplateFields,
+            {
+                name: '',
+                type: 'text',
+                value: '',
+                required: true,
+            },
+        ]);
+    }
+
+    const updateTemplateField = (
+        idx: number,
+        value: string,
+    ) => {
+        setItemTemplateFields(idx, 'name', value);
+    }
+
+
+    const generateNewItemTemplate = () => {
+
+    }
 
 
     const collectItem = () => {
@@ -102,11 +160,109 @@ function NewItem() {
     });
 
 
-    return (
-        <div class={`
-            h-full p-8 w-[400px] mx-auto text-center
-            grid gap-4 content-center place-content-center
-        `}>
+    const matchFallback = (
+        <>
+            <div>
+                something went wrong
+            </div>
+
+            <BackHomeButton />
+        </>
+    );
+
+    const newItemTemplate = (
+        <>
+            <input
+                class="mb-8"
+                placeholder={"template name"}
+                required
+                value={itemTemplateName()}
+                onInput={(event) => {
+                    setItemTemplateName(event?.target.value);
+                }}
+                spellcheck={false}
+            />
+
+            <For each={itemTemplateFields}>
+                {(field, idx) => {
+                    const {
+                        name,
+                    } = field;
+
+                    return (
+                        <div class="mb-6">
+                            <div class="flex justify-between">
+                                <div class="text-left mb-2">
+                                    field {idx()}
+                                </div>
+
+                                <div
+                                    class="select-none cursor-pointer"
+                                    onClick={() => {
+                                        setItemTemplateFields(
+                                            itemTemplateFields.filter((_, i) => i !== idx()),
+                                        );
+                                    }}
+                                >
+                                    &#10005;
+                                </div>
+                            </div>
+
+                            <input
+                                class="w-full"
+                                placeholder={"field name"}
+                                required
+                                value={name + ''}
+                                onInput={(event) => {
+                                    updateTemplateField(idx(), event?.target.value);
+                                }}
+                                spellcheck={false}
+                            />
+                        </div>
+                    );
+                }}
+            </For>
+
+            <button
+                onClick={() => {
+                    newTemplateField();
+                }}
+            >
+                Add Template Field
+            </button>
+
+            <Toggle
+                text="default template"
+                value={itemTemplateDefault()}
+                toggle={() => {
+                    setItemTemplateDefault(!itemTemplateDefault());
+                }}
+            />
+
+            <button
+                class="mt-8 disabled:opacity-50 disabled:pointer-events-none"
+                onClick={() => {
+                    generateNewItemTemplate();
+                }}
+                disabled={!itemTemplateName() || itemTemplateFields.length === 0}
+            >
+                Generate Item Template
+            </button>
+
+            {itemTemplate() ? (
+                <BackHomeButton
+                    atClick={() => {
+                        setView('new-item');
+                    }}
+                />
+            ) : (
+                <BackHomeButton />
+            )}
+        </>
+    );
+
+    const newItem = (
+        <>
             <Switch>
                 <Match when={params.id}>
                     <h1>edit item</h1>
@@ -215,6 +371,25 @@ function NewItem() {
             </Switch>
 
             <BackHomeButton />
+        </>
+    );
+
+
+    return (
+        <div class={`
+            h-full p-8 w-[400px] mx-auto text-center
+            grid gap-4 content-center place-content-center
+        `}>
+             <Switch
+                fallback={matchFallback}
+            >
+                <Match when={view() === 'new-item-template'}>
+                    {newItemTemplate}
+                </Match>
+                <Match when={view() === 'new-item'}>
+                    {newItem}
+                </Match>
+            </Switch>
         </div>
     );
 }
