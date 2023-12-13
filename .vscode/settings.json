@@ -1,5 +1,6 @@
 {
     "rust-analyzer.linkedProjects": [
         "packages/open-company/src-tauri/Cargo.toml",
+        "packages/interclients/invoicer/eu/Cargo.toml"
     ]
 }
