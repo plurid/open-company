@@ -1417,6 +1417,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "invoicer_eu"
+version = "0.1.0"
+dependencies = [
+ "xml-doc",
+]
+
+[[package]]
 name = "itoa"
 version = "0.4.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1900,6 +1907,7 @@ dependencies = [
  "diesel",
  "diesel_migrations",
  "dirs",
+ "invoicer_eu",
  "libsqlite3-sys",
  "pwhash",
  "serde",
@@ -2115,7 +2123,7 @@ dependencies = [
  "base64 0.21.5",
  "indexmap 2.1.0",
  "line-wrap",
- "quick-xml",
+ "quick-xml 0.31.0",
  "serde",
  "time",
 ]
@@ -2213,6 +2221,15 @@ dependencies = [
  "rand 0.8.5",
  "sha-1",
  "sha2 0.9.9",
+]
+
+[[package]]
+name = "quick-xml"
+version = "0.22.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8533f14c8382aaad0d592c812ac3b826162128b65662331e1127b45c3d18536b"
+dependencies = [
+ "memchr",
 ]
 
 [[package]]
@@ -4013,4 +4030,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f4686009f71ff3e5c4dbcf1a282d0a44db3f021ba69350cd42086b3e5f1c6985"
 dependencies = [
  "libc",
+]
+
+[[package]]
+name = "xml-doc"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1ca5fbba359bb42d157736e2a24a5f454a0fdff2edf837e4d79b00a84ba7265c"
+dependencies = [
+ "encoding_rs",
+ "quick-xml 0.22.0",
 ]
