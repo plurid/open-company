@@ -55,9 +55,15 @@ impl Invoicer {
     }
 
     pub fn write_to_file(&mut self, filename: &str) {
+        let xml_string = self.get_xml_string();
+        std::fs::write(filename, xml_string).expect("Failed to write to file");
+    }
+
+    pub fn get_xml_string(&mut self) -> String {
         let mut xml_string = self.doc.write_str().unwrap();
         xml_string.push_str("\n");
-        std::fs::write(filename, xml_string).expect("Failed to write to file");
+
+        xml_string
     }
 }
 
