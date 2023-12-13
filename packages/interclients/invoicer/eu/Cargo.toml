@@ -1,0 +1,11 @@
+[package]
+name = "invoicer_eu"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "invoicer_eu"
+crate-type = ["lib"]
+
+[dependencies]
+xml-doc = "0.2.0"
