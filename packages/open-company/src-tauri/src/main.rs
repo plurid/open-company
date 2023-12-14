@@ -22,6 +22,7 @@ mod crud {
     pub mod item;
     pub mod invoice;
 }
+mod invoicer;
 mod models;
 mod schema;
 mod commands;

@@ -1,6 +1,9 @@
-// use invoicer_eu::Invoicer;
+use invoicer_eu::entities;
 
 
 
-// let mut invoicer = Invoicer::new();
-// invoicer.write_to_file("invoice.xml");
+pub fn generate_invoice() {
+    let mut invoice = entities::invoice::Invoice::new(
+        Some("1234567890".to_string()),
+    );
+}
