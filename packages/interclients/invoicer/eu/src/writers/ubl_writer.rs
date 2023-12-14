@@ -1,7 +1,7 @@
 use xml_doc::{Document, Element};
 use std::collections::HashSet;
 
-use crate::invoice::Invoice;
+use crate::entities::invoice::Invoice;
 
 
 
