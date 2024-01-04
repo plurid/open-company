@@ -51,6 +51,12 @@ export default function Lines({
         <ul
             className="grid place-content-center p-8"
         >
+            {data.length === 0 && (
+                <div>
+                    niciun produs
+                </div>
+            )}
+
             {data.map((line, index) => {
                 return (
                     <Line
