@@ -6,6 +6,7 @@ import {
 
 import Party from '../components/Party';
 import Input from '../components/Input';
+import Lines from '../components/Lines';
 
 import {
     newParty,
@@ -65,39 +66,12 @@ export default function Home() {
         }));
     }
 
-    const updateLine = (
-        index: number,
-        type: string,
-        value: string,
-    ) => {
-        const newLines = lines.map((line, idx) => {
-            if (idx === index) {
-                return {
-                    ...line,
-                    [type]: value,
-                };
-            }
-
-            return {
-                ...line,
-            };
-        });
-
-        setLines(newLines);
-    }
 
     const addNewLine = () => {
         setLines(prevValues => ([
             ...prevValues,
             emptyLine,
         ]));
-    }
-
-    const removeLine = (
-        index: number,
-    ) => {
-        const newLines = lines.filter((_, idx) => index !== idx);
-        setLines(newLines);
     }
 
 
@@ -164,50 +138,10 @@ export default function Home() {
             </div>
 
             <div>
-                <ul
-                    className="grid place-content-center p-8"
-                >
-                    {lines.map((line, index) => {
-                        return (
-                            <li
-                                className="flex gap-4"
-                                key={'item' + index}
-                            >
-                                <Input
-                                    text="nume"
-                                    value={line.name}
-                                    setValue={(value) => updateLine(index, 'name', value)}
-                                />
-
-                                <Input
-                                    text="cantitate"
-                                    value={line.quantity + ''}
-                                    setValue={(value) => updateLine(index, 'quantity', value)}
-                                />
-
-                                <Input
-                                    text="pret"
-                                    value={line.price + ''}
-                                    setValue={(value) => updateLine(index, 'price', value)}
-                                />
-
-                                <Input
-                                    text="TVA"
-                                    value={line.vatRate + ''}
-                                    setValue={(value) => updateLine(index, 'vatRate', value)}
-                                />
-
-                                <div>
-                                    <button
-                                        onClick={() => removeLine(index)}
-                                    >
-                                        ștergere
-                                    </button>
-                                </div>
-                            </li>
-                        );
-                    })}
-                </ul>
+                <Lines
+                    data={lines}
+                    setLines={setLines}
+                />
             </div>
 
             <div
