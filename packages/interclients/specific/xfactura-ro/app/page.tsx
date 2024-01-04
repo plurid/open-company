@@ -14,6 +14,14 @@ import {
     InvoiceLine,
 } from '../data';
 
+import {
+    PHPRunner,
+} from '../logic/php';
+
+import {
+    downloadTextFile,
+} from '../logic/utilities';
+
 
 
 export default function Home() {
@@ -72,6 +80,27 @@ export default function Home() {
             ...prevValues,
             emptyLine,
         ]));
+    }
+
+    const generateEinvoice = () => {
+        const invoice = {
+            seller,
+            buyer,
+            metadata,
+            lines,
+        };
+
+        const phpRunner = new PHPRunner(
+            (value) => {
+                const filename = `einvoice-${metadata.number}-${seller.name}-${buyer.name}.xml`;
+
+                downloadTextFile(
+                    filename,
+                    value,
+                );
+            },
+        );
+        phpRunner.input(invoice);
     }
 
 
@@ -157,7 +186,9 @@ export default function Home() {
             <div
                 className="grid place-content-center p-8"
             >
-                <button>
+                <button
+                    onClick={() => generateEinvoice()}
+                >
                     generare efactura
                 </button>
             </div>
