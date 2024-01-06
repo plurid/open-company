@@ -2,16 +2,16 @@
     "name": "xfactura-ro",
     "version": "0.1.0",
     "private": true,
+    "type": "module",
     "scripts": {
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint",
-        "phpwasm": "cp node_modules/php-wasm/php-web.* public/"
+        "lint": "next lint"
     },
     "dependencies": {
+        "@webcontainer/api": "^1.1.8",
         "next": "14.0.4",
-        "php-wasm": "0.0.0-esm-preview-49",
         "react": "^18",
         "react-dom": "^18"
     },
