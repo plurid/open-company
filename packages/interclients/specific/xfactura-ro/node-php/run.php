@@ -16,10 +16,10 @@ $data = json_decode($entityBody);
 
 // Create invoice
 $invoice = new Invoice(Presets\CiusRo::class);
-$invoice->setNumber($data->number)
-    ->setCurrency($data->currency)
-    ->setIssueDate(new DateTime($data->issueDate))
-    ->setDueDate(new DateTime($data->dueDate));
+$invoice->setNumber($data->metadata->number)
+    ->setCurrency($data->metadata->currency)
+    ->setIssueDate(new DateTime($data->metadata->issueDate))
+    ->setDueDate(new DateTime($data->metadata->dueDate));
 
 
 // Set seller
