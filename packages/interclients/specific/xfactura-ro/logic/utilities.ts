@@ -17,3 +17,11 @@ export function downloadTextFile(
     a.click();
     document.body.removeChild(a);
 }
+
+
+export const getDateFormat = (
+    timestamp: number,
+) => {
+    const date = new Date(timestamp);
+    return date.toISOString().split('T')[0];
+}

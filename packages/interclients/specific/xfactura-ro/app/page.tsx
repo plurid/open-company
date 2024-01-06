@@ -15,11 +15,13 @@ import {
 } from '../data';
 
 import {
-    PHPRunner,
-} from '../logic/php';
+    writeData,
+    startNodePHPServer,
+} from '../logic/node-php';
 
 import {
     downloadTextFile,
+    getDateFormat,
 } from '../logic/utilities';
 
 
@@ -44,14 +46,14 @@ export default function Home() {
         setMetadata,
     ] = useState({
         number: '',
-        currency: '',
+        currency: 'RON',
         issueDate: Date.now(),
         dueDate: Date.now(),
     });
 
     const emptyLine = {
         name: '',
-        price: 1,
+        price: 100,
         quantity: 1,
         vatRate: 19,
     };
@@ -82,15 +84,26 @@ export default function Home() {
         ]));
     }
 
-    const generateEinvoice = () => {
+    const generateEinvoice = async () => {
         const invoice = {
-            seller,
-            buyer,
-            metadata,
+            metadata: {
+                ...metadata,
+                issueDate: getDateFormat(metadata.issueDate),
+                dueDate: getDateFormat(metadata.dueDate),
+            },
+            seller: {
+                ...seller,
+                subdivision: seller.county,
+            },
+            buyer: {
+                ...buyer,
+                subdivision: buyer.county,
+            },
             lines,
         };
 
-        const phpRunner = new PHPRunner(
+        await writeData(invoice);
+        await startNodePHPServer(
             (value) => {
                 const filename = `einvoice-${metadata.number}-${seller.name}-${buyer.name}.xml`;
 
@@ -100,7 +113,6 @@ export default function Home() {
                 );
             },
         );
-        phpRunner.input(invoice);
     }
 
 
@@ -156,13 +168,13 @@ export default function Home() {
                 <Input
                     text="dată emitere"
                     value={metadata.issueDate + ''}
-                    setValue={(value) => updateMetadata('issueDate', value)}
+                    setValue={(value) => updateMetadata('issueDate', parseInt(value))}
                 />
 
                 <Input
                     text="dată scadență"
                     value={metadata.dueDate + ''}
-                    setValue={(value) => updateMetadata('dueDate', value)}
+                    setValue={(value) => updateMetadata('dueDate', parseInt(value))}
                 />
             </div>
 
