@@ -10,15 +10,25 @@ import {
 
 let webcontainerInstance: WebContainer | null = null;
 
-window.addEventListener('load', async () => {
-    webcontainerInstance = await WebContainer.boot();
-    await webcontainerInstance.mount(files);
+export const loadWebContainer = async () => {
+    try {
+        if (webcontainerInstance) {
+            return true;
+        }
 
-    const exitCodeInstall = await installDependencies();
-    if (exitCodeInstall !== 0) {
-        throw new Error('Installation failed');
+        webcontainerInstance = await WebContainer.boot();
+        await webcontainerInstance.mount(files);
+
+        const exitCodeInstall = await installDependencies();
+        if (exitCodeInstall !== 0) {
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        return false;
     }
-});
+}
 
 async function installDependencies() {
     if (!webcontainerInstance) {

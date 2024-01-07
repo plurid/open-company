@@ -2,11 +2,14 @@
 
 import {
     useState,
+    useRef,
+    useEffect,
 } from 'react';
 
 import Party from '../components/Party';
 import Input from '../components/Input';
 import Lines from '../components/Lines';
+import Spinner from '../components/Spinner';
 
 import {
     newParty,
@@ -15,6 +18,7 @@ import {
 } from '../data';
 
 import {
+    loadWebContainer,
     writeData,
     startNodePHPServer,
 } from '../logic/node-php';
@@ -27,6 +31,14 @@ import {
 
 
 export default function Home() {
+    const mounted = useRef(false);
+
+
+    const [
+        loadedWebContainers,
+        setLoadedWebContainers,
+    ] = useState(false);
+
     const [
         seller,
         setSeller,
@@ -116,8 +128,28 @@ export default function Home() {
     }
 
 
+    useEffect(() => {
+        if (mounted.current) {
+            return;
+        }
+        mounted.current = true;
+
+        // TODO: fix memory leak
+        // loadWebContainer()
+        //     .then((value) => setLoadedWebContainers(value));
+        setTimeout(() => {
+            setLoadedWebContainers(true);
+        }, 2500);
+    }, []);
+
+
     return (
         <div>
+            {!loadedWebContainers && (
+                <Spinner />
+            )}
+
+
             <div
                 className="grid md:flex"
             >
