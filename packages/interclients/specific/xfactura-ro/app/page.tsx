@@ -88,6 +88,20 @@ export default function Home() {
         }));
     }
 
+    const updateDate = (
+        kind: 'issueDate' | 'dueDate',
+        value: string,
+    ) => {
+        const split = value.split('/');
+        const day = split[0];
+        const month = split[1];
+        const year = split[2];
+        const timestamp = Date.parse(
+            `${year}-${month}-${day}`,
+        );
+        updateMetadata(kind, timestamp);
+    }
+
 
     const addNewLine = () => {
         setLines(prevValues => ([
@@ -199,14 +213,14 @@ export default function Home() {
 
                 <Input
                     text="dată emitere"
-                    value={metadata.issueDate + ''}
-                    setValue={(value) => updateMetadata('issueDate', parseInt(value))}
+                    value={new Date(metadata.issueDate).toLocaleDateString()}
+                    setValue={(value) => updateDate('issueDate', value)}
                 />
 
                 <Input
                     text="dată scadență"
-                    value={metadata.dueDate + ''}
-                    setValue={(value) => updateMetadata('dueDate', parseInt(value))}
+                    value={new Date(metadata.dueDate).toLocaleDateString()}
+                    setValue={(value) => updateDate('dueDate', value)}
                 />
             </div>
 
