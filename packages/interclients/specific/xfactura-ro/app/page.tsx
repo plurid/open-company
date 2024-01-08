@@ -17,11 +17,7 @@ import {
     InvoiceLine,
 } from '../data';
 
-import {
-    loadWebContainer,
-    writeData,
-    startNodePHPServer,
-} from '../logic/node-php';
+import webContainerRunner from '../logic/node-php';
 
 import {
     downloadTextFile,
@@ -128,10 +124,10 @@ export default function Home() {
             lines,
         };
 
-        await writeData(invoice);
-        await startNodePHPServer(
+        await webContainerRunner.writeData(invoice);
+        await webContainerRunner.startNodePHPServer(
             (value) => {
-                const filename = `einvoice-${metadata.number}-${seller.name}-${buyer.name}.xml`;
+                const filename = `efactura-${metadata.number}-${seller.name}-${buyer.name}.xml`;
 
                 downloadTextFile(
                     filename,
@@ -148,12 +144,15 @@ export default function Home() {
         }
         mounted.current = true;
 
-        // TODO: fix memory leak
-        // loadWebContainer()
-        //     .then((value) => setLoadedWebContainers(value));
-        setTimeout(() => {
-            setLoadedWebContainers(true);
-        }, 2500);
+        webContainerRunner.load()
+            .then((loaded) => {
+                setLoadedWebContainers(true);
+
+                if (!loaded) {
+                    // TODO
+                    // notify error
+                }
+            });
     }, []);
 
 

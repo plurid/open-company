@@ -8,73 +8,96 @@ import {
 
 
 
-let webcontainerInstance: WebContainer | null = null;
+class WebContainerRunner {
+    webcontainerInstance: WebContainer | null = null;
 
-export const loadWebContainer = async () => {
-    try {
-        if (webcontainerInstance) {
-            return true;
+
+    constructor() {
+    }
+
+
+    private async installDependencies() {
+        if (!this.webcontainerInstance) {
+            return;
         }
 
-        webcontainerInstance = await WebContainer.boot();
-        await webcontainerInstance.mount(files);
+        const installProcess = await this.webcontainerInstance.spawn('npm', ['install']);
+        installProcess.output.pipeTo(new WritableStream({
+            write(data) {
+                console.log(data);
+            }
+        }));
 
-        const exitCodeInstall = await installDependencies();
-        if (exitCodeInstall !== 0) {
+        return installProcess.exit;
+    }
+
+
+    public async load() {
+        try {
+            if (this.webcontainerInstance) {
+                return true;
+            }
+
+            this.webcontainerInstance = await WebContainer.boot();
+            await this.webcontainerInstance.mount(files);
+
+            const exitCodeInstall = await this.installDependencies();
+            if (exitCodeInstall !== 0) {
+                return false;
+            }
+
+            return true;
+        } catch (error) {
             return false;
         }
-
-        return true;
-    } catch (error) {
-        return false;
-    }
-}
-
-async function installDependencies() {
-    if (!webcontainerInstance) {
-        return;
     }
 
-    const installProcess = await webcontainerInstance.spawn('npm', ['install']);
-    installProcess.output.pipeTo(new WritableStream({
-        write(data) {
-            console.log(data);
+    public destroy() {
+        if (!this.webcontainerInstance) {
+            return;
         }
-    }));
 
-    return installProcess.exit;
-}
-
-export async function writeData<D>(
-    content: D,
-) {
-    if (!webcontainerInstance) {
-        return;
+        this.webcontainerInstance.teardown();
+        this.webcontainerInstance = null;
     }
 
-    await webcontainerInstance.fs.writeFile('/data.json', JSON.stringify(content));
-}
+    public async writeData<D>(
+        content: D,
+    ) {
+        if (!this.webcontainerInstance) {
+            return;
+        }
 
-export async function startNodePHPServer(
-    extractor: (value: string) => void,
-) {
-    if (!webcontainerInstance) {
-        return;
+        await this.webcontainerInstance.fs.writeFile('/data.json', JSON.stringify(content));
     }
 
-    const startProcess = await webcontainerInstance.spawn('npm', ['run', 'start']);
-    startProcess.output.pipeTo(new WritableStream({
-        write(data) {
-            try {
-                const result = JSON.parse(data);
-                if (result.status) {
-                    extractor(result.data);
+    public async startNodePHPServer(
+        extractor: (value: string) => void,
+    ) {
+        if (!this.webcontainerInstance) {
+            return;
+        }
+
+        const startProcess = await this.webcontainerInstance.spawn('npm', ['run', 'start']);
+        startProcess.output.pipeTo(new WritableStream({
+            write(data) {
+                try {
+                    const result = JSON.parse(data);
+                    if (result.status) {
+                        extractor(result.data);
+                    }
+                } catch(error) {
+                    return;
                 }
-            } catch(error) {
-                return;
             }
-        }
-    }));
+        }));
 
-    return startProcess.exit;
+        return startProcess.exit;
+    }
 }
+
+
+const webContainerRunner = new WebContainerRunner();
+
+
+export default webContainerRunner;
