@@ -20,7 +20,7 @@ export const MenuIcon = ({
         xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50"
         className="z-50 fixed top-0 left-0 m-4 cursor-pointer"
         style={{
-            filter: 'invert(1)', width: '30px', height: '30px',
+            filter: 'invert(1)', width: '25px', height: '25px',
         }}
         onClick={(event) => {
             event.stopPropagation();
