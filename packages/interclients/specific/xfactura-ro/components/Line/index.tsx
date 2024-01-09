@@ -1,4 +1,5 @@
 import Input from '../Input';
+import Toggle from '../Toggle';
 
 import {
     InvoiceLine,
@@ -6,6 +7,15 @@ import {
 
 import Deleter from '../Deleter';
 
+
+
+function toFixed(
+    num: number,
+    fixed: number = 2,
+) {
+    var re = new RegExp('^-?\\d+(?:\.\\d{0,' + (fixed || -1) + '})?');
+    return num.toString().match(re)![0].replace('.', ',');
+}
 
 
 export default function Line({
@@ -16,7 +26,7 @@ export default function Line({
 }: {
     data: InvoiceLine,
     index: number,
-    updateLine: (index: number, type: string, value: string) => void,
+    updateLine: (index: number, type: string, value: string | boolean) => void,
     removeLine: (index: number) => void,
 }) {
     const computeTotal = () => {
@@ -24,6 +34,7 @@ export default function Line({
             price,
             quantity,
             vatRate,
+            vatIncluded,
         } = data;
 
         if (
@@ -34,17 +45,24 @@ export default function Line({
             return '0';
         }
 
-        const value = price * quantity;
-        const vat = value * vatRate / 100;
-        const total = value + vat;
+        const priceInUnits = price * 100;
+        const valueInUnits = priceInUnits * quantity;
 
-        return total.toFixed(2);
+        if (vatIncluded) {
+            return toFixed(valueInUnits / 100);
+        }
+
+        const vatInUnits = valueInUnits * vatRate / 100;
+        const totalInUnits = valueInUnits + vatInUnits;
+        const total = totalInUnits / 100;
+
+        return toFixed(total);
     }
 
 
     return (
         <li
-            className="grid gap-12 items-center md:flex"
+            className="grid gap-1 mb-10 items-center xl:flex xl:gap-12 xl:mb-4"
         >
             <Input
                 text="nume"
@@ -81,6 +99,12 @@ export default function Line({
                 setValue={(_value) => {}}
                 width={100}
                 disabled={true}
+            />
+
+            <Toggle
+                text="TVA inclus"
+                value={data.vatIncluded}
+                toggle={() => updateLine(index, 'vatIncluded', !data.vatIncluded)}
             />
 
             <Deleter

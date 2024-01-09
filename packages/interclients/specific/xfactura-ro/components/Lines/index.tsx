@@ -21,13 +21,18 @@ export default function Lines({
     const updateLine = (
         index: number,
         type: string,
-        value: string,
+        value: string | boolean,
     ) => {
         const newLines = data.map((line, idx) => {
             if (idx === index) {
+                const parsedValue = typeof value === 'number' &&
+                    (type === 'price' || type === 'quantity' || type === 'vatRate')
+                    ? parseFloat(value)
+                    : value;
+
                 return {
                     ...line,
-                    [type]: value,
+                    [type]: parsedValue,
                 };
             }
 

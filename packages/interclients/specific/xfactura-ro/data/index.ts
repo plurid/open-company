@@ -32,5 +32,14 @@ export type InvoiceLine = {
     name: string;
     price: number;
     vatRate: number;
+    vatIncluded: boolean;
     quantity: number;
 }
+
+export const emptyInvoiceLine: InvoiceLine = {
+    name: '',
+    price: 100,
+    quantity: 1,
+    vatRate: 19,
+    vatIncluded: false,
+};

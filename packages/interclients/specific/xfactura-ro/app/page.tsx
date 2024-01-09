@@ -16,6 +16,7 @@ import Deleter from '../components/Deleter';
 import {
     newParty,
     NewParty,
+    emptyInvoiceLine,
     InvoiceLine,
 } from '../data';
 
@@ -71,18 +72,11 @@ export default function Home() {
         dueDate: Date.now(),
     });
 
-    const emptyLine = {
-        name: '',
-        price: 100,
-        quantity: 1,
-        vatRate: 19,
-    };
-
     const [
         lines,
         setLines,
     ] = useState<InvoiceLine[]>([{
-        ...emptyLine,
+        ...emptyInvoiceLine,
     }]);
 
 
@@ -114,7 +108,7 @@ export default function Home() {
     const addNewLine = () => {
         setLines(prevValues => ([
             ...prevValues,
-            emptyLine,
+            emptyInvoiceLine,
         ]));
     }
 
@@ -169,142 +163,141 @@ export default function Home() {
 
 
     return (
-        <div
-            className="m-auto max-w-7xl z-0"
-        >
+        <>
             {!loadedWebContainers && (
                 <Spinner />
             )}
 
-            <div
-                className="m-4 pb-4"
-            >
-                <h1
-                    className="text-2xl text-center mb-4"
-                >
-                    xfactura.ro
-                </h1>
-
-                <div
-                    className="grid justify-center items-center text-center"
-                >
-                    <button
-                        className="cursor-pointer select-none mb-4 focus:outline-none focus:ring-2 focus:ring-white"
-                    >
-                        încărcare factură
-                        <br/>
-                        <span
-                            className="text-xs"
-                        >
-                            jpg/png/pdf/docx/xlsx/xml/json
-                        </span>
-                    </button>
-
-                    {isMobile && (
-                        <div
-                            className="cursor-pointer select-none mb-4"
-                        >
-                            fotografiere factură
-                        </div>
-                    )}
-                </div>
-            </div>
-
-
             <Menu />
 
-
-            <div
-                className="grid items-center justify-center md:flex m-auto"
-            >
-                <Party
-                    kind="seller"
-                    title="furnizor"
-                    data={seller}
-                    setParty={setSeller}
-                />
-
-                <Party
-                    kind="buyer"
-                    title="cumpărător"
-                    data={buyer}
-                    setParty={setBuyer}
-                />
-            </div>
-
-
-            <div
-                className="grid place-content-center p-8"
-            >
-                <Input
-                    text="număr factură"
-                    value={metadata.number}
-                    setValue={(value) => updateMetadata('number', value)}
-                />
-
-                <Input
-                    text="monedă"
-                    value={metadata.currency}
-                    setValue={(value) => updateMetadata('currency', value)}
-                />
-
-                <Input
-                    text="dată emitere"
-                    value={new Date(metadata.issueDate).toLocaleDateString()}
-                    setValue={(value) => updateDate('issueDate', value)}
-                />
-
-                <Input
-                    text="dată scadență"
-                    value={new Date(metadata.dueDate).toLocaleDateString()}
-                    setValue={(value) => updateDate('dueDate', value)}
-                />
-            </div>
-
-
-            <Lines
-                data={lines}
-                setLines={setLines}
-            />
-
-            <div
-                className="grid place-content-center p-8"
-            >
-                <button
-                    onClick={() => addNewLine()}
-                    className="select-none focus:outline-none focus:ring-2 focus:ring-white"
+            <div>
+                <div
+                    className="m-4 pb-4"
                 >
-                    adăugare produs
-                </button>
-            </div>
+                    <h1
+                        className="text-2xl text-center mb-4"
+                    >
+                        xfactura.ro
+                    </h1>
+
+                    <div
+                        className="grid justify-center items-center text-center"
+                    >
+                        <button
+                            className="cursor-pointer select-none mb-4 focus:outline-none focus:ring-2 focus:ring-white"
+                        >
+                            încărcare factură
+                            <br/>
+                            <span
+                                className="text-xs"
+                            >
+                                jpg/png/pdf/docx/xlsx/xml/json
+                            </span>
+                        </button>
+
+                        {isMobile && (
+                            <div
+                                className="cursor-pointer select-none mb-4"
+                            >
+                                fotografiere factură
+                            </div>
+                        )}
+                    </div>
+                </div>
 
 
-            <div
-                className="grid place-content-center p-8"
-            >
-                <button
-                    onClick={() => generateEinvoice()}
-                    className="select-none bg-gray-800 disabled:bg-gray-600 hover:bg-gray-900 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-white"
-                    disabled={!validData}
+                <div
+                    className="grid items-center justify-center md:flex m-auto"
                 >
-                    generare efactura
-                </button>
-            </div>
+                    <Party
+                        kind="seller"
+                        title="furnizor"
+                        data={seller}
+                        setParty={setSeller}
+                    />
+
+                    <Party
+                        kind="buyer"
+                        title="cumpărător"
+                        data={buyer}
+                        setParty={setBuyer}
+                    />
+                </div>
 
 
-            <div
-                className="grid place-content-center p-8"
-            >
-                <Deleter
-                    title="xfactură nouă"
-                    atDelete={() => {}}
+                <div
+                    className="grid place-content-center p-8"
+                >
+                    <Input
+                        text="număr factură"
+                        value={metadata.number}
+                        setValue={(value) => updateMetadata('number', value)}
+                    />
+
+                    <Input
+                        text="monedă"
+                        value={metadata.currency}
+                        setValue={(value) => updateMetadata('currency', value)}
+                    />
+
+                    <Input
+                        text="dată emitere"
+                        value={new Date(metadata.issueDate).toLocaleDateString()}
+                        setValue={(value) => updateDate('issueDate', value)}
+                    />
+
+                    <Input
+                        text="dată scadență"
+                        value={new Date(metadata.dueDate).toLocaleDateString()}
+                        setValue={(value) => updateDate('dueDate', value)}
+                    />
+                </div>
+
+
+                <Lines
+                    data={lines}
+                    setLines={setLines}
+                />
+
+                <div
+                    className="grid place-content-center p-8"
+                >
+                    <button
+                        onClick={() => addNewLine()}
+                        className="select-none focus:outline-none focus:ring-2 focus:ring-white"
+                    >
+                        adăugare produs
+                    </button>
+                </div>
+
+
+                <div
+                    className="grid place-content-center p-8"
+                >
+                    <button
+                        onClick={() => generateEinvoice()}
+                        className="select-none bg-gray-800 disabled:bg-gray-600 hover:bg-gray-900 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-white"
+                        disabled={!validData}
+                    >
+                        generare efactura
+                    </button>
+                </div>
+
+
+                <div
+                    className="grid place-content-center p-8"
+                >
+                    <Deleter
+                        title="xfactură nouă"
+                        atDelete={() => {}}
+                    />
+                </div>
+
+
+                <div
+                    className="mb-8"
                 />
             </div>
-
-
-            <div
-                className="mb-8"
-            />
-        </div>
+        </>
     );
 }
