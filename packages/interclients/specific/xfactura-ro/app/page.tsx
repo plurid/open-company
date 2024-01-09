@@ -43,6 +43,11 @@ export default function Home() {
     ] = useState(false);
 
     const [
+        validData,
+        setValidData,
+    ] = useState(false);
+
+    const [
         seller,
         setSeller,
     ] = useState<NewParty>({
@@ -279,7 +284,8 @@ export default function Home() {
             >
                 <button
                     onClick={() => generateEinvoice()}
-                    className="select-none bg-gray-600 hover:bg-gray-800 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-white"
+                    className="select-none bg-gray-800 disabled:bg-gray-600 hover:bg-gray-900 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-white"
+                    disabled={validData}
                 >
                     generare efactura
                 </button>

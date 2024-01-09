@@ -24,7 +24,7 @@ export default function Input({
             </div>
 
             <input
-                className="text-black w-[150px] bg-gray-600 text-white px-2 focus:outline-none focus:ring-2 focus:ring-white"
+                className="text-black w-[150px] bg-gray-800 text-white px-2 focus:outline-none focus:ring-2 focus:ring-white"
                 value={value}
                 onChange={(event) => {
                     setValue(event.target.value);
