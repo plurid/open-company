@@ -6,6 +6,7 @@ import {
     useEffect,
 } from 'react';
 
+import Menu from '../components/Menu';
 import Party from '../components/Party';
 import Input from '../components/Input';
 import Lines from '../components/Lines';
@@ -144,15 +145,15 @@ export default function Home() {
         }
         mounted.current = true;
 
-        webContainerRunner.load()
-            .then((loaded) => {
+        // webContainerRunner.load()
+        //     .then((loaded) => {
                 setLoadedWebContainers(true);
 
-                if (!loaded) {
-                    // TODO
-                    // notify error
-                }
-            });
+        //         if (!loaded) {
+        //             // TODO
+        //             // notify error
+        //         }
+        //     });
     }, []);
 
 
@@ -162,6 +163,13 @@ export default function Home() {
                 <Spinner />
             )}
 
+            <h1
+                className="text-2xl text-center m-4 pb-8"
+            >
+                xfactura.ro
+            </h1>
+
+            <Menu />
 
             <div
                 className="grid md:flex"
