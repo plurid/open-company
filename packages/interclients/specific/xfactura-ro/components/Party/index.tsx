@@ -15,10 +15,12 @@ import {
 
 export default function Party({
     kind,
+    title,
     data,
     setParty,
 }: {
     kind: string,
+    title: string,
     data: NewParty,
     setParty: Dispatch<SetStateAction<NewParty>>,
 }) {
@@ -37,20 +39,29 @@ export default function Party({
 
     return (
         <div
+            className="max-w-[300px] md:w-1/2 h-[300px] p-4 md:p-8"
         >
-            {partyFields.map(field => {
-                return (
-                    <div
-                        key={kind + field}
-                    >
-                        <Input
-                            text={partyText[field]}
-                            value={data[field]}
-                            setValue={updateParty(field)}
-                        />
-                    </div>
-                );
-            })}
+            <h2
+                className="select-none text-center text-xl mb-4 md:text-left"
+            >
+                {title}
+            </h2>
+
+            <div>
+                {partyFields.map(field => {
+                    return (
+                        <div
+                            key={kind + field}
+                        >
+                            <Input
+                                text={partyText[field]}
+                                value={data[field]}
+                                setValue={updateParty(field)}
+                            />
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 }

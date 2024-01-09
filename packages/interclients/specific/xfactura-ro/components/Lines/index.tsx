@@ -49,7 +49,7 @@ export default function Lines({
 
     return (
         <ul
-            className="grid place-content-center p-8"
+            className="grid place-content-center p-2 md:p-8"
         >
             {data.length === 0 && (
                 <div>
