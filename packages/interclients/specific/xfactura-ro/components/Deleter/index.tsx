@@ -2,6 +2,10 @@ import {
     useState,
 } from 'react';
 
+import {
+    defocus,
+} from '../../logic/utilities';
+
 
 
 export default function Deleter({
@@ -23,7 +27,11 @@ export default function Deleter({
                 className="select-none flex gap-4 items-center justify-center text-center min-w-[90px] min-h-[25px]"
             >
                 <button
-                    onClick={() => atDelete()}
+                    onClick={() => {
+                        atDelete();
+                        setShowDelete(false);
+                        defocus();
+                    }}
                     className="focus:outline-none focus:ring-2 focus:ring-white"
                 >
                     <svg
