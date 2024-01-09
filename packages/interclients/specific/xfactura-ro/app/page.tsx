@@ -285,7 +285,7 @@ export default function Home() {
                 <button
                     onClick={() => generateEinvoice()}
                     className="select-none bg-gray-800 disabled:bg-gray-600 hover:bg-gray-900 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-white"
-                    disabled={validData}
+                    disabled={!validData}
                 >
                     generare efactura
                 </button>
