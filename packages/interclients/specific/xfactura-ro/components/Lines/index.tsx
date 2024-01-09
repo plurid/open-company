@@ -9,14 +9,21 @@ import {
     InvoiceLine,
 } from '../../data';
 
+import {
+    toFixed,
+} from '../../logic/utilities';
+
+
 
 
 export default function Lines({
     data,
     setLines,
+    addNewLine,
 }: {
     data: InvoiceLine[],
     setLines: Dispatch<SetStateAction<InvoiceLine[]>>,
+    addNewLine: () => void,
 }) {
     const updateLine = (
         index: number,
@@ -51,28 +58,113 @@ export default function Lines({
         setLines(newLines);
     }
 
+    const quantityPrice = (line: InvoiceLine) => line.price * line.quantity;
+    const vatValue = (line: InvoiceLine) => quantityPrice(line) / (1 + line.vatRate / 100);
+
+    const computeWithoutVAT = () => {
+        return toFixed(
+            data.reduce((acc, line) => {
+                if (line.vatIncluded) {
+                    return acc + vatValue(line);
+                }
+
+                return acc + quantityPrice(line);
+            }, 0),
+        );
+    }
+
+    const computeVAT = () => {
+        return toFixed(
+            data.reduce((acc, line) => {
+                if (line.vatIncluded) {
+                    return acc + quantityPrice(line) - vatValue(line);
+                }
+
+                return acc + quantityPrice(line) * line.vatRate / 100;
+            }, 0),
+        );
+    }
+
+    const computeTotal = () => {
+        return toFixed(
+            data.reduce((acc, line) => {
+                if (line.vatIncluded) {
+                    return acc + quantityPrice(line);
+                }
+
+                return acc + quantityPrice(line) * (1 + line.vatRate / 100);
+            }, 0),
+        );
+    }
+
 
     return (
-        <ul
-            className="grid place-content-center p-2 md:p-8"
-        >
-            {data.length === 0 && (
-                <div>
-                    niciun produs
-                </div>
-            )}
+        <div>
+            <ul
+                className="grid place-content-center p-2 md:p-8"
+            >
+                {data.length === 0 && (
+                    <div>
+                        niciun produs
+                    </div>
+                )}
 
-            {data.map((line, index) => {
-                return (
-                    <Line
-                        key={'line' + index}
-                        data={line}
-                        index={index}
-                        updateLine={updateLine}
-                        removeLine={removeLine}
-                    />
-                );
-            })}
-        </ul>
+                {data.map((line, index) => {
+                    return (
+                        <Line
+                            key={'line' + index}
+                            data={line}
+                            index={index}
+                            updateLine={updateLine}
+                            removeLine={removeLine}
+                        />
+                    );
+                })}
+            </ul>
+
+            <div
+                className="grid place-content-center p-8"
+            >
+                <button
+                    onClick={() => addNewLine()}
+                    className="select-none focus:outline-none focus:ring-2 focus:ring-white"
+                >
+                    adăugare produs
+                </button>
+            </div>
+
+            <div
+                className="grid place-content-center p-8"
+            >
+                <div className="flex justify-between m-2 w-[200px]">
+                    <div>
+                        total fără TVA
+                    </div>
+
+                    <div>
+                        {computeWithoutVAT()}
+                    </div>
+                </div>
+
+                <div className="flex justify-between m-2 w-[200px]">
+                    <div>
+                        total TVA
+                    </div>
+
+                    <div>
+                        {computeVAT()}
+                    </div>
+                </div>
+
+                <div className="flex justify-between m-2 w-[200px]">
+                    <div>
+                        total
+                    </div>
+                    <div>
+                        {computeTotal()}
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }

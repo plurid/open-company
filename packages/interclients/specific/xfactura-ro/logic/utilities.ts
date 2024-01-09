@@ -33,3 +33,12 @@ export const getDateFormat = (
     const date = new Date(timestamp);
     return date.toISOString().split('T')[0];
 }
+
+
+export function toFixed(
+    num: number,
+    fixed: number = 2,
+) {
+    var re = new RegExp('^-?\\d+(?:\.\\d{0,' + (fixed || -1) + '})?');
+    return num.toString().match(re)![0].replace('.', ',');
+}

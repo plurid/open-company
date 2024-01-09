@@ -257,18 +257,8 @@ export default function Home() {
                 <Lines
                     data={lines}
                     setLines={setLines}
+                    addNewLine={addNewLine}
                 />
-
-                <div
-                    className="grid place-content-center p-8"
-                >
-                    <button
-                        onClick={() => addNewLine()}
-                        className="select-none focus:outline-none focus:ring-2 focus:ring-white"
-                    >
-                        adăugare produs
-                    </button>
-                </div>
 
 
                 <div

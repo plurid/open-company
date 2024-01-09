@@ -1,21 +1,15 @@
 import Input from '../Input';
 import Toggle from '../Toggle';
+import Deleter from '../Deleter';
 
 import {
     InvoiceLine,
 } from '../../data';
 
-import Deleter from '../Deleter';
+import {
+    toFixed,
+} from '../../logic/utilities';
 
-
-
-function toFixed(
-    num: number,
-    fixed: number = 2,
-) {
-    var re = new RegExp('^-?\\d+(?:\.\\d{0,' + (fixed || -1) + '})?');
-    return num.toString().match(re)![0].replace('.', ',');
-}
 
 
 export default function Line({
