@@ -72,8 +72,11 @@ export default function Deleter({
             className="select-none flex gap-4 items-center justify-center text-center min-w-[90px] min-h-[25px]"
         >
             <button
-                onClick={() => setShowDelete(true)}
-                className="focus:outline-none focus:ring-2 focus:ring-white"
+                onClick={() => {
+                    setShowDelete(true);
+                    defocus();
+                }}
+                className="font-bold focus:outline-none focus:ring-2 focus:ring-white"
             >
                 {title || 'ștergere'}
             </button>

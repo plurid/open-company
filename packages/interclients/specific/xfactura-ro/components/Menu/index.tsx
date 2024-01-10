@@ -167,7 +167,11 @@ export default function Menu() {
                 <div
                     className="fixed z-40 top-0 h-screen right-0 left-0 botom-0 backdrop-blur-md grid place-items-center text-center"
                 >
-                    {viewElement}
+                    <div
+                        className="max-w-xl p-4"
+                    >
+                        {viewElement}
+                    </div>
                 </div>
             )}
         </>

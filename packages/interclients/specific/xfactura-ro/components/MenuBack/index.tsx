@@ -5,7 +5,7 @@ export default function MenuBack({
 }) {
     return (
         <div
-            className="mt-8 flex justify-center"
+            className="mt-8 flex justify-center font-bold"
         >
             <div
                 className="cursor-pointer text-center inline"

@@ -20,10 +20,7 @@ export default function InvoicesList({
     return (
         <div>
             <h1
-                className="text-center"
-                style={{
-                    marginBottom: '2rem',
-                }}
+                className="text-center mb-8"
             >
                 xfacturi
             </h1>

@@ -11,10 +11,7 @@ export default function Settings({
     return (
         <div>
             <h1
-                className="text-center"
-                style={{
-                    marginBottom: '2rem',
-                }}
+                className="text-center mb-8"
             >
                 setări
             </h1>
@@ -22,11 +19,15 @@ export default function Settings({
             <div
                 className="grid gap-4"
             >
-                <button>
+                <button
+                    className="font-bold"
+                >
                     export
                 </button>
 
-                <button>
+                <button
+                    className="font-bold"
+                >
                     import
                 </button>
 

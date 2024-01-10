@@ -9,13 +9,10 @@ export default function About({
 }) {
     return (
         <div
-            className="max-w-xl p-4 text-left"
+            className="text-left"
         >
             <h1
-                className="text-center"
-                style={{
-                    marginBottom: '2rem',
-                }}
+                className="text-center mb-8"
             >
                 despre xfactura.ro
             </h1>
