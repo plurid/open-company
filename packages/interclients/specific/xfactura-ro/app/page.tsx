@@ -150,15 +150,15 @@ export default function Home() {
         }
         mounted.current = true;
 
-        // webContainerRunner.load()
-        //     .then((loaded) => {
+        webContainerRunner.load()
+            .then((loaded) => {
                 setLoadedWebContainers(true);
 
-        //         if (!loaded) {
-        //             // TODO
-        //             // notify error
-        //         }
-        //     });
+                if (!loaded) {
+                    // TODO
+                    // notify error
+                }
+            });
     }, []);
 
 
