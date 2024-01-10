@@ -8,7 +8,7 @@ export default function MenuBack({
             className="mt-8 flex justify-center font-bold"
         >
             <div
-                className="cursor-pointer text-center inline"
+                className="cursor-pointer select-none text-center inline"
                 onClick={() => back()}
             >
                 înapoi

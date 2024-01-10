@@ -18,8 +18,7 @@ export default function About({
             </h1>
 
             <p>
-                xfactura.ro este un proiect
-                &nbsp;
+                xfactura.ro este un proiect&nbsp;
                 <a
                     href="https://github.com/plurid/open-company/tree/master/packages/interclients/specific/xfactura-ro"
                     target="_blank"
@@ -41,8 +40,7 @@ export default function About({
             </p>
 
             <p>
-                xfactura.ro poate fi rulat pe propriul calculator folosind
-                &nbsp;
+                xfactura.ro poate fi rulat pe propriul calculator folosind&nbsp;
                 <a
                     href="https://github.com/plurid/open-company/tree/master/packages/interclients/specific/xfactura-ro#self-hosting"
                     target="_blank"
@@ -52,8 +50,7 @@ export default function About({
             </p>
 
             <p>
-                xfactura.ro poate fi susținut prin
-                &nbsp;
+                xfactura.ro poate fi susținut prin&nbsp;
                 <a
                     href="https://buy.stripe.com/aEU5nj6Pma6Va6A3ch"
                     target="_blank"
