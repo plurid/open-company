@@ -165,7 +165,7 @@ export default function Menu() {
 
             {showMenu && (
                 <div
-                    className="fixed z-40 top-0 h-screen right-0 left-0 botom-0 backdrop-blur-md grid place-items-center text-center"
+                    className="animate-fadeIn fixed z-40 top-0 h-screen right-0 left-0 botom-0 backdrop-blur-md grid place-items-center text-center"
                 >
                     <div
                         className="max-w-xl p-4"
