@@ -1,6 +1,5 @@
 import Input from '../Input';
-import Toggle from '../Toggle';
-import Deleter from '../Deleter';
+import LineMenu from '../LineMenu';
 
 import {
     InvoiceLine,
@@ -8,6 +7,7 @@ import {
 
 import {
     toFixed,
+    financial,
 } from '../../logic/utilities';
 
 
@@ -39,16 +39,19 @@ export default function Line({
             return '0';
         }
 
-        const priceInUnits = price * 100;
-        const valueInUnits = priceInUnits * quantity;
+        // const priceInUnits = price * 100;
+        // const valueInUnits = priceInUnits * quantity;
+        const value = financial(price * quantity);
 
         if (vatIncluded) {
-            return toFixed(valueInUnits / 100);
+            return toFixed(value);
         }
 
-        const vatInUnits = valueInUnits * vatRate / 100;
-        const totalInUnits = valueInUnits + vatInUnits;
-        const total = totalInUnits / 100;
+        // const vatInUnits = valueInUnits * vatRate / 100;
+        // const totalInUnits = valueInUnits + vatInUnits;
+        // const total = totalInUnits / 100;
+        const vat = financial(value * vatRate / 100);
+        const total = financial(value + vat);
 
         return toFixed(total);
     }
@@ -56,7 +59,7 @@ export default function Line({
 
     return (
         <li
-            className="grid gap-1 mb-10 items-center xl:flex xl:gap-12 xl:mb-4"
+            className="grid gap-1 mb-10 items-center lg:flex lg:gap-12 lg:mb-4"
         >
             <Input
                 text="nume"
@@ -95,14 +98,11 @@ export default function Line({
                 disabled={true}
             />
 
-            <Toggle
-                text="TVA inclus"
-                value={data.vatIncluded}
-                toggle={() => updateLine(index, 'vatIncluded', !data.vatIncluded)}
-            />
-
-            <Deleter
-                atDelete={() => removeLine(index)}
+            <LineMenu
+                data={data}
+                index={index}
+                updateLine={updateLine}
+                removeLine={removeLine}
             />
         </li>
     );

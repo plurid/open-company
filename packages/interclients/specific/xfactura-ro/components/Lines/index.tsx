@@ -11,8 +11,8 @@ import {
 
 import {
     toFixed,
+    financial,
 } from '../../logic/utilities';
-
 
 
 
@@ -58,42 +58,48 @@ export default function Lines({
         setLines(newLines);
     }
 
-    const quantityPrice = (line: InvoiceLine) => line.price * line.quantity;
-    const vatValue = (line: InvoiceLine) => quantityPrice(line) / (1 + line.vatRate / 100);
+    const quantityPrice = (line: InvoiceLine) => financial(line.price * line.quantity);
+    const vatValue = (line: InvoiceLine) => financial(quantityPrice(line) / (1 + line.vatRate / 100));
 
     const computeWithoutVAT = () => {
         return toFixed(
-            data.reduce((acc, line) => {
-                if (line.vatIncluded) {
-                    return acc + vatValue(line);
-                }
+            financial(
+                data.reduce((acc, line) => {
+                    if (line.vatIncluded) {
+                        return acc + vatValue(line);
+                    }
 
-                return acc + quantityPrice(line);
-            }, 0),
+                    return acc + quantityPrice(line);
+                }, 0),
+            ),
         );
     }
 
     const computeVAT = () => {
         return toFixed(
-            data.reduce((acc, line) => {
-                if (line.vatIncluded) {
-                    return acc + quantityPrice(line) - vatValue(line);
-                }
+            financial(
+                data.reduce((acc, line) => {
+                    if (line.vatIncluded) {
+                        return acc + financial(quantityPrice(line) - vatValue(line));
+                    }
 
-                return acc + quantityPrice(line) * line.vatRate / 100;
-            }, 0),
+                    return acc + financial(quantityPrice(line) * line.vatRate / 100);
+                }, 0),
+            ),
         );
     }
 
     const computeTotal = () => {
         return toFixed(
-            data.reduce((acc, line) => {
-                if (line.vatIncluded) {
-                    return acc + quantityPrice(line);
-                }
+            financial(
+                data.reduce((acc, line) => {
+                    if (line.vatIncluded) {
+                        return acc + quantityPrice(line);
+                    }
 
-                return acc + quantityPrice(line) * (1 + line.vatRate / 100);
-            }, 0),
+                    return acc + financial(quantityPrice(line) * (1 + line.vatRate / 100));
+                }, 0),
+            ),
         );
     }
 

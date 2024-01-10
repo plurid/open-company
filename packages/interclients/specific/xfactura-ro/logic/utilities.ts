@@ -42,3 +42,26 @@ export function toFixed(
     var re = new RegExp('^-?\\d+(?:\.\\d{0,' + (fixed || -1) + '})?');
     return num.toString().match(re)![0].replace('.', ',');
 }
+
+
+export const formatNumber = (
+    value: number,
+) => {
+    const formatter = new Intl.NumberFormat('ro-RO', {
+        // currency: 'RON',
+        // currencySign: 'accounting',
+        // style: 'currency',
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2,
+    });
+    const formated = formatter.format(value);
+
+    return formated;
+}
+
+
+export const financial = (
+    num: number,
+) => {
+    return Math.round(num * 100) / 100;
+}
