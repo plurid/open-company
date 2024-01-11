@@ -13,9 +13,8 @@ import Lines from '../components/Lines';
 import Spinner from '../components/Spinner';
 import Deleter from '../components/Deleter';
 import Datepicker from '../components/Datepicker';
-import LinkButton from '../components/LinkButton';
-import Tooltip from '../components/Tooltip';
 
+import Extractors from '../containers/Extractors';
 import Camera from '../containers/Camera';
 import Audio from '../containers/Audio';
 
@@ -26,7 +25,6 @@ import {
     InvoiceLine,
     emptyMetadata,
     Metadata,
-    acceptedInvoiceFiles,
 } from '../data';
 
 import webContainerRunner from '../logic/node-php';
@@ -48,7 +46,6 @@ import {
 export default function Home() {
     // #region references
     const mounted = useRef(false);
-    const configInput = useRef<HTMLInputElement | null>(null);
     // #endregion references
 
 
@@ -109,31 +106,6 @@ export default function Home() {
 
 
     // #region handlers
-    const triggerReadInput = () => {
-        if (!configInput?.current) {
-            return;
-        }
-        configInput.current.click();
-    }
-
-    const handleReadInput = () => {
-        if (!configInput?.current) {
-            return;
-        }
-
-        const files = configInput.current.files;
-        if (!files) {
-            return;
-        }
-
-        const file = files[0];
-        if (!file) {
-            return;
-        }
-
-        // console.log(file);
-    }
-
     const addAudioElement = (
         blob: Blob,
     ) => {
@@ -302,81 +274,11 @@ export default function Home() {
                         xfactura.ro
                     </h1>
 
-                    <div
-                        className="grid gap-2 justify-center items-center text-center min-h-[50px] md:flex md:gap-6"
-                    >
-                        <div
-                            className="mb-4"
-                        >
-                            <input
-                                ref={configInput}
-                                type="file"
-                                accept={acceptedInvoiceFiles}
-                                className="hidden"
-                                onChange={() => handleReadInput()}
-                            />
-                            <Tooltip
-                                content={(
-                                    <>
-                                        încarcă fișier cu factura în format
-                                        <br />
-                                        {acceptedInvoiceFiles.replace(/\./g, ' ')}
-                                        <br />
-                                        pentru a detecta automat datele
-                                    </>
-                                )}
-                            >
-                                <LinkButton
-                                    text="încărcare"
-                                    onClick={() => triggerReadInput()}
-                                />
-                            </Tooltip>
-                        </div>
-
-                        {hasMediaDevices && (
-                            <>
-                                <div
-                                    className="mb-4"
-                                >
-                                    <Tooltip
-                                        content={(
-                                            <>
-                                                folosește camera pentru a fotografia factura
-                                                <br />
-                                                și a detecta automat datele
-                                            </>
-                                        )}
-                                    >
-                                        <LinkButton
-                                            text="fotografiere"
-                                            onClick={() => {
-                                                setShowCamera(true);
-                                            }}
-                                        />
-                                    </Tooltip>
-                                </div>
-
-                                <div
-                                    className="mb-4"
-                                >
-                                    <Tooltip
-                                        content={(
-                                            <>
-                                                folosește microfonul pentru a dicta factura
-                                                <br />
-                                                &quot;factură de la ... către ... număr ... dată ... produs unu ...&quot;
-                                            </>
-                                        )}
-                                    >
-                                        <LinkButton
-                                            text="înregistrare"
-                                            onClick={() => setShowMicrophone(show => !show)}
-                                        />
-                                    </Tooltip>
-                                </div>
-                            </>
-                        )}
-                    </div>
+                    <Extractors
+                        hasMediaDevices={hasMediaDevices}
+                        setShowCamera={setShowCamera}
+                        setShowMicrophone={setShowMicrophone}
+                    />
 
                     {showCamera && (
                         <Camera
