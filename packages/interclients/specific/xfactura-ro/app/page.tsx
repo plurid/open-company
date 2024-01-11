@@ -6,6 +6,9 @@ import {
     useEffect,
 } from 'react';
 
+import Camera from 'react-html5-camera-photo';
+import 'react-html5-camera-photo/build/css/index.css';
+
 import Menu from '../components/Menu';
 import Party from '../components/Party';
 import Input from '../components/Input';
@@ -51,6 +54,11 @@ export default function Home() {
     const [
         isMobile,
         setIsMobile,
+    ] = useState(false);
+
+    const [
+        showCamera,
+        setShowCamera,
     ] = useState(false);
 
     const [
@@ -143,6 +151,15 @@ export default function Home() {
         );
     }
 
+    const handleInvoicePhoto = (
+        dataUri: string,
+    ) => {
+        setShowCamera(false);
+
+        // TODO
+        // handle photo
+    }
+
     const resetInvoice = () => {
         setSeller({
             ...newParty,
@@ -227,10 +244,10 @@ export default function Home() {
                         xfactura.ro
                     </h1>
 
-                    {/* <div
+                    <div
                         className="grid justify-center items-center text-center"
                     >
-                        <button
+                        {/* <button
                             className="cursor-pointer select-none mb-4 focus:outline-none focus:ring-2 focus:ring-white"
                         >
                             încărcare factură
@@ -240,16 +257,52 @@ export default function Home() {
                             >
                                 jpg/png/pdf/docx/xlsx/xml/json
                             </span>
-                        </button>
+                        </button> */}
 
                         {isMobile && (
                             <div
                                 className="cursor-pointer select-none mb-4"
                             >
-                                fotografiere factură
+                                <button
+                                    onClick={() => {
+                                        setShowCamera(true);
+                                    }}
+                                >
+                                    fotografiere factură
+                                </button>
                             </div>
                         )}
-                    </div> */}
+                    </div>
+
+                    {showCamera && (
+                        <div
+                            className="bg-black fixed top-0 left-0 right-0 bottom-0 z-50 grid justify-center items-center grid-rows-4"
+                        >
+                            <div
+                                className="row-span-3"
+                            >
+                                <Camera
+                                    onTakePhoto={(dataUri) => {
+                                        handleInvoicePhoto(dataUri);
+                                    }}
+                                    idealFacingMode="environment"
+                                    imageCompression={1}
+                                    isMaxResolution={true}
+                                />
+                            </div>
+
+                            <div
+                                className="flex justify-center m-4"
+                            >
+                                <button
+                                    onClick={() => setShowCamera(false)}
+                                    className=""
+                                >
+                                    anulare
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
 
