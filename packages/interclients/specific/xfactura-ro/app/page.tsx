@@ -6,7 +6,6 @@ import {
     useEffect,
 } from 'react';
 
-
 import Menu from '../components/Menu';
 import Party from '../components/Party';
 import Input from '../components/Input';
@@ -18,6 +17,7 @@ import LinkButton from '../components/LinkButton';
 import Tooltip from '../components/Tooltip';
 
 import Camera from '../containers/Camera';
+import Audio from '../containers/Audio';
 
 import {
     newParty,
@@ -66,6 +66,11 @@ export default function Home() {
     const [
         showCamera,
         setShowCamera,
+    ] = useState(false);
+
+    const [
+        showMicrophone,
+        setShowMicrophone,
     ] = useState(false);
 
     const [
@@ -128,6 +133,16 @@ export default function Home() {
 
         // console.log(file);
     }
+
+    const addAudioElement = (
+        blob: Blob,
+    ) => {
+        // const url = URL.createObjectURL(blob);
+        // const audio = document.createElement('audio');
+        // audio.src = url;
+        // audio.controls = true;
+        // document.body.appendChild(audio);
+    };
 
     const updateMetadata = (
         type: keyof Metadata,
@@ -355,8 +370,7 @@ export default function Home() {
                                     >
                                         <LinkButton
                                             text="înregistrare"
-                                            onClick={() => {
-                                            }}
+                                            onClick={() => setShowMicrophone(show => !show)}
                                         />
                                     </Tooltip>
                                 </div>
@@ -368,6 +382,13 @@ export default function Home() {
                         <Camera
                             handlePhoto={handleInvoicePhoto}
                             back={() => setShowCamera(false)}
+                        />
+                    )}
+
+                    {showMicrophone && (
+                        <Audio
+                            setShowMicrophone={setShowMicrophone}
+                            addAudioElement={addAudioElement}
                         />
                     )}
                 </div>

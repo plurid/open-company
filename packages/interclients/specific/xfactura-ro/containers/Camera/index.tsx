@@ -1,6 +1,8 @@
 import Camera from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 
+import LinkButton from '../../components/LinkButton';
+
 
 
 export default function CameraContainer({
@@ -12,7 +14,7 @@ export default function CameraContainer({
 }) {
     return (
         <div
-            className="bg-black fixed top-0 left-0 right-0 bottom-0 z-50 grid justify-center items-center grid-rows-4"
+            className="h-full bg-black fixed top-0 left-0 right-0 bottom-0 z-50 grid justify-center items-center grid-rows-4"
         >
             <div
                 className="row-span-3 bg-blue"
@@ -30,12 +32,10 @@ export default function CameraContainer({
             <div
                 className="flex justify-center m-4"
             >
-                <button
+                <LinkButton
+                    text="anulare"
                     onClick={() => back()}
-                    className=""
-                >
-                    anulare
-                </button>
+                />
             </div>
         </div>
     );
