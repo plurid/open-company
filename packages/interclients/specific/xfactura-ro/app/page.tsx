@@ -233,19 +233,21 @@ export default function Home() {
         }
         mounted.current = true;
 
-        if (ENVIRONMENT.IN_PRODUCTION === 'true') {
-            webContainerRunner.load()
-                .then((loaded) => {
-                    setLoadedWebContainers(true);
+        // if (ENVIRONMENT.IN_PRODUCTION === 'true') {
+        //     webContainerRunner.load()
+        //         .then((loaded) => {
+        //             setLoadedWebContainers(true);
 
-                    if (!loaded) {
-                        // TODO
-                        // notify error
-                    }
-                });
-        } else {
-            setLoadedWebContainers(true);
-        }
+        //             if (!loaded) {
+        //                 // TODO
+        //                 // notify error
+        //             }
+        //         });
+        // } else {
+        //     setLoadedWebContainers(true);
+        // }
+
+        setLoadedWebContainers(true);
     }, []);
 
     /** valid data */
