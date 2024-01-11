@@ -104,3 +104,6 @@ export const countyMap: Record<string, string> = {
     'Vrancea': 'VN',
     'Vâlcea': 'VL',
 };
+
+
+export const acceptedInvoiceFiles = ".jpg,.jpeg,.png,.pdf,.docx,.xlsx,.xml,.json";

@@ -6,8 +6,6 @@ import {
     useEffect,
 } from 'react';
 
-import Camera from 'react-html5-camera-photo';
-import 'react-html5-camera-photo/build/css/index.css';
 
 import Menu from '../components/Menu';
 import Party from '../components/Party';
@@ -16,6 +14,10 @@ import Lines from '../components/Lines';
 import Spinner from '../components/Spinner';
 import Deleter from '../components/Deleter';
 import Datepicker from '../components/Datepicker';
+import LinkButton from '../components/LinkButton';
+import Tooltip from '../components/Tooltip';
+
+import Camera from '../containers/Camera';
 
 import {
     newParty,
@@ -24,6 +26,7 @@ import {
     InvoiceLine,
     emptyMetadata,
     Metadata,
+    acceptedInvoiceFiles,
 } from '../data';
 
 import webContainerRunner from '../logic/node-php';
@@ -43,18 +46,22 @@ import {
 
 
 export default function Home() {
+    // #region references
     const mounted = useRef(false);
+    const configInput = useRef<HTMLInputElement | null>(null);
+    // #endregion references
 
 
+    // #region state
     const [
         loadedWebContainers,
         setLoadedWebContainers,
     ] = useState(false);
 
     const [
-        isMobile,
-        setIsMobile,
-    ] = useState(false);
+        hasMediaDevices,
+        setHasMediaDevices,
+    ] = useState(true);
 
     const [
         showCamera,
@@ -93,10 +100,37 @@ export default function Home() {
     ] = useState<InvoiceLine[]>([{
         ...emptyInvoiceLine,
     }]);
+    // #endregion state
 
+
+    // #region handlers
+    const triggerReadInput = () => {
+        if (!configInput?.current) {
+            return;
+        }
+        configInput.current.click();
+    }
+
+    const handleReadInput = () => {
+        if (!configInput?.current) {
+            return;
+        }
+
+        const files = configInput.current.files;
+        if (!files) {
+            return;
+        }
+
+        const file = files[0];
+        if (!file) {
+            return;
+        }
+
+        // console.log(file);
+    }
 
     const updateMetadata = (
-        type: any,
+        type: keyof Metadata,
         value: string | number,
     ) => {
         setMetadata(prevValues => ({
@@ -111,7 +145,6 @@ export default function Home() {
     ) => {
         updateMetadata(kind, timestamp);
     }
-
 
     const addNewLine = () => {
         setLines(prevValues => ([
@@ -177,26 +210,29 @@ export default function Home() {
             ...emptyInvoiceLine,
         }]);
     }
+    // #endregion handlers
 
 
+    // #region effects
+    /** web container */
     useEffect(() => {
         if (mounted.current) {
             return;
         }
         mounted.current = true;
 
-        webContainerRunner.load()
-            .then((loaded) => {
-                setLoadedWebContainers(true);
+        // webContainerRunner.load()
+        //     .then((loaded) => {
+                   setLoadedWebContainers(true);
 
-                if (!loaded) {
-                    // TODO
-                    // notify error
-                }
-            });
+        //         if (!loaded) {
+        //             // TODO
+        //             // notify error
+        //         }
+        //     });
     }, []);
 
-
+    /** valid data */
     useEffect(() => {
         const validSeller = checkValidParty(seller);
         const validBuyer = checkValidParty(buyer);
@@ -218,12 +254,19 @@ export default function Home() {
         lines,
     ]);
 
+    /** media devices */
     useEffect(() => {
+        let hasMediaDevices = true;
+
         if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-            const isMobile = true;
-            setIsMobile(isMobile);
+            hasMediaDevices = true;
+        } else {
+            hasMediaDevices = false;
         }
+
+        setHasMediaDevices(hasMediaDevices);
     }, []);
+    // #endregion effects
 
 
     return (
@@ -245,63 +288,87 @@ export default function Home() {
                     </h1>
 
                     <div
-                        className="grid justify-center items-center text-center"
+                        className="grid gap-2 justify-center items-center text-center min-h-[50px] md:flex md:gap-6"
                     >
-                        {/* <button
-                            className="cursor-pointer select-none mb-4 focus:outline-none focus:ring-2 focus:ring-white"
+                        <div
+                            className="mb-4"
                         >
-                            încărcare factură
-                            <br/>
-                            <span
-                                className="text-xs"
+                            <input
+                                ref={configInput}
+                                type="file"
+                                accept={acceptedInvoiceFiles}
+                                className="hidden"
+                                onChange={() => handleReadInput()}
+                            />
+                            <Tooltip
+                                content={(
+                                    <>
+                                        încarcă fișier cu factura în format
+                                        <br />
+                                        {acceptedInvoiceFiles.replace(/\./g, ' ')}
+                                        <br />
+                                        pentru a detecta automat datele
+                                    </>
+                                )}
                             >
-                                jpg/png/pdf/docx/xlsx/xml/json
-                            </span>
-                        </button> */}
+                                <LinkButton
+                                    text="încărcare"
+                                    onClick={() => triggerReadInput()}
+                                />
+                            </Tooltip>
+                        </div>
 
-                        {isMobile && (
-                            <div
-                                className="cursor-pointer select-none mb-4"
-                            >
-                                <button
-                                    onClick={() => {
-                                        setShowCamera(true);
-                                    }}
+                        {hasMediaDevices && (
+                            <>
+                                <div
+                                    className="mb-4"
                                 >
-                                    fotografiere factură
-                                </button>
-                            </div>
+                                    <Tooltip
+                                        content={(
+                                            <>
+                                                folosește camera pentru a fotografia factura
+                                                <br />
+                                                și a detecta automat datele
+                                            </>
+                                        )}
+                                    >
+                                        <LinkButton
+                                            text="fotografiere"
+                                            onClick={() => {
+                                                setShowCamera(true);
+                                            }}
+                                        />
+                                    </Tooltip>
+                                </div>
+
+                                <div
+                                    className="mb-4"
+                                >
+                                    <Tooltip
+                                        content={(
+                                            <>
+                                                folosește microfonul pentru a dicta factura
+                                                <br />
+                                                &quot;factură de la ... către ... număr ... dată ... produs unu ...&quot;
+                                            </>
+                                        )}
+                                    >
+                                        <LinkButton
+                                            text="înregistrare"
+                                            onClick={() => {
+                                            }}
+                                        />
+                                    </Tooltip>
+                                </div>
+                            </>
                         )}
                     </div>
 
                     {showCamera && (
-                        <div
-                            className="bg-black fixed top-0 left-0 right-0 bottom-0 z-50 grid justify-center items-center grid-rows-4"
-                        >
-                            <div
-                                className="row-span-3"
-                            >
-                                <Camera
-                                    onTakePhoto={(dataUri) => {
-                                        handleInvoicePhoto(dataUri);
-                                    }}
-                                    idealFacingMode="environment"
-                                    imageCompression={1}
-                                    isMaxResolution={true}
-                                />
-                            </div>
-
-                            <div
-                                className="flex justify-center m-4"
-                            >
-                                <button
-                                    onClick={() => setShowCamera(false)}
-                                    className=""
-                                >
-                                    anulare
-                                </button>
-                            </div>
-                        </div>
+                        <Camera
+                            handlePhoto={handleInvoicePhoto}
+                            back={() => setShowCamera(false)}
+                        />
                     )}
                 </div>
 
