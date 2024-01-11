@@ -110,9 +110,16 @@ export const acceptedInvoiceFiles = '.jpg,.jpeg,.png,.pdf,.docx,.xlsx,.xml,.json
 
 
 export const COMPANY_DETAILS_API = `${process.env.NEXT_PUBLIC_X_DOMAIN}/api/company_details`;
+export const EINVOICE_API = `${process.env.NEXT_PUBLIC_X_DOMAIN}/api/einvoice`;
 
 
 export const ENVIRONMENT = {
     IN_PRODUCTION: process.env.NEXT_PUBLIC_IN_PRODUCTION,
     X_DOMAIN: process.env.NEXT_PUBLIC_X_DOMAIN,
 };
+
+
+export type ResponseData = {
+    status: boolean;
+    data?: any;
+}

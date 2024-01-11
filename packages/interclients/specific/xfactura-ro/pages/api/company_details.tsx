@@ -4,6 +4,10 @@ import type {
 } from 'next';
 
 import {
+    ResponseData,
+} from '../../data';
+
+import {
     logger,
 } from '../../logic/utilities';
 
@@ -16,12 +20,7 @@ const MAP_LIMIT = 10_000;
 
 type RequestBody = {
     vatNumber: string;
-};
-
-type ResponseData = {
-    status: boolean;
-    data?: any;
-};
+}
 
 
 export default async function handler(

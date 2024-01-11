@@ -42,6 +42,10 @@ import {
     normalizedUserCounty,
 } from '../logic/validation';
 
+import {
+    getEInvoice,
+} from '../logic/requests';
+
 
 
 export default function Home() {
@@ -69,6 +73,11 @@ export default function Home() {
     const [
         showMicrophone,
         setShowMicrophone,
+    ] = useState(false);
+
+    const [
+        loadingEInvoice,
+        setLoadingEInvoice,
     ] = useState(false);
 
     const [
@@ -142,6 +151,8 @@ export default function Home() {
     }
 
     const generateEinvoice = async () => {
+        setLoadingEInvoice(true);
+
         const invoice = {
             metadata: {
                 ...metadata,
@@ -159,17 +170,30 @@ export default function Home() {
             lines,
         };
 
-        await webContainerRunner.writeData(invoice);
-        await webContainerRunner.startNodePHPServer(
-            (value) => {
-                const filename = `efactura-${metadata.number}-${seller.name}-${buyer.name}.xml`;
+        const response = await getEInvoice(invoice);
+        setLoadingEInvoice(false);
 
-                downloadTextFile(
-                    filename,
-                    value,
-                );
-            },
-        );
+        if (response && response.status) {
+            const filename = `efactura-${metadata.number}-${seller.name}-${buyer.name}.xml`;
+
+            downloadTextFile(
+                filename,
+                response.data,
+            );
+        }
+
+        // await webContainerRunner.writeData(invoice);
+        // await webContainerRunner.startNodePHPServer(
+        //     (value) => {
+        //         setLoadingEInvoice(false);
+        //         const filename = `efactura-${metadata.number}-${seller.name}-${buyer.name}.xml`;
+
+        //         downloadTextFile(
+        //             filename,
+        //             value,
+        //         );
+        //     },
+        // );
     }
 
     const handleInvoicePhoto = (
@@ -336,7 +360,7 @@ export default function Home() {
                     <button
                         onClick={() => generateEinvoice()}
                         className="select-none bg-gray-800 disabled:bg-gray-600 hover:bg-gray-900 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-white"
-                        disabled={!validData}
+                        disabled={loadingEInvoice || !validData}
                     >
                         generare efactura
                     </button>
