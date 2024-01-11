@@ -23,7 +23,7 @@ const Toggle = ({
                     }}
                 />
                 <div className={`
-                    w-11 h-6 bg-gray-200
+                    w-11 h-6 bg-gray-500
                     peer-focus:outline-none
                     peer-focus:ring-2
                     peer-focus:ring-white

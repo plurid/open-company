@@ -56,7 +56,7 @@ export default function LineMenu({
 
             {show && (
                 <div
-                    className="absolute z-40 top-[30px] left-0 w-[180px] backdrop-blur-md shadow-2xl p-4 lg:right-0 lg:left-auto"
+                    className="absolute z-30 top-[30px] left-0 w-[180px] backdrop-blur-md shadow-2xl p-4 lg:right-0 lg:left-auto"
                 >
                     <Toggle
                         text="TVA inclus"

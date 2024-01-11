@@ -208,15 +208,19 @@ export default function Home() {
         }
         mounted.current = true;
 
-        webContainerRunner.load()
-            .then((loaded) => {
-                setLoadedWebContainers(true);
+        if (process.env.NEXT_PUBLIC_IN_PRODUCTION === 'true') {
+            webContainerRunner.load()
+                .then((loaded) => {
+                    setLoadedWebContainers(true);
 
-                if (!loaded) {
-                    // TODO
-                    // notify error
-                }
-            });
+                    if (!loaded) {
+                        // TODO
+                        // notify error
+                    }
+                });
+        } else {
+            setLoadedWebContainers(true);
+        }
     }, []);
 
     /** valid data */

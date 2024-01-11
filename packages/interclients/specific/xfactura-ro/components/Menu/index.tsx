@@ -3,6 +3,8 @@ import {
     useEffect,
 } from 'react';
 
+import LinkButton from '../../components/LinkButton';
+
 import About from '../../containers/About';
 import InvoicesList from '../../containers/InvoicesList';
 import Settings from '../../containers/Settings';
@@ -120,36 +122,28 @@ export default function Menu() {
             viewElement = (
                 <ul>
                     <li className="m-4">
-                        <div
+                        <LinkButton
+                            text="xfactură nouă"
                             onClick={() => setShowMenu(false)}
-                            className="cursor-pointer"
-                        >
-                            xfactură nouă
-                        </div>
+                        />
                     </li>
                     <li className="m-4">
-                        <div
+                        <LinkButton
+                            text="despre xfactura.ro"
                             onClick={() => setView('about')}
-                            className="cursor-pointer"
-                        >
-                            despre xfactura.ro
-                        </div>
+                        />
                     </li>
                     <li className="m-4">
-                        <div
+                        <LinkButton
+                            text="xfacturi"
                             onClick={() => setView('invoices')}
-                            className="cursor-pointer"
-                        >
-                            xfacturi
-                        </div>
+                        />
                     </li>
                     <li className="m-4">
-                        <div
+                        <LinkButton
+                            text="setări"
                             onClick={() => setView('settings')}
-                            className="cursor-pointer"
-                        >
-                            setări
-                        </div>
+                        />
                     </li>
                 </ul>
             );

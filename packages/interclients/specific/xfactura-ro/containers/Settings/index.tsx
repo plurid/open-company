@@ -1,5 +1,11 @@
+import {
+    useState,
+} from 'react';
+
 import MenuBack from '../../components/MenuBack';
 import Deleter from '../../components/Deleter';
+import LinkButton from '../../components/LinkButton';
+import Toggle from '../../components/Toggle';
 
 
 
@@ -8,6 +14,12 @@ export default function Settings({
 } : {
     back: () => void,
 }) {
+    const [
+        useLocalStorage,
+        setUseLocalStorage,
+    ] = useState(true);
+
+
     return (
         <div>
             <h1
@@ -19,17 +31,23 @@ export default function Settings({
             <div
                 className="grid gap-4"
             >
-                <button
-                    className="font-bold"
-                >
-                    export
-                </button>
+                <Toggle
+                    text="stocare date locale"
+                    value={useLocalStorage}
+                    toggle={() => {
+                        setUseLocalStorage(!useLocalStorage);
+                    }}
+                />
 
-                <button
-                    className="font-bold"
-                >
-                    import
-                </button>
+                <LinkButton
+                    text="export"
+                    onClick={() => {}}
+                />
+
+                <LinkButton
+                    text="import"
+                    onClick={() => {}}
+                />
 
                 <Deleter
                     title="ștergere totală"
