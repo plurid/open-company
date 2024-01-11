@@ -18,11 +18,11 @@ const customTheme: CustomFlowbiteTheme = {
                 "svg": "h-5 w-5 text-gray-500 dark:text-gray-400"
             },
             "input": {
-                "base": "block w-full bg-black disabled:cursor-not-allowed disabled:opacity-50",
+                "base": "block w-[150px] bg-black disabled:cursor-not-allowed disabled:opacity-50",
                 "sizes": {
-                    "sm": "p-1 sm:text-xs",
-                    "md": "p-1 text-sm",
-                    "lg": "sm:text-md p-1"
+                    "sm": "p-1 pl-2 sm:text-xs",
+                    "md": "p-1 pl-2 text-sm",
+                    "lg": "sm:text-md p-1 pl-2"
                 },
                 "colors": {
                     "gray": "bg-gray-800 text-white focus:ring-gray-500 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-500 dark:focus:ring-gray-500",
@@ -162,6 +162,7 @@ export default function CustomDatepicker({
                     language="ro-RO"
                     labelTodayButton='azi'
                     labelClearButton='eliminare'
+                    icon={undefined}
                 />
             </Flowbite>
         </div>
