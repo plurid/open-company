@@ -6,6 +6,16 @@ import {
     useEffect,
 } from 'react';
 
+import {
+    newParty,
+    NewParty,
+    emptyInvoiceLine,
+    InvoiceLine,
+    emptyMetadata,
+    Metadata,
+    ENVIRONMENT,
+} from '../data';
+
 import Menu from '../components/Menu';
 import Party from '../components/Party';
 import Lines from '../components/Lines';
@@ -17,15 +27,6 @@ import Extractors from '../containers/Extractors';
 import MetadataComponent from '../containers/Metadata';
 import Camera from '../containers/Camera';
 import Audio from '../containers/Audio';
-
-import {
-    newParty,
-    NewParty,
-    emptyInvoiceLine,
-    InvoiceLine,
-    emptyMetadata,
-    Metadata,
-} from '../data';
 
 import webContainerRunner from '../logic/node-php';
 
@@ -208,7 +209,7 @@ export default function Home() {
         }
         mounted.current = true;
 
-        if (process.env.NEXT_PUBLIC_IN_PRODUCTION === 'true') {
+        if (ENVIRONMENT.IN_PRODUCTION === 'true') {
             webContainerRunner.load()
                 .then((loaded) => {
                     setLoadedWebContainers(true);

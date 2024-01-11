@@ -3,13 +3,21 @@ import {
     SetStateAction,
 } from 'react';
 
-import Input from '../Input';
-
 import {
     NewParty,
     partyText,
     partyFields,
 } from '../../data';
+
+import Input from '../Input';
+
+import {
+    getCompanyDetails,
+} from '../../logic/requests';
+
+import {
+    normalizedVatNumber,
+} from '../../logic/validation';
 
 
 
@@ -27,9 +35,75 @@ export default function Party({
     const updateParty = (
         type: typeof partyFields[number],
     ) => {
-        return (
+        return async (
             value: string,
         ) => {
+            if (type === 'vatNumber' && normalizedVatNumber(value).length > 5) {
+                try {
+                    setParty(prevValues => ({
+                        ...prevValues,
+                        vatNumber: value,
+                    }));
+
+                    const vatNumber = normalizedVatNumber(value);
+                    const request = await getCompanyDetails(vatNumber);
+                    if (request && request.status) {
+                        const {
+                            adresa_domiciliu_fiscal,
+                            adresa_sediu_social,
+                            date_generale,
+                        } = request.data;
+
+                        const name = date_generale.denumire;
+                        if (name) {
+                            setParty(prevValues => ({
+                                ...prevValues,
+                                name: name.replace('S.R.L.', 'SRL'),
+                            }));
+                        }
+
+                        const address = adresa_domiciliu_fiscal.ddenumire_Strada
+                            ? (adresa_domiciliu_fiscal.ddenumire_Strada + ' ' + adresa_domiciliu_fiscal.dnumar_Strada)
+                            : adresa_sediu_social.sdenumire_Strada
+                                ? (adresa_sediu_social.sdenumire_Strada + ' ' + adresa_sediu_social.snumar_Strada)
+                                : '';
+                        if (address) {
+                            setParty(prevValues => ({
+                                ...prevValues,
+                                address,
+                            }));
+                        }
+
+                        const city = adresa_domiciliu_fiscal.ddenumire_Localitate || adresa_sediu_social.sdenumire_Localitate || '';
+                        if (city) {
+                            setParty(prevValues => ({
+                                ...prevValues,
+                                city: city.replace('Mun. ', ''),
+                            }));
+                        }
+
+                        const county = adresa_domiciliu_fiscal.ddenumire_Judet || adresa_sediu_social.sdenumire_Judet || '';
+                        if (county) {
+                            setParty(prevValues => ({
+                                ...prevValues,
+                                county,
+                            }));
+                        }
+                    }
+
+                    setParty(prevValues => ({
+                        ...prevValues,
+                        vatNumber,
+                    }));
+                } catch (error) {
+                    setParty(prevValues => ({
+                        ...prevValues,
+                        vatNumber: value,
+                    }));
+                    return;
+                }
+            }
+
             setParty(prevValues => ({
                 ...prevValues,
                 [type]: value,

@@ -83,3 +83,10 @@ export const checkValidMetadata = (metadata: Metadata) => {
         validDueDate
     );
 }
+
+
+export const normalizedVatNumber = (
+    vatNumber: string,
+) => vatNumber
+    .replace(/\s/g, '')
+    .replace('RO', '');

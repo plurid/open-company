@@ -65,3 +65,24 @@ export const financial = (
 ) => {
     return Math.round(num * 100) / 100;
 }
+
+
+export const logger = (
+    type: 'log' | 'error' | 'warn' | 'info',
+    ...args: any[]
+) => {
+    switch (type) {
+        case 'log':
+            console.log(...args);
+            break;
+        case 'error':
+            console.error(...args);
+            break;
+        case 'warn':
+            console.warn(...args);
+            break;
+        case 'info':
+            console.info(...args);
+            break;
+    }
+}

@@ -1,6 +1,6 @@
 export const newParty = {
-    name: '',
     vatNumber: '',
+    name: '',
     address: '',
     city: '',
     county: '',
@@ -8,8 +8,8 @@ export const newParty = {
 };
 
 export const partyText = {
-    name: 'nume',
     vatNumber: 'CUI',
+    name: 'nume',
     address: 'adresă',
     city: 'oraș',
     county: 'județ',
@@ -17,8 +17,8 @@ export const partyText = {
 } as const;
 
 export const partyFields = [
-    'name',
     'vatNumber',
+    'name',
     'address',
     'city',
     'county',
@@ -106,4 +106,13 @@ export const countyMap: Record<string, string> = {
 };
 
 
-export const acceptedInvoiceFiles = ".jpg,.jpeg,.png,.pdf,.docx,.xlsx,.xml,.json";
+export const acceptedInvoiceFiles = '.jpg,.jpeg,.png,.pdf,.docx,.xlsx,.xml,.json';
+
+
+export const COMPANY_DETAILS_API = `${process.env.NEXT_PUBLIC_X_DOMAIN}/api/company_details`;
+
+
+export const ENVIRONMENT = {
+    IN_PRODUCTION: process.env.NEXT_PUBLIC_IN_PRODUCTION,
+    X_DOMAIN: process.env.NEXT_PUBLIC_X_DOMAIN,
+};
