@@ -18,6 +18,8 @@ import {
     NewParty,
     emptyInvoiceLine,
     InvoiceLine,
+    emptyMetadata,
+    Metadata,
 } from '../data';
 
 import webContainerRunner from '../logic/node-php';
@@ -26,6 +28,13 @@ import {
     downloadTextFile,
     getDateFormat,
 } from '../logic/utilities';
+
+import {
+    checkValidParty,
+    checkValidLine,
+    checkValidMetadata,
+    normalizedUserCounty,
+} from '../logic/validation';
 
 
 
@@ -65,11 +74,8 @@ export default function Home() {
     const [
         metadata,
         setMetadata,
-    ] = useState({
-        number: '',
-        currency: 'RON',
-        issueDate: Date.now(),
-        dueDate: Date.now(),
+    ] = useState<Metadata>({
+        ...emptyMetadata,
     });
 
     const [
@@ -121,11 +127,11 @@ export default function Home() {
             },
             seller: {
                 ...seller,
-                subdivision: seller.county,
+                subdivision: normalizedUserCounty(seller.county),
             },
             buyer: {
                 ...buyer,
-                subdivision: buyer.county,
+                subdivision: normalizedUserCounty(buyer.county),
             },
             lines,
         };
@@ -141,6 +147,24 @@ export default function Home() {
                 );
             },
         );
+    }
+
+    const resetInvoice = () => {
+        setSeller({
+            ...newParty,
+        });
+
+        setBuyer({
+            ...newParty,
+        });
+
+        setMetadata({
+            ...emptyMetadata,
+        });
+
+        setLines([{
+            ...emptyInvoiceLine,
+        }]);
     }
 
 
@@ -159,6 +183,35 @@ export default function Home() {
                     // notify error
                 }
             });
+    }, []);
+
+
+    useEffect(() => {
+        const validSeller = checkValidParty(seller);
+        const validBuyer = checkValidParty(buyer);
+        const validMetadata = checkValidMetadata(metadata);
+        const validLines = lines.every(checkValidLine);
+
+        const validData = (
+            validSeller &&
+            validBuyer &&
+            validMetadata &&
+            validLines
+        );
+
+        setValidData(validData);
+    }, [
+        seller,
+        buyer,
+        metadata,
+        lines,
+    ]);
+
+    useEffect(() => {
+        if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+            const isMobile = true;
+            setIsMobile(isMobile);
+        }
     }, []);
 
 
@@ -279,7 +332,7 @@ export default function Home() {
                 >
                     <Deleter
                         title="xfactură nouă"
-                        atDelete={() => {}}
+                        atDelete={() => resetInvoice()}
                     />
                 </div>
 

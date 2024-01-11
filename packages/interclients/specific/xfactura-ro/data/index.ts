@@ -43,3 +43,64 @@ export const emptyInvoiceLine: InvoiceLine = {
     vatRate: 19,
     vatIncluded: false,
 };
+
+
+export interface Metadata {
+    number: string,
+    currency: string,
+    issueDate: number,
+    dueDate: number,
+}
+
+export const emptyMetadata: Metadata = {
+    number: '',
+    currency: 'RON',
+    issueDate: Date.now(),
+    dueDate: Date.now(),
+};
+
+
+export const countyMap: Record<string, string> = {
+    'Alba': 'AB',
+    'Arad': 'AR',
+    'Arges': 'AG',
+    'Bacău': 'BC',
+    'Bihor': 'BH',
+    'Bistrița-Năsăud': 'BN',
+    'Botoşani': 'BT',
+    'Braşov': 'BV',
+    'Brăila': 'BR',
+    'București': 'B',
+    'Buzău': 'BZ',
+    'Caraş-Severin': 'CS',
+    'Cluj': 'CJ',
+    'Constanţa': 'CT',
+    'Covasna': 'CV',
+    'Călărași': 'CL',
+    'Dolj': 'DJ',
+    'Dâmbovița': 'DB',
+    'Galați': 'GL',
+    'Giurgiu': 'GR',
+    'Gorj': 'GJ',
+    'Harghita': 'HR',
+    'Hunedoara': 'HD',
+    'Ialomiţa': 'IL',
+    'Iaşi': 'IS',
+    'Ilfov': 'IF',
+    'Maramureş': 'MM',
+    'Mehedinți': 'MH',
+    'Mureş': 'MS',
+    'Neamț': 'NT',
+    'Olt': 'OT',
+    'Prahova': 'PH',
+    'Satu Mare': 'SM',
+    'Sibiu': 'SB',
+    'Suceava': 'SV',
+    'Sălaj': 'SJ',
+    'Teleorman': 'TR',
+    'Timiș': 'TM',
+    'Tulcea': 'TL',
+    'Vaslui': 'VS',
+    'Vrancea': 'VN',
+    'Vâlcea': 'VL',
+};

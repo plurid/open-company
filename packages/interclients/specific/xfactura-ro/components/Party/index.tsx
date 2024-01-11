@@ -49,6 +49,16 @@ export default function Party({
 
             <div>
                 {partyFields.map(field => {
+                    // if (field === 'county') {
+                    //     return (
+                    //         <div
+                    //             key={kind + field}
+                    //         >
+                    //             TODO dropdown
+                    //         </div>
+                    //     );
+                    // }
+
                     return (
                         <div
                             key={kind + field}
