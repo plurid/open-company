@@ -15,7 +15,7 @@ export default function Input({
 }) {
     return (
         <div
-            className="flex justify-between my-2 gap-4"
+            className="flex items-center justify-between my-2 gap-4"
         >
             <div
                 className="select-none"

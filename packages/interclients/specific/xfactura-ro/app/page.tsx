@@ -12,6 +12,7 @@ import Input from '../components/Input';
 import Lines from '../components/Lines';
 import Spinner from '../components/Spinner';
 import Deleter from '../components/Deleter';
+import Datepicker from '../components/Datepicker';
 
 import {
     newParty,
@@ -98,15 +99,8 @@ export default function Home() {
 
     const updateDate = (
         kind: 'issueDate' | 'dueDate',
-        value: string,
+        timestamp: number,
     ) => {
-        const split = value.split('/');
-        const day = split[0];
-        const month = split[1];
-        const year = split[2];
-        const timestamp = Date.parse(
-            `${year}-${month}-${day}`,
-        );
         updateMetadata(kind, timestamp);
     }
 
@@ -233,7 +227,7 @@ export default function Home() {
                         xfactura.ro
                     </h1>
 
-                    <div
+                    {/* <div
                         className="grid justify-center items-center text-center"
                     >
                         <button
@@ -255,7 +249,7 @@ export default function Home() {
                                 fotografiere factură
                             </div>
                         )}
-                    </div>
+                    </div> */}
                 </div>
 
 
@@ -293,16 +287,14 @@ export default function Home() {
                         setValue={(value) => updateMetadata('currency', value)}
                     />
 
-                    <Input
+                    <Datepicker
                         text="dată emitere"
-                        value={new Date(metadata.issueDate).toLocaleDateString()}
-                        setValue={(value) => updateDate('issueDate', value)}
+                        atSelect={(value) => updateDate('issueDate', value)}
                     />
 
-                    <Input
+                    <Datepicker
                         text="dată scadență"
-                        value={new Date(metadata.dueDate).toLocaleDateString()}
-                        setValue={(value) => updateDate('dueDate', value)}
+                        atSelect={(value) => updateDate('dueDate', value)}
                     />
                 </div>
 
