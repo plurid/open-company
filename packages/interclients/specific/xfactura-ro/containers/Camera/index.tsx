@@ -17,7 +17,7 @@ export default function CameraContainer({
             className="h-full bg-black fixed top-0 left-0 right-0 bottom-0 z-50 grid justify-center items-center grid-rows-4"
         >
             <div
-                className="row-span-3 bg-blue"
+                className="row-span-2"
             >
                 <Camera
                     onTakePhoto={(dataUri) => {
