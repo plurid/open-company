@@ -8,13 +8,13 @@ import {
 
 import Menu from '../components/Menu';
 import Party from '../components/Party';
-import Input from '../components/Input';
 import Lines from '../components/Lines';
 import Spinner from '../components/Spinner';
 import Deleter from '../components/Deleter';
-import Datepicker from '../components/Datepicker';
 
+import Title from '../containers/Title';
 import Extractors from '../containers/Extractors';
+import MetadataComponent from '../containers/Metadata';
 import Camera from '../containers/Camera';
 import Audio from '../containers/Audio';
 
@@ -208,15 +208,15 @@ export default function Home() {
         }
         mounted.current = true;
 
-        // webContainerRunner.load()
-        //     .then((loaded) => {
+        webContainerRunner.load()
+            .then((loaded) => {
                    setLoadedWebContainers(true);
 
-        //         if (!loaded) {
-        //             // TODO
-        //             // notify error
-        //         }
-        //     });
+                if (!loaded) {
+                    // TODO
+                    // notify error
+                }
+            });
     }, []);
 
     /** valid data */
@@ -268,11 +268,7 @@ export default function Home() {
                 <div
                     className="m-4 pb-4"
                 >
-                    <h1
-                        className="text-2xl text-center mb-4"
-                    >
-                        xfactura.ro
-                    </h1>
+                    <Title />
 
                     <Extractors
                         hasMediaDevices={hasMediaDevices}
@@ -315,31 +311,11 @@ export default function Home() {
                 </div>
 
 
-                <div
-                    className="grid place-content-center p-8"
-                >
-                    <Input
-                        text="număr factură"
-                        value={metadata.number}
-                        setValue={(value) => updateMetadata('number', value)}
-                    />
-
-                    <Input
-                        text="monedă"
-                        value={metadata.currency}
-                        setValue={(value) => updateMetadata('currency', value)}
-                    />
-
-                    <Datepicker
-                        text="dată emitere"
-                        atSelect={(value) => updateDate('issueDate', value)}
-                    />
-
-                    <Datepicker
-                        text="dată scadență"
-                        atSelect={(value) => updateDate('dueDate', value)}
-                    />
-                </div>
+                <MetadataComponent
+                    metadata={metadata}
+                    updateMetadata={updateMetadata}
+                    updateDate={updateDate}
+                />
 
 
                 <Lines

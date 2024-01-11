@@ -54,6 +54,9 @@ export default function Extractors({
     return (
         <div
             className="grid gap-2 justify-center items-center text-center min-h-[50px] md:flex md:gap-6"
+            style={{
+                justifyItems: 'center',
+            }}
         >
             <div
                 className="mb-4"
