@@ -8,6 +8,10 @@ import {
 } from '../../data';
 
 import {
+    normalizeVatNumber,
+} from '../../logic/validation';
+
+import {
     logger,
 } from '../../logic/utilities';
 
@@ -32,7 +36,12 @@ export default async function handler(
         const {
             vatNumber,
         } = data;
-        if (!vatNumber) {
+        const normalizedVatNumber = normalizeVatNumber(vatNumber);
+        if (
+            !normalizedVatNumber
+            || normalizedVatNumber.length < 5
+            || normalizedVatNumber.length > 12
+        ) {
             res.status(400).json({
                 status: false,
             });
@@ -63,7 +72,7 @@ export default async function handler(
             },
             body: JSON.stringify([
                 {
-                    cui: vatNumber,
+                    cui: normalizedVatNumber,
                     data: new Date().toISOString().split('T')[0],
                 },
             ]),

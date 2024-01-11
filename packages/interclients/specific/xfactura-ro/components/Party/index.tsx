@@ -16,7 +16,7 @@ import {
 } from '../../logic/requests';
 
 import {
-    normalizedVatNumber,
+    normalizeVatNumber,
 } from '../../logic/validation';
 
 
@@ -38,15 +38,15 @@ export default function Party({
         return async (
             value: string,
         ) => {
-            if (type === 'vatNumber' && normalizedVatNumber(value).length > 5) {
+            if (type === 'vatNumber' && normalizeVatNumber(value).length > 5) {
                 try {
                     setParty(prevValues => ({
                         ...prevValues,
                         vatNumber: value,
                     }));
 
-                    const vatNumber = normalizedVatNumber(value);
-                    const request = await getCompanyDetails(vatNumber);
+                    const vatNumber = normalizeVatNumber(value);
+                    const request: any = await getCompanyDetails(vatNumber);
                     if (request && request.status) {
                         const {
                             adresa_domiciliu_fiscal,

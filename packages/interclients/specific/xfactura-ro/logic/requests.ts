@@ -6,11 +6,12 @@ import {
 
 import {
     logger,
+    debounce,
 } from './utilities';
 
 
 
-export const getCompanyDetails = async (
+export const getCompanyDetails = debounce(async (
     vatNumber: string,
 ) => {
     if (!ENVIRONMENT.X_DOMAIN) {
@@ -35,7 +36,7 @@ export const getCompanyDetails = async (
         .catch((error) => {
             logger('error', error);
         });
-}
+});
 
 
 export const getEInvoice = async (

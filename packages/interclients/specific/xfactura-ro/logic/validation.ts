@@ -85,7 +85,7 @@ export const checkValidMetadata = (metadata: Metadata) => {
 }
 
 
-export const normalizedVatNumber = (
+export const normalizeVatNumber = (
     vatNumber: string,
 ) => vatNumber
     .replace(/\s/g, '')
