@@ -210,7 +210,7 @@ export default function Home() {
 
         webContainerRunner.load()
             .then((loaded) => {
-                   setLoadedWebContainers(true);
+                setLoadedWebContainers(true);
 
                 if (!loaded) {
                     // TODO
