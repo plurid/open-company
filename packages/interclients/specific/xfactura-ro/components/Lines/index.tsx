@@ -3,7 +3,8 @@ import {
     SetStateAction,
 } from 'react';
 
-import Line from '../Line';
+import Line from '../../components/Line';
+import LinkButton from '../../components/LinkButton';
 
 import {
     InvoiceLine,
@@ -131,12 +132,10 @@ export default function Lines({
             <div
                 className="grid place-content-center p-8"
             >
-                <button
+                <LinkButton
+                    text="adăugare produs"
                     onClick={() => addNewLine()}
-                    className="select-none focus:outline-none focus:ring-2 focus:ring-white"
-                >
-                    adăugare produs
-                </button>
+                />
             </div>
 
             <div
