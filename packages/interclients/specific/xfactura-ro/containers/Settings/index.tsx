@@ -152,6 +152,7 @@ export default function Settings({
                     title="ștergere totală"
                     atDelete={() => {
                         localStorage.obliterate();
+                        location.reload();
                     }}
                 />
             </div>
