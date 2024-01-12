@@ -62,7 +62,7 @@ export default function Line({
             className="grid gap-1 mb-10 items-center lg:flex lg:gap-12 lg:mb-4"
         >
             <Input
-                text="nume"
+                text="denumire"
                 value={data.name}
                 setValue={(value) => updateLine(index, 'name', value)}
             />
@@ -79,7 +79,7 @@ export default function Line({
             />
 
             <Input
-                text="pret"
+                text="preț"
                 value={data.price + ''}
                 setValue={(value) => updateLine(index, 'price', value)}
                 width={95}
@@ -90,7 +90,7 @@ export default function Line({
             />
 
             <Input
-                text="TVA"
+                text="TVA %"
                 value={data.vatRate + ''}
                 setValue={(value) => updateLine(index, 'vatRate', value)}
                 width={65}

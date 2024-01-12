@@ -19,7 +19,7 @@ export const MenuIcon = ({
     atClick: () => void;
 }) => (
     <button
-        className="z-50 fixed top-0 left-0 m-4 cursor-pointer"
+        className="z-50 fixed top-[4px] left-0 m-4 cursor-pointer"
         onClick={(event) => {
             event.stopPropagation();
             event.preventDefault();
