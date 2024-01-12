@@ -47,6 +47,11 @@ export default function Party({
         setLoadingVatNumber,
     ] = useState(false);
 
+    const [
+        usingLocalData,
+        setUsingLocalData,
+    ] = useState(false);
+
 
     const updateParty = (
         type: typeof partyFields[number],
@@ -66,6 +71,7 @@ export default function Party({
                         const localStorageData = localStorage.companies[vatNumber];
                         if (localStorageData && verifyPartyData(localStorageData)) {
                             setParty(localStorageData);
+                            setUsingLocalData(true);
                             return;
                         }
                     }
@@ -74,6 +80,10 @@ export default function Party({
                     const request: any = await getCompanyDetails(vatNumber);
                     setLoadingVatNumber(false);
                     if (request && request.status) {
+                        if (usingLocalData) {
+                            return;
+                        }
+
                         const {
                             adresa_domiciliu_fiscal,
                             adresa_sediu_social,
