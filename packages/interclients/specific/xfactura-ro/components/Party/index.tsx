@@ -67,51 +67,28 @@ export default function Party({
                         } = request.data;
 
                         const name = date_generale.denumire;
-                        if (name) {
-                            setParty(prevValues => ({
-                                ...prevValues,
-                                name: normalizePartyName(name),
-                            }));
-                        }
-
                         const address = adresa_domiciliu_fiscal.ddenumire_Strada
                             ? (adresa_domiciliu_fiscal.ddenumire_Strada + ' ' + adresa_domiciliu_fiscal.dnumar_Strada)
                             : adresa_sediu_social.sdenumire_Strada
                                 ? (adresa_sediu_social.sdenumire_Strada + ' ' + adresa_sediu_social.snumar_Strada)
                                 : '';
-                        if (address) {
-                            setParty(prevValues => ({
-                                ...prevValues,
-                                address,
-                            }));
-                        }
-
                         const city = adresa_domiciliu_fiscal.ddenumire_Localitate || adresa_sediu_social.sdenumire_Localitate || '';
-                        if (city) {
-                            setParty(prevValues => ({
-                                ...prevValues,
-                                city: normalizePartyCity(city),
-                            }));
-                        }
-
                         const county = adresa_domiciliu_fiscal.ddenumire_Judet || adresa_sediu_social.sdenumire_Judet || '';
-                        if (county) {
-                            setParty(prevValues => ({
-                                ...prevValues,
-                                county: normalizePartyCounty(county),
-                            }));
-                        }
 
                         setParty(prevValues => ({
                             ...prevValues,
+                            name: name ? normalizePartyName(name) : prevValues.name,
+                            address: address ? address : prevValues.address,
+                            city: city ? normalizePartyCity(city) : prevValues.city,
+                            county: county ? normalizePartyCounty(county) : prevValues.county,
                             country: 'România',
                         }));
+                    } else {
+                        setParty(prevValues => ({
+                            ...prevValues,
+                            vatNumber,
+                        }));
                     }
-
-                    setParty(prevValues => ({
-                        ...prevValues,
-                        vatNumber,
-                    }));
                 } catch (error) {
                     setParty(prevValues => ({
                         ...prevValues,
