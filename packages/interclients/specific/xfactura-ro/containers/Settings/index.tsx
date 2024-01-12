@@ -97,6 +97,11 @@ export default function Settings({
                         companies: parsedData.companies,
                         invoices: parsedData.invoices,
                     });
+
+                    setTimeout(() => {
+                        // TODO notify
+                        location.reload();
+                    }, 1_000);
                 }
             } catch (error) {
                 return;
@@ -154,7 +159,11 @@ export default function Settings({
                     title="ștergere totală"
                     atDelete={() => {
                         localStorage.obliterate();
-                        location.reload();
+
+                        setTimeout(() => {
+                            // TODO notify
+                            location.reload();
+                        }, 1_000);
                     }}
                 />
             </div>
