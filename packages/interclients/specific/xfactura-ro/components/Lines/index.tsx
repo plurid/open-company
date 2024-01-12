@@ -11,7 +11,7 @@ import {
 } from '../../data';
 
 import {
-    toFixed,
+    formatNumber,
     financial,
 } from '../../logic/utilities';
 
@@ -63,7 +63,7 @@ export default function Lines({
     const vatValue = (line: InvoiceLine) => financial(quantityPrice(line) / (1 + line.vatRate / 100));
 
     const computeWithoutVAT = () => {
-        return toFixed(
+        return formatNumber(
             financial(
                 data.reduce((acc, line) => {
                     if (line.vatIncluded) {
@@ -77,7 +77,7 @@ export default function Lines({
     }
 
     const computeVAT = () => {
-        return toFixed(
+        return formatNumber(
             financial(
                 data.reduce((acc, line) => {
                     if (line.vatIncluded) {
@@ -91,7 +91,7 @@ export default function Lines({
     }
 
     const computeTotal = () => {
-        return toFixed(
+        return formatNumber(
             financial(
                 data.reduce((acc, line) => {
                     if (line.vatIncluded) {
@@ -141,7 +141,7 @@ export default function Lines({
             <div
                 className="grid place-content-center p-8"
             >
-                <div className="flex justify-between m-2 w-[200px]">
+                <div className="flex justify-between m-2 min-w-[250px]">
                     <div>
                         total fără TVA
                     </div>
@@ -151,7 +151,7 @@ export default function Lines({
                     </div>
                 </div>
 
-                <div className="flex justify-between m-2 w-[200px]">
+                <div className="flex justify-between m-2 min-w-[250px]">
                     <div>
                         total TVA
                     </div>
@@ -161,7 +161,7 @@ export default function Lines({
                     </div>
                 </div>
 
-                <div className="flex justify-between m-2 w-[200px]">
+                <div className="flex justify-between m-2 min-w-[250px]">
                     <div>
                         total
                     </div>
