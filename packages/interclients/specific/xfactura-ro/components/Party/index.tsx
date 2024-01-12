@@ -1,5 +1,6 @@
 import {
     useState,
+    useEffect,
     Dispatch,
     SetStateAction,
 } from 'react';
@@ -9,6 +10,10 @@ import {
     partyText,
     partyFields,
 } from '../../data';
+
+import localStorage, {
+    localKeys,
+} from '../../data/localStorage';
 
 import Input from '../Input';
 
@@ -25,13 +30,26 @@ import {
 
 
 
+const verifyData = (
+    data: NewParty,
+) => {
+    return data.vatNumber
+        && data.vatNumber.length > 5
+        && data.name
+        && data.country
+        && data.county
+        && data.city
+        && data.address
+}
+
+
 export default function Party({
     kind,
     title,
     data,
     setParty,
 }: {
-    kind: string;
+    kind: 'seller' | 'buyer';
     title: string;
     data: NewParty;
     setParty: Dispatch<SetStateAction<NewParty>>;
@@ -104,6 +122,50 @@ export default function Party({
             }));
         }
     }
+
+
+    useEffect(() => {
+        if (verifyData(data)) {
+            localStorage.set(
+                `${localKeys.company}${data.vatNumber}`,
+                data,
+            );
+        }
+    }, [
+        data,
+    ]);
+
+    useEffect(() => {
+        if (kind === 'seller' && verifyData(data)) {
+            localStorage.set(
+                localKeys.defaultSeller,
+                data.vatNumber,
+            );
+        }
+    }, [
+        kind,
+        data,
+    ]);
+
+    useEffect(() => {
+        if (
+            kind === 'seller'
+            && localStorage.usingStorage
+            && localStorage.defaultSeller
+        ) {
+            const defaultData = localStorage.companies[localStorage.defaultSeller];
+            if (!defaultData) {
+                return;
+            }
+
+            if (verifyData(defaultData)) {
+                setParty(defaultData);
+            }
+        }
+    }, [
+        kind,
+        setParty,
+    ]);
 
 
     return (

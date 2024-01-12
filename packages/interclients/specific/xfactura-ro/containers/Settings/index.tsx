@@ -2,6 +2,10 @@ import {
     useState,
 } from 'react';
 
+import localStorage, {
+    localKeys,
+} from '../../data/localStorage';
+
 import MenuBack from '../../components/MenuBack';
 import Deleter from '../../components/Deleter';
 import LinkButton from '../../components/LinkButton';
@@ -17,7 +21,7 @@ export default function Settings({
     const [
         useLocalStorage,
         setUseLocalStorage,
-    ] = useState(true);
+    ] = useState(localStorage.usingStorage);
 
 
     return (
@@ -36,6 +40,8 @@ export default function Settings({
                     value={useLocalStorage}
                     toggle={() => {
                         setUseLocalStorage(!useLocalStorage);
+                        localStorage.set(localKeys.usingStorage, !useLocalStorage);
+                        localStorage.usingStorage = !useLocalStorage;
                     }}
                 />
 
