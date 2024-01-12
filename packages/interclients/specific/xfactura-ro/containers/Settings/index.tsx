@@ -87,14 +87,16 @@ export default function Settings({
                     return;
                 }
 
-                if (parsedData.defaultSeller) {
-                    localStorage.defaultSeller = parsedData.defaultSeller;
-                }
-                if (isObject(parsedData.companies)) {
-                    localStorage.companies = parsedData.companies;
-                }
-                if (isObject(parsedData.invoices)) {
-                    localStorage.invoices = parsedData.invoices;
+                if (
+                    typeof parsedData.defaultSeller === 'string' && parsedData.defaultSeller
+                    && isObject(parsedData.companies)
+                    && isObject(parsedData.invoices)
+                ) {
+                    localStorage.loadData({
+                        defaultSeller: parsedData.defaultSeller,
+                        companies: parsedData.companies,
+                        invoices: parsedData.invoices,
+                    });
                 }
             } catch (error) {
                 return;

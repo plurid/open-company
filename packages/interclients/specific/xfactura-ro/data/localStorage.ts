@@ -116,6 +116,31 @@ class LocalStorage {
         this.companies = {};
         this.invoices = {};
     }
+
+    public loadData(
+        data: {
+            defaultSeller: string,
+            companies: Record<string, NewParty | undefined>,
+            invoices: Record<string, any | undefined>,
+        },
+    ) {
+        this.defaultSeller = data.defaultSeller;
+        setLocalStorage(localKeys.defaultSeller, data.defaultSeller);
+
+        for (const [key, company] of Object.entries(data.companies)) {
+            setLocalStorage(
+                `${localKeys.company}${key}`,
+                company,
+            );
+        }
+
+        for (const [key, invoice] of Object.entries(data.invoices)) {
+            setLocalStorage(
+                `${localKeys.invoice}${key}`,
+                invoice,
+            );
+        }
+    }
 }
 
 
