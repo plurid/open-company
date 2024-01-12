@@ -147,3 +147,35 @@ export const normalizePartyCounty = (
 ) => {
     return toNormalCase(value);
 }
+
+
+export const verifyPartyData = (
+    data: NewParty,
+) => {
+    try {
+        return typeof data.vatNumber === 'string'
+            && data.vatNumber
+            && data.vatNumber.length > 5
+            && typeof data.name === 'string'
+            && data.name
+            && typeof data.country === 'string'
+            && data.country
+            && typeof data.county === 'string'
+            && data.county
+            && typeof data.city === 'string'
+            && data.city
+            && typeof data.address === 'string'
+            && data.address
+    } catch (error) {
+        return false;
+    }
+}
+
+
+export const isObject = (
+    value: any,
+) => {
+    return typeof value === 'object'
+        && value !== null
+        && !Array.isArray(value);
+}

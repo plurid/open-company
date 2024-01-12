@@ -1,4 +1,5 @@
 import {
+    useRef,
     useState,
 } from 'react';
 
@@ -11,6 +12,15 @@ import Deleter from '../../components/Deleter';
 import LinkButton from '../../components/LinkButton';
 import Toggle from '../../components/Toggle';
 
+import {
+    isObject,
+} from '../../logic/validation';
+
+import {
+    downloadTextFile,
+    defocus,
+} from '../../logic/utilities';
+
 
 
 export default function Settings({
@@ -18,10 +28,80 @@ export default function Settings({
 } : {
     back: () => void;
 }) {
+    const importInput = useRef<HTMLInputElement | null>(null);
+
+
     const [
         useLocalStorage,
         setUseLocalStorage,
     ] = useState(localStorage.usingStorage);
+
+
+    const exportData = () => {
+        const data = {
+            defaultSeller: localStorage.defaultSeller,
+            companies: localStorage.companies,
+            invoices: localStorage.invoices,
+        };
+
+        const date =  new Date().toISOString().split('T')[0];
+
+        downloadTextFile(
+            `xfactura-ro-export-${date}.json`,
+            JSON.stringify(data, null, 2),
+        );
+    }
+
+    const triggerImport = () => {
+        if (!importInput?.current) {
+            return;
+        }
+        importInput.current.click();
+    }
+
+    const handleImport = () => {
+        if (!importInput?.current) {
+            return;
+        }
+
+        const files = importInput.current.files;
+        if (!files) {
+            return;
+        }
+
+        const file = files[0];
+        if (!file) {
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const data = event.target?.result;
+                if (!data) {
+                    return;
+                }
+
+                const parsedData = JSON.parse(data as string);
+                if (!parsedData) {
+                    return;
+                }
+
+                if (parsedData.defaultSeller) {
+                    localStorage.defaultSeller = parsedData.defaultSeller;
+                }
+                if (isObject(parsedData.companies)) {
+                    localStorage.companies = parsedData.companies;
+                }
+                if (isObject(parsedData.invoices)) {
+                    localStorage.invoices = parsedData.invoices;
+                }
+            } catch (error) {
+                return;
+            }
+        };
+        reader.readAsText(file);
+    }
 
 
     return (
@@ -48,12 +128,24 @@ export default function Settings({
 
                 <LinkButton
                     text="export"
-                    onClick={() => {}}
+                    onClick={() => {
+                        exportData();
+                        defocus();
+                    }}
                 />
 
+                <input
+                    ref={importInput}
+                    type="file"
+                    accept={'.json'}
+                    className="hidden"
+                    onChange={() => handleImport()}
+                />
                 <LinkButton
                     text="import"
-                    onClick={() => {}}
+                    onClick={() => {
+                        triggerImport();
+                    }}
                 />
 
                 <Deleter

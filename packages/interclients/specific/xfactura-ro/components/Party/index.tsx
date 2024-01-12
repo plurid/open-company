@@ -26,21 +26,9 @@ import {
     normalizePartyCity,
     normalizePartyCounty,
     normalizeVatNumber,
+    verifyPartyData,
 } from '../../logic/validation';
 
-
-
-const verifyData = (
-    data: NewParty,
-) => {
-    return data.vatNumber
-        && data.vatNumber.length > 5
-        && data.name
-        && data.country
-        && data.county
-        && data.city
-        && data.address
-}
 
 
 export default function Party({
@@ -125,7 +113,7 @@ export default function Party({
 
 
     useEffect(() => {
-        if (verifyData(data)) {
+        if (verifyPartyData(data)) {
             localStorage.set(
                 `${localKeys.company}${data.vatNumber}`,
                 data,
@@ -136,7 +124,7 @@ export default function Party({
     ]);
 
     useEffect(() => {
-        if (kind === 'seller' && verifyData(data)) {
+        if (kind === 'seller' && verifyPartyData(data)) {
             localStorage.set(
                 localKeys.defaultSeller,
                 data.vatNumber,
@@ -158,7 +146,7 @@ export default function Party({
                 return;
             }
 
-            if (verifyData(defaultData)) {
+            if (verifyPartyData(defaultData)) {
                 setParty(defaultData);
             }
         }
