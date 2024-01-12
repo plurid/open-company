@@ -90,3 +90,51 @@ export const normalizeVatNumber = (
 ) => vatNumber
     .replace(/\s/g, '')
     .replace('RO', '');
+
+
+export const toNormalCase = (
+    value: string,
+) => {
+    const letters = [];
+    const chars = [...value];
+
+    for (const [idx, letter] of chars.entries()) {
+        if (idx === 0) {
+            letters.push(letter.toUpperCase());
+            continue;
+        }
+
+        const previousChar = chars[idx - 1];
+        if (previousChar === ' ' || previousChar === '-') {
+            letters.push(letter.toUpperCase());
+            continue;
+        } else {
+            letters.push(letter.toLowerCase());
+        }
+    }
+
+    return letters.join('');
+}
+
+
+export const normalizePartyName = (
+    value: string,
+) => {
+    return toNormalCase(value)
+        .replace(/S.r.l.$/, 'SRL')
+        .replace(/S.a.$/, 'SA');
+}
+
+
+export const normalizePartyCity = (
+    value: string,
+) => {
+    return value.replace('Mun. ', '');
+}
+
+
+export const normalizePartyCounty = (
+    value: string,
+) => {
+    return toNormalCase(value);
+}

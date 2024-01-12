@@ -17,6 +17,9 @@ import {
 } from '../../logic/requests';
 
 import {
+    normalizePartyName,
+    normalizePartyCity,
+    normalizePartyCounty,
     normalizeVatNumber,
 } from '../../logic/validation';
 
@@ -67,7 +70,7 @@ export default function Party({
                         if (name) {
                             setParty(prevValues => ({
                                 ...prevValues,
-                                name: name.replace('S.R.L.', 'SRL'),
+                                name: normalizePartyName(name),
                             }));
                         }
 
@@ -87,7 +90,7 @@ export default function Party({
                         if (city) {
                             setParty(prevValues => ({
                                 ...prevValues,
-                                city: city.replace('Mun. ', ''),
+                                city: normalizePartyCity(city),
                             }));
                         }
 
@@ -95,7 +98,7 @@ export default function Party({
                         if (county) {
                             setParty(prevValues => ({
                                 ...prevValues,
-                                county,
+                                county: normalizePartyCounty(county),
                             }));
                         }
                     }
