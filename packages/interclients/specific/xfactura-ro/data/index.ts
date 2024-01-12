@@ -10,19 +10,19 @@ export const newParty = {
 export const partyText = {
     vatNumber: 'CUI',
     name: 'nume',
-    address: 'adresă',
-    city: 'oraș',
-    county: 'județ',
     country: 'țară',
+    county: 'județ',
+    city: 'localitate',
+    address: 'adresă',
 } as const;
 
 export const partyFields = [
     'vatNumber',
     'name',
-    'address',
-    'city',
-    'county',
     'country',
+    'county',
+    'city',
+    'address',
 ] as const;
 
 export type NewParty = typeof newParty;
