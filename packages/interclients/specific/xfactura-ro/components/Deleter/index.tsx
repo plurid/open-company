@@ -24,7 +24,7 @@ export default function Deleter({
     if (showDelete) {
         return (
             <div
-                className="select-none flex gap-4 items-center justify-center text-center min-w-[90px] min-h-[25px]"
+                className="select-none flex gap-14 items-center justify-center text-center min-w-[90px] min-h-[25px]"
             >
                 <button
                     onClick={() => {

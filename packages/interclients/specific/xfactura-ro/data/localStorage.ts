@@ -45,6 +45,12 @@ const getLocalStorage = (
     }
 }
 
+const deleteLocalStorage = (
+    key: LocalStorageKey,
+) => {
+    localStorage.removeItem(key);
+}
+
 const getAllLocalStorage = <V = any>(
     keyStart: string,
 ) => {
@@ -57,6 +63,15 @@ const getAllLocalStorage = <V = any>(
     }
 
     return values;
+}
+
+const deleteAllLocalStorage = (
+    keyStart: string,
+) => {
+    const items = Object.keys(localStorage).filter(key => key.startsWith(keyStart));
+    for (const item of items) {
+        deleteLocalStorage(item as LocalStorageKey);
+    }
 }
 
 
@@ -85,11 +100,21 @@ class LocalStorage {
         key: LocalStorageKey,
         value: V,
     ) {
-        if (!this.usingStorage) {
+        if (!this.usingStorage && key !== localKeys.usingStorage) {
             return;
         }
 
         setLocalStorage(key, value);
+    }
+
+    public obliterate() {
+        deleteLocalStorage(localKeys.defaultSeller);
+        deleteAllLocalStorage(localKeys.company);
+        deleteAllLocalStorage(localKeys.invoice);
+
+        this.defaultSeller = '';
+        this.companies = {};
+        this.invoices = {};
     }
 }
 

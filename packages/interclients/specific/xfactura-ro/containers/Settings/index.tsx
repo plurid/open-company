@@ -39,9 +39,10 @@ export default function Settings({
                     text="stocare date locale"
                     value={useLocalStorage}
                     toggle={() => {
-                        setUseLocalStorage(!useLocalStorage);
-                        localStorage.set(localKeys.usingStorage, !useLocalStorage);
-                        localStorage.usingStorage = !useLocalStorage;
+                        localStorage.set(localKeys.usingStorage, !localStorage.usingStorage);
+                        localStorage.usingStorage = !localStorage.usingStorage;
+
+                        setUseLocalStorage(localStorage.usingStorage);
                     }}
                 />
 
@@ -57,7 +58,9 @@ export default function Settings({
 
                 <Deleter
                     title="ștergere totală"
-                    atDelete={() => {}}
+                    atDelete={() => {
+                        localStorage.obliterate();
+                    }}
                 />
             </div>
 
