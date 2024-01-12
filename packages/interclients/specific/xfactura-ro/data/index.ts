@@ -4,7 +4,7 @@ export const newParty = {
     address: '',
     city: '',
     county: '',
-    country: 'Romania',
+    country: 'România',
 };
 
 export const partyText = {

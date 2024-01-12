@@ -8,14 +8,10 @@ import {
 
 
 
-const normalizedCountyString = (
+export const normalizeDiacritics = (
     value: string,
 ) => {
     return value
-        .trim()
-        .toLowerCase()
-        .replace(/ /g, '')
-        .replace(/-/g, '')
         .replace(/ă/g, 'a')
         .replace(/â/g, 'a')
         .replace(/î/g, 'i')
@@ -23,6 +19,19 @@ const normalizedCountyString = (
         .replace(/ş/g, 's')
         .replace(/ț/g, 't')
         .replace(/ţ/g, 't');
+}
+
+
+export const normalizedCountyString = (
+    value: string,
+) => {
+    const normalizedValue = value
+        .trim()
+        .toLowerCase()
+        .replace(/ /g, '')
+        .replace(/-/g, '')
+
+    return normalizeDiacritics(normalizedValue);
 }
 
 export const normalizedUserCounty = (
@@ -113,7 +122,7 @@ export const toNormalCase = (
         }
     }
 
-    return letters.join('');
+    return letters.join('').trim();
 }
 
 
