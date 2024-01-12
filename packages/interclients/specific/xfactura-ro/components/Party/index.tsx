@@ -1,4 +1,5 @@
 import {
+    useState,
     Dispatch,
     SetStateAction,
 } from 'react';
@@ -32,6 +33,12 @@ export default function Party({
     data: NewParty;
     setParty: Dispatch<SetStateAction<NewParty>>;
 }) {
+    const [
+        loadingVatNumber,
+        setLoadingVatNumber,
+    ] = useState(false);
+
+
     const updateParty = (
         type: typeof partyFields[number],
     ) => {
@@ -46,7 +53,9 @@ export default function Party({
                     }));
 
                     const vatNumber = normalizeVatNumber(value);
+                    setLoadingVatNumber(true);
                     const request: any = await getCompanyDetails(vatNumber);
+                    setLoadingVatNumber(false);
                     if (request && request.status) {
                         const {
                             adresa_domiciliu_fiscal,
@@ -111,6 +120,7 @@ export default function Party({
         }
     }
 
+
     return (
         <div
             className="max-w-[400px] md:w-1/2 min-h-[300px] p-4 md:p-8"
@@ -141,6 +151,7 @@ export default function Party({
                                 text={partyText[field]}
                                 value={data[field]}
                                 setValue={updateParty(field)}
+                                loading={field === 'vatNumber' && loadingVatNumber}
                             />
                         </div>
                     );

@@ -3,6 +3,8 @@ import {
     InputHTMLAttributes,
 } from 'react';
 
+import Spinner from '../Spinner';
+
 
 
 export type InputProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
@@ -15,6 +17,7 @@ export default function Input({
     width,
     type,
     disabled,
+    loading,
     inputProps,
 }: {
     text: string;
@@ -23,11 +26,12 @@ export default function Input({
     width?: number;
     type?: string;
     disabled?: boolean;
+    loading?: boolean;
     inputProps?: InputProps;
 }) {
     return (
         <div
-            className="flex items-center justify-between my-2 gap-4"
+            className="relative flex items-center justify-between my-2 gap-4"
         >
             <div
                 className="select-none"
@@ -48,6 +52,16 @@ export default function Input({
                 disabled={disabled}
                 {...inputProps}
             />
+
+            {loading && (
+                <Spinner
+                    absolute={true}
+                    style={{
+                        right: '4px',
+                        top: '19px',
+                    }}
+                />
+            )}
         </div>
     );
 }

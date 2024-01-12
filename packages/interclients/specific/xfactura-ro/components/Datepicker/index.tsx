@@ -25,7 +25,7 @@ const customTheme: CustomFlowbiteTheme = {
                     "lg": "p-2"
                 },
                 "colors": {
-                    "gray": "bg-gray-800 text-white focus:ring-gray-500 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-500 dark:focus:ring-gray-500",
+                    "gray": "bg-gray-800 text-white focus:ring-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-500 dark:focus:ring-gray-500",
                     "info": "border-gray-500 bg-gray-50 text-gray-900 placeholder-gray-700 focus:border-gray-500 focus:ring-gray-500 dark:border-gray-400 dark:bg-gray-100 dark:focus:border-gray-500 dark:focus:ring-gray-500",
                     "failure": "border-red-500 bg-red-50 text-red-900 placeholder-red-700 focus:border-red-500 focus:ring-red-500 dark:border-red-400 dark:bg-red-100 dark:focus:border-red-500 dark:focus:ring-red-500",
                     "warning": "border-yellow-500 bg-yellow-50 text-yellow-900 placeholder-yellow-700 focus:border-yellow-500 focus:ring-yellow-500 dark:border-yellow-400 dark:bg-yellow-100 dark:focus:border-yellow-500 dark:focus:ring-yellow-500",
@@ -58,7 +58,7 @@ const customTheme: CustomFlowbiteTheme = {
             "root": {
                 "base": "absolute top-10 z-50 block pt-2 bg-black text-white",
                 "inline": "relative top-0 z-auto",
-                "inner": "inline-block p-4 shadow-lg"
+                "inner": "inline-block p-4 shadow-lg border border-white"
             },
             "header": {
                 "base": "bg-black",
@@ -94,7 +94,7 @@ const customTheme: CustomFlowbiteTheme = {
                 "items": {
                     "base": "grid w-64 text-white grid-cols-7",
                     "item": {
-                        "base": "block flex-1 text-white cursor-pointer border-0 text-center text-sm font-semibold leading-9  hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
+                        "base": "block flex-1 text-white cursor-pointer border-0 text-center text-sm font-semibold leading-9 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
                         "selected": "bg-gray-700 text-white hover:bg-gray-600",
                         "disabled": "text-gray-500"
                     }
@@ -104,7 +104,7 @@ const customTheme: CustomFlowbiteTheme = {
                 "items": {
                     "base": "grid w-64 text-white grid-cols-4",
                     "item": {
-                        "base": "block flex-1 cursor-pointer border-0 text-center text-white text-sm font-semibold leading-9  hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
+                        "base": "block flex-1 cursor-pointer border-0 text-center text-white text-sm font-semibold leading-9 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
                         "selected": "bg-gray-700 text-white hover:bg-gray-600",
                         "disabled": "text-gray-500"
                     }
@@ -114,7 +114,7 @@ const customTheme: CustomFlowbiteTheme = {
                 "items": {
                     "base": "grid w-64 text-white grid-cols-4",
                     "item": {
-                        "base": "block flex-1 cursor-pointer border-0 text-center text-sm font-semibold leading-9 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600 ",
+                        "base": "block flex-1 cursor-pointer border-0 text-center text-sm font-semibold leading-9 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
                         "selected": "bg-gray-700 text-white hover:bg-gray-600",
                         "disabled": "text-gray-500"
                     }
@@ -124,7 +124,7 @@ const customTheme: CustomFlowbiteTheme = {
                 "items": {
                     "base": "grid w-64 text-white grid-cols-4",
                     "item": {
-                        "base": "block flex-1 cursor-pointer border-0 text-center text-sm font-semibold leading-9  hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600 ",
+                        "base": "block flex-1 cursor-pointer border-0 text-center text-sm font-semibold leading-9  hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
                         "selected": "bg-gray-700 text-white hover:bg-gray-600",
                         "disabled": "text-gray-500"
                     }
