@@ -56,9 +56,9 @@ const customTheme: CustomFlowbiteTheme = {
         },
         "popup": {
             "root": {
-                "base": "absolute top-10 z-50 block pt-2 bg-black text-white",
+                "base": "absolute top-[45px] right-[-2px] z-50 block pt-2 bg-black text-white",
                 "inline": "relative top-0 z-auto",
-                "inner": "inline-block p-4 shadow-lg border border-white"
+                "inner": "inline-block p-4 shadow-lg border border-white border-2"
             },
             "header": {
                 "base": "bg-black",
@@ -94,7 +94,7 @@ const customTheme: CustomFlowbiteTheme = {
                 "items": {
                     "base": "grid w-64 text-white grid-cols-7",
                     "item": {
-                        "base": "block flex-1 text-white cursor-pointer border-0 text-center text-sm font-semibold leading-9 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
+                        "base": "block flex-1 text-white cursor-pointer border-0 text-center text-sm font-semibold leading-9 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600 hover:text-black",
                         "selected": "bg-gray-700 text-white hover:bg-gray-600",
                         "disabled": "text-gray-500"
                     }
@@ -104,7 +104,7 @@ const customTheme: CustomFlowbiteTheme = {
                 "items": {
                     "base": "grid w-64 text-white grid-cols-4",
                     "item": {
-                        "base": "block flex-1 cursor-pointer border-0 text-center text-white text-sm font-semibold leading-9 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
+                        "base": "block flex-1 cursor-pointer border-0 text-center text-white text-sm font-semibold leading-9 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600 hover:text-black",
                         "selected": "bg-gray-700 text-white hover:bg-gray-600",
                         "disabled": "text-gray-500"
                     }
@@ -114,7 +114,7 @@ const customTheme: CustomFlowbiteTheme = {
                 "items": {
                     "base": "grid w-64 text-white grid-cols-4",
                     "item": {
-                        "base": "block flex-1 cursor-pointer border-0 text-center text-sm font-semibold leading-9 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
+                        "base": "block flex-1 cursor-pointer border-0 text-center text-sm font-semibold leading-9 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600 hover:text-black",
                         "selected": "bg-gray-700 text-white hover:bg-gray-600",
                         "disabled": "text-gray-500"
                     }
@@ -124,7 +124,7 @@ const customTheme: CustomFlowbiteTheme = {
                 "items": {
                     "base": "grid w-64 text-white grid-cols-4",
                     "item": {
-                        "base": "block flex-1 cursor-pointer border-0 text-center text-sm font-semibold leading-9  hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600",
+                        "base": "block flex-1 cursor-pointer border-0 text-center text-sm font-semibold leading-9  hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600 hover:text-black",
                         "selected": "bg-gray-700 text-white hover:bg-gray-600",
                         "disabled": "text-gray-500"
                     }
