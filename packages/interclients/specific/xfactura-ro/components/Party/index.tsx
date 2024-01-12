@@ -101,6 +101,11 @@ export default function Party({
                                 county: normalizePartyCounty(county),
                             }));
                         }
+
+                        setParty(prevValues => ({
+                            ...prevValues,
+                            country: 'România',
+                        }));
                     }
 
                     setParty(prevValues => ({
