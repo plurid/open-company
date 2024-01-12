@@ -39,12 +39,13 @@ export default function Settings({
 
     const exportData = () => {
         const data = {
+            exportedAt: Date.now(),
             defaultSeller: localStorage.defaultSeller,
             companies: localStorage.companies,
             invoices: localStorage.invoices,
         };
 
-        const date =  new Date().toISOString().split('T')[0];
+        const date = new Date().toISOString().split('T')[0];
 
         downloadTextFile(
             `xfactura-ro-export-${date}.json`,
