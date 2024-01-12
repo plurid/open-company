@@ -62,6 +62,14 @@ export default function Party({
                     }));
 
                     const vatNumber = normalizeVatNumber(value);
+                    if (localStorage.usingStorage && localStorage.companies[vatNumber]) {
+                        const localStorageData = localStorage.companies[vatNumber];
+                        if (localStorageData && verifyPartyData(localStorageData)) {
+                            setParty(localStorageData);
+                            return;
+                        }
+                    }
+
                     setLoadingVatNumber(true);
                     const request: any = await getCompanyDetails(vatNumber);
                     setLoadingVatNumber(false);
