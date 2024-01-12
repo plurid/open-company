@@ -1,3 +1,13 @@
+import {
+    DetailedHTMLProps,
+    InputHTMLAttributes,
+} from 'react';
+
+
+
+export type InputProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+
+
 export default function Input({
     text,
     value,
@@ -5,13 +15,15 @@ export default function Input({
     width,
     type,
     disabled,
+    inputProps,
 }: {
-    text: string,
-    value: string,
-    setValue: (value: string) => void,
+    text: string;
+    value: string;
+    setValue: (value: string) => void;
     width?: number;
     type?: string;
     disabled?: boolean;
+    inputProps?: InputProps;
 }) {
     return (
         <div
@@ -24,7 +36,7 @@ export default function Input({
             </div>
 
             <input
-                className="text-black w-[150px] bg-gray-800 disabled:bg-gray-600 text-white px-2 focus:outline-none focus:ring-2 focus:ring-white"
+                className="bg-gray-800 w-[200px] p-2 border-none rounded-none text-white focus:outline-none focus:ring-2 focus:ring-white disabled:bg-gray-600"
                 value={value}
                 onChange={(event) => {
                     setValue(event.target.value);
@@ -34,6 +46,7 @@ export default function Input({
                 }}
                 type={type}
                 disabled={disabled}
+                {...inputProps}
             />
         </div>
     );

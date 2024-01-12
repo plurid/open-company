@@ -1,7 +1,7 @@
 export default function MenuBack({
     back,
 } : {
-    back: () => void,
+    back: () => void;
 }) {
     return (
         <div

@@ -9,7 +9,7 @@ import MenuBack from '../../components/MenuBack';
 export default function InvoicesList({
     back,
 } : {
-    back: () => void,
+    back: () => void;
 }) {
     const [
         invoices,

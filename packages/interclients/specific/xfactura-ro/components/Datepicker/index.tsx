@@ -18,11 +18,11 @@ const customTheme: CustomFlowbiteTheme = {
                 "svg": "h-5 w-5 text-gray-500 dark:text-gray-400"
             },
             "input": {
-                "base": "block w-[150px] bg-black disabled:cursor-not-allowed disabled:opacity-50",
+                "base": "w-[200px] h-[40px] rounded-none border-none focus:outline-none focus:ring-2 focus:ring-white disabled:cursor-not-allowed disabled:opacity-50",
                 "sizes": {
-                    "sm": "p-1 pl-2 sm:text-xs",
-                    "md": "p-1 pl-2 text-sm",
-                    "lg": "sm:text-md p-1 pl-2"
+                    "sm": "p-2",
+                    "md": "p-2",
+                    "lg": "p-2"
                 },
                 "colors": {
                     "gray": "bg-gray-800 text-white focus:ring-gray-500 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-500 dark:focus:ring-gray-500",
@@ -66,7 +66,7 @@ const customTheme: CustomFlowbiteTheme = {
                 "selectors": {
                     "base": "flex justify-between mb-2",
                     "button": {
-                        "base": "text-sm  text-white bg-black font-semibold py-2.5 px-5 focus:outline-none focus:ring-2 focus:ring-gray-200 view-switch",
+                        "base": "text-sm text-white bg-black font-semibold py-2.5 px-5 focus:outline-none focus:ring-2 focus:ring-gray-200 view-switch",
                         "prev": "",
                         "next": "",
                         "view": ""
@@ -139,8 +139,8 @@ export default function CustomDatepicker({
     text,
     atSelect,
 }: {
-    text: string,
-    atSelect: (timestamp: number) => void,
+    text: string;
+    atSelect: (timestamp: number) => void;
 }) {
     return (
         <div

@@ -18,9 +18,9 @@ export default function Extractors({
     setShowCamera,
     setShowMicrophone,
 } : {
-    hasMediaDevices: boolean,
-    setShowCamera: Dispatch<SetStateAction<boolean>>,
-    setShowMicrophone: Dispatch<SetStateAction<boolean>>,
+    hasMediaDevices: boolean;
+    setShowCamera: Dispatch<SetStateAction<boolean>>;
+    setShowMicrophone: Dispatch<SetStateAction<boolean>>;
 }) {
     const configInput = useRef<HTMLInputElement | null>(null);
 

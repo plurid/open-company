@@ -12,8 +12,8 @@ import {
     emptyInvoiceLine,
     InvoiceLine,
     emptyMetadata,
-    Metadata,
-    ENVIRONMENT,
+    Metadata as IMetadata,
+    // ENVIRONMENT,
 } from '../data';
 
 import Menu from '../components/Menu';
@@ -21,14 +21,15 @@ import Party from '../components/Party';
 import Lines from '../components/Lines';
 import Spinner from '../components/Spinner';
 import Deleter from '../components/Deleter';
+import GenerateButton from '../components/GenerateButton';
 
 import Title from '../containers/Title';
 import Extractors from '../containers/Extractors';
-import MetadataComponent from '../containers/Metadata';
+import Metadata from '../containers/Metadata';
 import Camera from '../containers/Camera';
 import Audio from '../containers/Audio';
 
-import webContainerRunner from '../logic/node-php';
+// import webContainerRunner from '../logic/node-php';
 
 import {
     downloadTextFile,
@@ -102,7 +103,7 @@ export default function Home() {
     const [
         metadata,
         setMetadata,
-    ] = useState<Metadata>({
+    ] = useState<IMetadata>({
         ...emptyMetadata,
     });
 
@@ -127,7 +128,7 @@ export default function Home() {
     };
 
     const updateMetadata = (
-        type: keyof Metadata,
+        type: keyof IMetadata,
         value: string | number,
     ) => {
         setMetadata(prevValues => ({
@@ -322,7 +323,6 @@ export default function Home() {
                     )}
                 </div>
 
-
                 <div
                     className="grid items-center justify-center md:flex m-auto"
                 >
@@ -341,13 +341,11 @@ export default function Home() {
                     />
                 </div>
 
-
-                <MetadataComponent
+                <Metadata
                     metadata={metadata}
                     updateMetadata={updateMetadata}
                     updateDate={updateDate}
                 />
-
 
                 <Lines
                     data={lines}
@@ -355,19 +353,11 @@ export default function Home() {
                     addNewLine={addNewLine}
                 />
 
-
-                <div
-                    className="grid place-content-center p-8"
-                >
-                    <button
-                        onClick={() => generateEinvoice()}
-                        className="select-none bg-gray-800 disabled:bg-gray-600 hover:bg-gray-900 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-white"
-                        disabled={loadingEInvoice || !validData}
-                    >
-                        generare efactura
-                    </button>
-                </div>
-
+                <GenerateButton
+                    loadingEInvoice={loadingEInvoice}
+                    validData={validData}
+                    generateEinvoice={generateEinvoice}
+                />
 
                 <div
                     className="grid place-content-center p-8"
@@ -377,7 +367,6 @@ export default function Home() {
                         atDelete={() => resetInvoice()}
                     />
                 </div>
-
 
                 <div
                     className="mb-8"

@@ -9,8 +9,8 @@ export default function CameraContainer({
     handlePhoto,
     back,
 } : {
-    handlePhoto: (dataUri: string) => void,
-    back: () => void,
+    handlePhoto: (dataUri: string) => void;
+    back: () => void;
 }) {
     return (
         <div

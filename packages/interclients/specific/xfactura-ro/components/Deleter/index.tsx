@@ -12,8 +12,8 @@ export default function Deleter({
     title,
     atDelete,
 }: {
-    atDelete: () => void,
-    title?: string,
+    atDelete: () => void;
+    title?: string;
 }) {
     const [
         showDelete,

@@ -12,19 +12,19 @@ export default function Metadata({
     updateMetadata,
     updateDate,
 } : {
-    metadata: Metadata,
+    metadata: Metadata;
     updateMetadata: (
         type: keyof Metadata,
         value: string | number,
-    ) => void,
+    ) => void;
     updateDate: (
         kind: 'issueDate' | 'dueDate',
         timestamp: number,
-    ) => void,
+    ) => void;
 }) {
     return (
         <div
-            className="grid place-content-center p-8"
+            className="grid place-content-center p-8 max-w-[500px]"
         >
             <Input
                 text="număr factură"

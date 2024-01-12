@@ -6,7 +6,7 @@ import {
 
 
 export type LinkButtonProps = {
-    text: string | JSX.Element,
+    text: string | JSX.Element;
 } & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 
 

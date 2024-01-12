@@ -30,10 +30,10 @@ export default function LineMenu({
     updateLine,
     removeLine,
 }: {
-    data: InvoiceLine,
-    index: number,
-    updateLine: (index: number, type: string, value: string | boolean) => void,
-    removeLine: (index: number) => void,
+    data: InvoiceLine;
+    index: number;
+    updateLine: (index: number, type: string, value: string | boolean) => void;
+    removeLine: (index: number) => void;
 }) {
     const [
         show,

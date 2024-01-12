@@ -14,8 +14,8 @@ export default function Audio({
     setShowMicrophone,
     addAudioElement,
 } : {
-    setShowMicrophone: Dispatch<SetStateAction<boolean>>,
-    addAudioElement: (blob: Blob) => void,
+    setShowMicrophone: Dispatch<SetStateAction<boolean>>;
+    addAudioElement: (blob: Blob) => void;
 }) {
     const recorderControls = useAudioRecorder();
 

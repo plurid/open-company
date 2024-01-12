@@ -12,7 +12,7 @@ import Toggle from '../../components/Toggle';
 export default function Settings({
     back,
 } : {
-    back: () => void,
+    back: () => void;
 }) {
     const [
         useLocalStorage,

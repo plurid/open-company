@@ -21,9 +21,9 @@ export default function Lines({
     setLines,
     addNewLine,
 }: {
-    data: InvoiceLine[],
-    setLines: Dispatch<SetStateAction<InvoiceLine[]>>,
-    addNewLine: () => void,
+    data: InvoiceLine[];
+    setLines: Dispatch<SetStateAction<InvoiceLine[]>>;
+    addNewLine: () => void;
 }) {
     const updateLine = (
         index: number,

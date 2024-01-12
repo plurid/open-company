@@ -5,7 +5,7 @@ import MenuBack from '../../components/MenuBack';
 export default function About({
     back,
 } : {
-    back: () => void,
+    back: () => void;
 }) {
     return (
         <div

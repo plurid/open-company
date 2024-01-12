@@ -27,10 +27,10 @@ export default function Party({
     data,
     setParty,
 }: {
-    kind: string,
-    title: string,
-    data: NewParty,
-    setParty: Dispatch<SetStateAction<NewParty>>,
+    kind: string;
+    title: string;
+    data: NewParty;
+    setParty: Dispatch<SetStateAction<NewParty>>;
 }) {
     const updateParty = (
         type: typeof partyFields[number],
@@ -113,7 +113,7 @@ export default function Party({
 
     return (
         <div
-            className="max-w-[300px] md:w-1/2 h-[300px] p-4 md:p-8"
+            className="max-w-[400px] md:w-1/2 min-h-[300px] p-4 md:p-8"
         >
             <h2
                 className="select-none text-center text-xl mb-4 md:text-left"

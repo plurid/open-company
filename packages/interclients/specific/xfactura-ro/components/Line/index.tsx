@@ -18,10 +18,10 @@ export default function Line({
     updateLine,
     removeLine,
 }: {
-    data: InvoiceLine,
-    index: number,
-    updateLine: (index: number, type: string, value: string | boolean) => void,
-    removeLine: (index: number) => void,
+    data: InvoiceLine;
+    index: number;
+    updateLine: (index: number, type: string, value: string | boolean) => void;
+    removeLine: (index: number) => void;
 }) {
     const computeTotal = () => {
         const {
@@ -73,6 +73,9 @@ export default function Line({
                 setValue={(value) => updateLine(index, 'quantity', value)}
                 width={70}
                 type="number"
+                inputProps={{
+                    min: 0,
+                }}
             />
 
             <Input
@@ -81,13 +84,20 @@ export default function Line({
                 setValue={(value) => updateLine(index, 'price', value)}
                 width={95}
                 type="number"
+                inputProps={{
+                    min: 0,
+                }}
             />
 
             <Input
                 text="TVA"
                 value={data.vatRate + ''}
                 setValue={(value) => updateLine(index, 'vatRate', value)}
-                width={35}
+                width={65}
+                type="number"
+                inputProps={{
+                    min: 0,
+                }}
             />
 
             <Input
