@@ -49,9 +49,14 @@ export const MenuIcon = ({
 
 export default function Menu() {
     const [
+        showBgBlack,
+        setShowBgBlack,
+    ] = useState(true);
+
+    const [
         showMenu,
         setShowMenu,
-    ] = useState(false);
+    ] = useState(true);
 
     const [
         view,
@@ -61,6 +66,10 @@ export default function Menu() {
 
     useEffect(() => {
         setView('general');
+
+        if (!showMenu) {
+            setShowBgBlack(false);
+        }
     }, [
         showMenu,
     ]);
@@ -82,12 +91,14 @@ export default function Menu() {
         if (showMenu) {
             window.addEventListener('scroll', handleScroll, { passive: false });
             window.addEventListener('wheel', handleScroll, { passive: false });
+            window.addEventListener('touchmove', handleScroll, { passive: false });
             window.addEventListener('keydown', handleEscape);
         }
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
             window.removeEventListener('wheel', handleScroll);
+            window.removeEventListener('touchmove', handleScroll);
             window.removeEventListener('keydown', handleEscape);
         };
     }, [
@@ -159,7 +170,7 @@ export default function Menu() {
 
             {showMenu && (
                 <div
-                    className="animate-fadeIn fixed z-40 top-0 h-screen right-0 left-0 botom-0 backdrop-blur-md grid place-items-center text-center"
+                    className={`${showBgBlack ? 'bg-black': 'animate-fadeIn backdrop-blur-md'} fixed z-40 top-0 h-screen right-0 left-0 botom-0 grid place-items-center text-center`}
                 >
                     <div
                         className="max-w-xl p-4"
