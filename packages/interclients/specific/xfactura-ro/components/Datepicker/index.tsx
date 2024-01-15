@@ -161,7 +161,7 @@ export default function CustomDatepicker({
                     weekStart={1}
                     language="ro-RO"
                     labelTodayButton='azi'
-                    labelClearButton='eliminare'
+                    labelClearButton='resetare'
                     icon={undefined}
                 />
             </Flowbite>

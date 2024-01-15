@@ -49,6 +49,10 @@ import {
     getEInvoice,
 } from '../logic/requests';
 
+import {
+    logicCamera,
+} from '../logic/camera';
+
 
 
 export default function Home() {
@@ -59,8 +63,8 @@ export default function Home() {
 
     // #region state
     const [
-        loadedWebContainers,
-        setLoadedWebContainers,
+        showLoading,
+        setShowLoading,
     ] = useState(false);
 
     const [
@@ -122,11 +126,16 @@ export default function Home() {
     const addAudioElement = (
         blob: Blob,
     ) => {
-        // const url = URL.createObjectURL(blob);
-        // const audio = document.createElement('audio');
-        // audio.src = url;
-        // audio.controls = true;
-        // document.body.appendChild(audio);
+        const url = URL.createObjectURL(blob);
+        const audio = document.createElement('audio');
+        audio.src = url;
+        audio.controls = true;
+        document.body.appendChild(audio);
+
+        // convert blob using speech to text
+
+        // fa o factura catre SC Marcel SRL CUI 515161
+        // send text to gpt-4v
     };
 
     const updateMetadata = (
@@ -205,13 +214,15 @@ export default function Home() {
         // );
     }
 
-    const handleInvoicePhoto = (
-        dataUri: string,
+    const handleInvoicePhoto = async (
+        dataURI: string,
     ) => {
         setShowCamera(false);
+        setShowLoading(true);
 
-        // TODO
-        // handle photo
+        await logicCamera(dataURI);
+
+        setShowLoading(false);
     }
 
     const resetInvoice = () => {
@@ -245,7 +256,7 @@ export default function Home() {
         // if (ENVIRONMENT.IN_PRODUCTION === 'true') {
         //     webContainerRunner.load()
         //         .then((loaded) => {
-        //             setLoadedWebContainers(true);
+        //             setShowLoading(true);
 
         //             if (!loaded) {
         //                 // TODO
@@ -253,10 +264,10 @@ export default function Home() {
         //             }
         //         });
         // } else {
-        //     setLoadedWebContainers(true);
+        //     setShowLoading(true);
         // }
 
-        setLoadedWebContainers(true);
+        setShowLoading(false);
     }, []);
 
     /** valid data */
@@ -298,7 +309,7 @@ export default function Home() {
 
     return (
         <>
-            {!loadedWebContainers && (
+            {showLoading && (
                 <Spinner />
             )}
 

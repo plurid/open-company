@@ -24,8 +24,9 @@ export default function CameraContainer({
                         handlePhoto(dataUri);
                     }}
                     idealFacingMode="environment"
-                    imageCompression={1}
                     isMaxResolution={true}
+                    imageType="png"
+                    imageCompression={1}
                 />
             </div>
 
