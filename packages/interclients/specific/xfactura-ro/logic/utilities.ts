@@ -48,16 +48,30 @@ export const formatNumber = (
     value: number,
     currency = 'RON',
 ) => {
-    const formatter = new Intl.NumberFormat('ro-RO', {
-        currency,
+    const properties = {
         currencySign: 'accounting',
         style: 'currency',
         maximumFractionDigits: 2,
         minimumFractionDigits: 2,
-    });
-    const formated = formatter.format(value);
+    };
 
-    return formated;
+    try {
+        const formatter = new Intl.NumberFormat('ro-RO', {
+            currency,
+            ...properties,
+        });
+        const formated = formatter.format(value);
+
+        return formated;
+    } catch (error) {
+        const formatter = new Intl.NumberFormat('ro-RO', {
+            currency: 'RON',
+            ...properties,
+        });
+        const formated = formatter.format(value);
+
+        return formated;
+    }
 }
 
 
