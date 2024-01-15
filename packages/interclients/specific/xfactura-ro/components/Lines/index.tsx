@@ -21,10 +21,12 @@ export default function Lines({
     data,
     setLines,
     addNewLine,
+    currency,
 }: {
     data: InvoiceLine[];
     setLines: Dispatch<SetStateAction<InvoiceLine[]>>;
     addNewLine: () => void;
+    currency: string;
 }) {
     const updateLine = (
         index: number,
@@ -73,6 +75,7 @@ export default function Lines({
                     return acc + quantityPrice(line);
                 }, 0),
             ),
+            currency,
         );
     }
 
@@ -87,6 +90,7 @@ export default function Lines({
                     return acc + financial(quantityPrice(line) * line.vatRate / 100);
                 }, 0),
             ),
+            currency,
         );
     }
 
@@ -101,6 +105,7 @@ export default function Lines({
                     return acc + financial(quantityPrice(line) * (1 + line.vatRate / 100));
                 }, 0),
             ),
+            currency,
         );
     }
 

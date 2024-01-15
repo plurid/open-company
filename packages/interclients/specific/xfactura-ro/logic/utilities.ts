@@ -46,11 +46,12 @@ export function toFixed(
 
 export const formatNumber = (
     value: number,
+    currency = 'RON',
 ) => {
     const formatter = new Intl.NumberFormat('ro-RO', {
-        // currency: 'RON',
-        // currencySign: 'accounting',
-        // style: 'currency',
+        currency,
+        currencySign: 'accounting',
+        style: 'currency',
         maximumFractionDigits: 2,
         minimumFractionDigits: 2,
     });
@@ -94,6 +95,7 @@ export function debounce(callback: any, delay = 700) {
     return (...args: any) => {
         return new Promise((resolve, reject) => {
             clearTimeout(timer);
+
             timer = setTimeout(() => {
                 try {
                     let output = callback(...args);
@@ -102,7 +104,6 @@ export function debounce(callback: any, delay = 700) {
                     reject(err);
                 }
             }, delay);
-        })
-
+        });
     }
 }

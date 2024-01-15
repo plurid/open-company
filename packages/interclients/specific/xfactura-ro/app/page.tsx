@@ -359,6 +359,7 @@ export default function Home() {
                     data={lines}
                     setLines={setLines}
                     addNewLine={addNewLine}
+                    currency={metadata.currency}
                 />
 
                 <GenerateButton
