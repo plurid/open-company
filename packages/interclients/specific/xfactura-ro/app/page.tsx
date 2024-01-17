@@ -40,9 +40,9 @@ import {
     checkValidParty,
     checkValidLine,
     checkValidMetadata,
-    toNormalCase,
-    normalizedUserCounty,
-    normalizeDiacritics,
+    normalizeUserCounty,
+    normalizeUserCountry,
+    normalizeVatNumber,
 } from '../logic/validation';
 
 import {
@@ -173,17 +173,15 @@ export default function Home() {
             },
             seller: {
                 ...seller,
-                subdivision: normalizedUserCounty(seller.county),
-                country: toNormalCase(
-                    normalizeDiacritics(seller.country),
-                ),
+                vatNumber: normalizeVatNumber(seller.vatNumber),
+                subdivision: normalizeUserCounty(seller.county, seller.country),
+                country: normalizeUserCountry(seller.country),
             },
             buyer: {
                 ...buyer,
-                subdivision: normalizedUserCounty(buyer.county),
-                country: toNormalCase(
-                    normalizeDiacritics(buyer.country),
-                ),
+                vatNumber: normalizeVatNumber(buyer.vatNumber),
+                subdivision: normalizeUserCounty(buyer.county, buyer.country),
+                country: normalizeUserCountry(buyer.country),
             },
             lines,
         };

@@ -106,6 +106,11 @@ export const countyMap: Record<string, string> = {
 };
 
 
+export const countryMap: Record<string, string> = {
+    'Romania': 'RO',
+};
+
+
 export const acceptedInvoiceFiles = '.jpg,.jpeg,.png,.pdf,.docx,.xlsx,.xml,.json';
 
 

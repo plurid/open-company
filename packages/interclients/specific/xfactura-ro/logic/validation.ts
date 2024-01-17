@@ -4,6 +4,7 @@ import {
     Metadata,
 
     countyMap,
+    countryMap,
 } from '../data';
 
 
@@ -22,7 +23,7 @@ export const normalizeDiacritics = (
 }
 
 
-export const normalizedCountyString = (
+export const normalizeCountyString = (
     value: string,
 ) => {
     const normalizedValue = value
@@ -34,25 +35,37 @@ export const normalizedCountyString = (
     return normalizeDiacritics(normalizedValue);
 }
 
-export const normalizedUserCounty = (
+export const normalizeUserCounty = (
     userCounty: string,
+    userCountry: string,
 ) => {
-    const normalizedUserCounty = normalizedCountyString(userCounty);
+    const normalizedUserCounty = normalizeCountyString(userCounty);
 
     for (const [key, value] of Object.entries(countyMap)) {
-        const normalizedKey = normalizedCountyString(key);
+        const normalizedKey = normalizeCountyString(key);
 
         if (normalizedKey === normalizedUserCounty) {
-            return value;
+            return normalizeUserCountry(userCountry) + '-' + value;
         }
     }
+}
+
+export const normalizeUserCountry = (
+    value: string,
+) => {
+    const normalizedValue = normalizeDiacritics(
+        toNormalCase(value),
+    );
+    const country = countryMap[normalizedValue];
+
+    return country || 'RO';
 }
 
 
 export const checkValidParty = (party: NewParty) => {
     const validName = party.name.length > 0;
     const validVatNumber = party.vatNumber.length > 0;
-    const validCounty = party.county.length > 0 && !!normalizedUserCounty(party.county);
+    const validCounty = party.county.length > 0 && !!normalizeUserCounty(party.county, party.country);
     const validCity = party.city.length > 0;
     const validAddress = party.address.length > 0;
 
@@ -96,9 +109,17 @@ export const checkValidMetadata = (metadata: Metadata) => {
 
 export const normalizeVatNumber = (
     vatNumber: string,
-) => vatNumber
-    .replace(/\s/g, '')
-    .replace('RO', '');
+) => {
+    let value = vatNumber
+        .toUpperCase()
+        .replace(/\s/g, '');
+
+    if (value.startsWith('RO')) {
+        return value;
+    }
+
+    return 'RO' + value;
+}
 
 
 export const toNormalCase = (
