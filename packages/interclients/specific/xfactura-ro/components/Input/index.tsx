@@ -52,6 +52,10 @@ export default function Input({
                 }}
                 type={type}
                 disabled={disabled}
+                spellCheck={false}
+                autoCapitalize="off"
+                autoCorrect="off"
+                autoComplete="off"
                 {...inputProps}
             />
 
