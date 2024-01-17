@@ -140,6 +140,7 @@ export default function Lines({
                             index={index}
                             updateLine={updateLine}
                             removeLine={removeLine}
+                            currency={currency}
                         />
                     );
                 })}

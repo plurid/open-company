@@ -19,6 +19,7 @@ export default function Input({
     disabled,
     loading,
     inputProps,
+    asGrid,
 }: {
     text: string;
     value: string;
@@ -28,10 +29,11 @@ export default function Input({
     disabled?: boolean;
     loading?: boolean;
     inputProps?: InputProps;
+    asGrid?: boolean;
 }) {
     return (
         <div
-            className="relative flex items-center justify-between my-2 gap-4"
+            className={`flex relative items-center justify-between my-2 gap-4 ${asGrid ? 'lg:grid' : 'lg:flex'}`}
         >
             <div
                 className="select-none"

@@ -8,6 +8,7 @@ import {
 import {
     toFixed,
     financial,
+    formatNumber,
 } from '../../logic/utilities';
 
 
@@ -15,11 +16,13 @@ import {
 export default function Line({
     data,
     index,
+    currency,
     updateLine,
     removeLine,
 }: {
     data: InvoiceLine;
     index: number;
+    currency: string;
     updateLine: (index: number, type: string, value: string | boolean) => void;
     removeLine: (index: number) => void;
 }) {
@@ -53,7 +56,10 @@ export default function Line({
         const vat = financial(value * vatRate / 100);
         const total = financial(value + vat);
 
-        return toFixed(total);
+        return formatNumber(
+            total,
+            currency,
+        );
     }
 
 
@@ -71,6 +77,7 @@ export default function Line({
                 text="denumire"
                 value={data.name}
                 setValue={(value) => updateLine(index, 'name', value)}
+                asGrid={true}
             />
 
             <Input
@@ -82,6 +89,7 @@ export default function Line({
                 inputProps={{
                     min: 0,
                 }}
+                asGrid={true}
             />
 
             <Input
@@ -93,6 +101,7 @@ export default function Line({
                 inputProps={{
                     min: 0,
                 }}
+                asGrid={true}
             />
 
             <Input
@@ -104,14 +113,16 @@ export default function Line({
                 inputProps={{
                     min: 0,
                 }}
+                asGrid={true}
             />
 
             <Input
                 text="total"
                 value={computeTotal()}
                 setValue={(_value) => {}}
-                width={100}
+                width={140}
                 disabled={true}
+                asGrid={true}
             />
 
             <LineMenu
