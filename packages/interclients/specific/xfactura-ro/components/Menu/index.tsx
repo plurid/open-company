@@ -6,6 +6,7 @@ import {
 import LinkButton from '../../components/LinkButton';
 
 import About from '../../containers/About';
+import CompaniesList from '../../containers/CompaniesList';
 import InvoicesList from '../../containers/InvoicesList';
 import Settings from '../../containers/Settings';
 
@@ -61,7 +62,7 @@ export default function Menu() {
     const [
         view,
         setView,
-    ] = useState<'general' | 'about' | 'invoices' | 'settings'>('general');
+    ] = useState<'general' | 'about' | 'companies' | 'invoices' | 'settings'>('general');
 
 
     useEffect(() => {
@@ -115,6 +116,13 @@ export default function Menu() {
                 />
             );
             break;
+        case 'companies':
+            viewElement = (
+                <CompaniesList
+                    back={() => setView('general')}
+                />
+            );
+            break;
         case 'invoices':
             viewElement = (
                 <InvoicesList
@@ -135,13 +143,22 @@ export default function Menu() {
                     <li className="m-4">
                         <LinkButton
                             text="xfactură nouă"
-                            onClick={() => setShowMenu(false)}
+                            onClick={() => {
+                                setShowMenu(false);
+                                window.scrollTo(0, 0);
+                            }}
                         />
                     </li>
                     <li className="m-4">
                         <LinkButton
                             text="despre xfactura.ro"
                             onClick={() => setView('about')}
+                        />
+                    </li>
+                    <li className="m-4">
+                        <LinkButton
+                            text="companii"
+                            onClick={() => setView('companies')}
                         />
                     </li>
                     <li className="m-4">
