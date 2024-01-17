@@ -45,6 +45,7 @@ export default function CustomTooltip({
             theme={theme}
             style="dark"
             placement="bottom"
+            trigger="hover"
         >
             {children}
         </Tooltip>

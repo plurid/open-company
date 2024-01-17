@@ -36,6 +36,11 @@ export default function Settings({
         setUseLocalStorage,
     ] = useState(localStorage.usingStorage);
 
+    const [
+        generateEinvoiceLocally,
+        setGenerateEinvoiceLocally
+    ] = useState(localStorage.generateEinvoiceLocally);
+
 
     const exportData = () => {
         const data = {
@@ -131,6 +136,17 @@ export default function Settings({
                         localStorage.usingStorage = !localStorage.usingStorage;
 
                         setUseLocalStorage(localStorage.usingStorage);
+                    }}
+                />
+
+                <Toggle
+                    text="generare efactura local"
+                    value={generateEinvoiceLocally}
+                    toggle={() => {
+                        localStorage.set(localKeys.generateEinvoiceLocally, !localStorage.generateEinvoiceLocally);
+                        localStorage.generateEinvoiceLocally = !localStorage.generateEinvoiceLocally;
+
+                        setGenerateEinvoiceLocally(localStorage.generateEinvoiceLocally);
                     }}
                 />
 
