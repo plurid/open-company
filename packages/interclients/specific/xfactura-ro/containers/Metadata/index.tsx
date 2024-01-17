@@ -4,6 +4,7 @@ import {
 
 import Input from '../../components/Input';
 import Datepicker from '../../components/Datepicker';
+import Subtitle from '../../components/Subtitle';
 
 
 
@@ -26,6 +27,10 @@ export default function Metadata({
         <div
             className="grid place-content-center p-8 max-w-[500px]"
         >
+            <Subtitle
+                text="metadata"
+            />
+
             <Input
                 text="număr factură"
                 value={metadata.number}

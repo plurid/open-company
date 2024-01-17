@@ -5,6 +5,7 @@ import {
 
 import Line from '../../components/Line';
 import LinkButton from '../../components/LinkButton';
+import Subtitle from '../../components/Subtitle';
 
 import {
     InvoiceLine,
@@ -111,9 +112,19 @@ export default function Lines({
 
 
     return (
-        <div>
+        <div
+            className="p-2 md:p-8"
+        >
+            <div
+                className='grid place-content-center mb-4'
+            >
+                <Subtitle
+                    text="produse & servicii"
+                />
+            </div>
+
             <ul
-                className="grid place-content-center p-2 md:p-8"
+                className="grid place-content-center"
             >
                 {data.length === 0 && (
                     <div>

@@ -15,7 +15,8 @@ import localStorage, {
     localKeys,
 } from '../../data/localStorage';
 
-import Input from '../Input';
+import Subtitle from '../../components/Subtitle';
+import Input from '../../components/Input';
 
 import {
     getCompanyDetails,
@@ -178,11 +179,9 @@ export default function Party({
         <div
             className="max-w-[400px] md:w-1/2 min-h-[300px] p-4 md:p-8"
         >
-            <h2
-                className="select-none text-center text-xl mb-4 md:text-left"
-            >
-                {title}
-            </h2>
+            <Subtitle
+                text={title}
+            />
 
             <div>
                 {partyFields.map(field => {
