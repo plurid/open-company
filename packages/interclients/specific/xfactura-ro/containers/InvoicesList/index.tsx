@@ -2,6 +2,8 @@ import {
     useState,
 } from 'react';
 
+import localStorage from '../../data/localStorage';
+
 import MenuBack from '../../components/MenuBack';
 
 
@@ -14,7 +16,9 @@ export default function InvoicesList({
     const [
         invoices,
         setInvoices,
-    ] = useState<any[]>([]);
+    ] = useState<any[]>(
+        Object.values(localStorage.invoices) as any[],
+    );
 
 
     return (

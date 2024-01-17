@@ -2,6 +2,12 @@ import {
     useState,
 } from 'react';
 
+import {
+    NewParty,
+} from '../../data';
+
+import localStorage from '../../data/localStorage';
+
 import MenuBack from '../../components/MenuBack';
 
 
@@ -14,7 +20,9 @@ export default function CompaniesList({
     const [
         companies,
         setCompanies,
-    ] = useState<any[]>([]);
+    ] = useState<NewParty[]>(
+        Object.values(localStorage.companies) as NewParty[],
+    );
 
 
     return (
@@ -30,6 +38,23 @@ export default function CompaniesList({
                     nici o companie
                 </div>
             )}
+
+            {companies.map(company => {
+                return (
+                    <div
+                        key={company.vatNumber}
+                        className="flex justify-between items-center gap-4 p-2 mb-2 w-full"
+                    >
+                        <div>
+                            {company.vatNumber}
+                        </div>
+
+                        <div>
+                            {company.name}
+                        </div>
+                    </div>
+                );
+            })}
 
             <MenuBack
                 back={back}
