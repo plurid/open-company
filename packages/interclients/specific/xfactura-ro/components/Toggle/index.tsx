@@ -1,17 +1,45 @@
+import Tooltip from '../Tooltip';
+
+
+
 const Toggle = ({
     text,
     value,
     toggle,
+    tooltip,
 }: {
     text: string;
     value: boolean;
     toggle: () => void;
+    tooltip?: React.ReactNode;
 }) => {
     return (
-        <div className="flex gap-2 justify-between my-2">
-            <span>
-                {text}
-            </span>
+        <div className="flex gap-6 justify-between my-2">
+            <div
+                className="flex items-center gap-2"
+            >
+                <>
+                    {text}
+                </>
+
+                {tooltip && (
+                    <Tooltip
+                        content={(
+                            <div
+                                className="max-w-[250px] p-2"
+                            >
+                                {tooltip}
+                            </div>
+                        )}
+                    >
+                        <span
+                            className="text-gray-400 cursor-pointer"
+                        >
+                            ?
+                        </span>
+                    </Tooltip>
+                )}
+            </div>
 
             <label className="relative inline-flex items-center cursor-pointer">
                 <input

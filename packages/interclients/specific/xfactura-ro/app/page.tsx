@@ -13,7 +13,7 @@ import {
     InvoiceLine,
     emptyMetadata,
     Metadata as IMetadata,
-    // ENVIRONMENT,
+    ENVIRONMENT,
 } from '../data';
 
 import Menu from '../components/Menu';
@@ -29,7 +29,7 @@ import Metadata from '../containers/Metadata';
 import Camera from '../containers/Camera';
 import Audio from '../containers/Audio';
 
-// import webContainerRunner from '../logic/node-php';
+import webContainerRunner from '../logic/node-php';
 
 import {
     downloadTextFile,
@@ -53,6 +53,8 @@ import {
     logicCamera,
 } from '../logic/camera';
 
+import localStorage from '../data/localStorage';
+
 
 
 export default function Home() {
@@ -65,7 +67,7 @@ export default function Home() {
     const [
         showLoading,
         setShowLoading,
-    ] = useState(false);
+    ] = useState(true);
 
     const [
         hasMediaDevices,
@@ -186,30 +188,33 @@ export default function Home() {
             lines,
         };
 
-        const response = await getEInvoice(invoice);
-        setLoadingEInvoice(false);
 
-        if (response && response.status) {
-            const filename = `efactura-${metadata.number}-${seller.name}-${buyer.name}.xml`;
+        const filename = `efactura-${metadata.number}-${seller.name}-${buyer.name}.xml`;
 
-            downloadTextFile(
-                filename,
-                response.data,
+        if (localStorage.generateEinvoiceLocally) {
+            await webContainerRunner.writeData(invoice);
+            await webContainerRunner.startNodePHPServer(
+                (value) => {
+                    setLoadingEInvoice(false);
+
+                    downloadTextFile(
+                        filename,
+                        value,
+                    );
+                },
             );
+        } else {
+                const response = await getEInvoice(invoice);
+                setLoadingEInvoice(false);
+
+                if (response && response.status) {
+                    downloadTextFile(
+                        filename,
+                        response.data,
+                    );
+                }
+
         }
-
-        // await webContainerRunner.writeData(invoice);
-        // await webContainerRunner.startNodePHPServer(
-        //     (value) => {
-        //         setLoadingEInvoice(false);
-        //         const filename = `efactura-${metadata.number}-${seller.name}-${buyer.name}.xml`;
-
-        //         downloadTextFile(
-        //             filename,
-        //             value,
-        //         );
-        //     },
-        // );
     }
 
     const handleInvoicePhoto = async (
@@ -251,21 +256,19 @@ export default function Home() {
         }
         mounted.current = true;
 
-        // if (ENVIRONMENT.IN_PRODUCTION === 'true') {
-        //     webContainerRunner.load()
-        //         .then((loaded) => {
-        //             setShowLoading(true);
+        if (localStorage.generateEinvoiceLocally) {
+            webContainerRunner.load()
+                .then((loaded) => {
+                    setShowLoading(false);
 
-        //             if (!loaded) {
-        //                 // TODO
-        //                 // notify error
-        //             }
-        //         });
-        // } else {
-        //     setShowLoading(true);
-        // }
-
-        setShowLoading(false);
+                    if (!loaded) {
+                        // TODO
+                        // notify error
+                    }
+                });
+        } else {
+            setShowLoading(false);
+        }
     }, []);
 
     /** valid data */

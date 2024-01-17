@@ -116,6 +116,13 @@ export default function Settings({
         reader.readAsText(file);
     }
 
+    const reload = () => {
+        setTimeout(() => {
+            // TODO notify
+            location.reload();
+        }, 1_000);
+    }
+
 
     return (
         <div>
@@ -147,7 +154,23 @@ export default function Settings({
                         localStorage.generateEinvoiceLocally = !localStorage.generateEinvoiceLocally;
 
                         setGenerateEinvoiceLocally(localStorage.generateEinvoiceLocally);
+
+                        reload();
                     }}
+                    tooltip={(
+                        <>
+                            <p>
+                                dacă această opțiune este activată, efactura se va genera în browser, fără a fi trimisă către serverul xfactura.ro · recomandat în browser-ul Chrome sau Firefox pe desktop
+                            </p>
+                            <p
+                                style={{
+                                    margin: 0,
+                                }}
+                            >
+                                dacă această opțiune este dezactivată, efactura se va genera pe serverul xfactura.ro fără a fi stocate datele
+                            </p>
+                        </>
+                    )}
                 />
 
                 <LinkButton
@@ -176,11 +199,7 @@ export default function Settings({
                     title="ștergere totală"
                     atDelete={() => {
                         localStorage.obliterate();
-
-                        setTimeout(() => {
-                            // TODO notify
-                            location.reload();
-                        }, 1_000);
+                        reload();
                     }}
                 />
             </div>
