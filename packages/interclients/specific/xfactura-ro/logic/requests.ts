@@ -4,16 +4,16 @@ import {
     EINVOICE_API,
     UPLOAD_AUDIO_API,
     UPLOAD_FILE_API,
+    ExtractedResponse,
 } from '../data';
 
 import {
     logger,
-    debounce,
 } from './utilities';
 
 
 
-export const getCompanyDetails = debounce(async (
+export const getCompanyDetails = async (
     vatNumber: string,
 ) => {
     if (!ENVIRONMENT.X_DOMAIN) {
@@ -38,7 +38,7 @@ export const getCompanyDetails = debounce(async (
         .catch((error) => {
             logger('error', error);
         });
-});
+}
 
 
 export const getEInvoice = async (
