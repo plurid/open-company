@@ -13,7 +13,6 @@ import {
     InvoiceLine,
     emptyMetadata,
     Metadata as IMetadata,
-    ENVIRONMENT,
 } from '../data';
 
 import Menu from '../components/Menu';
@@ -47,6 +46,7 @@ import {
 
 import {
     getEInvoice,
+    uploadAudio,
 } from '../logic/requests';
 
 import {
@@ -125,19 +125,11 @@ export default function Home() {
 
 
     // #region handlers
-    const addAudioElement = (
+    const addAudioElement = async (
         blob: Blob,
     ) => {
-        const url = URL.createObjectURL(blob);
-        const audio = document.createElement('audio');
-        audio.src = url;
-        audio.controls = true;
-        document.body.appendChild(audio);
-
-        // convert blob using speech to text
-
-        // fa o factura catre SC Marcel SRL CUI 515161
-        // send text to gpt-4v
+        const data = await uploadAudio(blob);
+        // console.log(data);
     };
 
     const updateMetadata = (

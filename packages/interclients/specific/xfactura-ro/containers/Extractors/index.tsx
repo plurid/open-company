@@ -11,6 +11,10 @@ import {
     acceptedInvoiceFiles,
 } from '../../data';
 
+import {
+    uploadFile,
+} from '../../logic/requests';
+
 
 
 export default function Extractors({
@@ -32,7 +36,7 @@ export default function Extractors({
         configInput.current.click();
     }
 
-    const handleReadInput = () => {
+    const handleReadInput = async () => {
         if (!configInput?.current) {
             return;
         }
@@ -47,7 +51,8 @@ export default function Extractors({
             return;
         }
 
-        // console.log(file);
+        const data = await uploadFile(file);
+        // console.log(data);
     }
 
 

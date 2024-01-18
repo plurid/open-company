@@ -1,5 +1,9 @@
 import { createWorker } from 'tesseract.js';
 
+import {
+    uploadFile,
+} from '../logic/requests';
+
 
 
 export const logicCamera = async (
@@ -16,17 +20,22 @@ export const logicCamera = async (
 
     const byteArray = new Uint8Array(byteNumbers);
     const blob = new Blob([byteArray], { type: 'image/png' });
+
+    const data = await uploadFile(blob);
+    // console.log(data);
+
+
     // console.log(blob);
 
-    // const blobUrl = URL.createObjectURL(blob);
+    // // const blobUrl = URL.createObjectURL(blob);
 
-    const worker = await createWorker('ron');
-    // const ret = await worker.recognize(blobUrl);
-    const ret = await worker.recognize(blob);
-    console.log(ret.data);
-    // debugRef.current!.innerHTML = JSON.stringify(ret.data.blocks, null, 2);
+    // const worker = await createWorker('ron');
+    // // const ret = await worker.recognize(blobUrl);
+    // const ret = await worker.recognize(blob);
+    // console.log(ret.data);
+    // // debugRef.current!.innerHTML = JSON.stringify(ret.data.blocks, null, 2);
 
-    await worker.terminate();
-    // URL.revokeObjectURL(blobUrl);
-    // setDebugSrc(blobUrl);
+    // await worker.terminate();
+    // // URL.revokeObjectURL(blobUrl);
+    // // setDebugSrc(blobUrl);
 }

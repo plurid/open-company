@@ -114,14 +114,18 @@ export const countryMap: Record<string, string> = {
 export const acceptedInvoiceFiles = '.jpg,.jpeg,.png,.pdf,.docx,.xlsx,.xml,.json';
 
 
-export const COMPANY_DETAILS_API = `${process.env.NEXT_PUBLIC_X_DOMAIN}/api/company_details`;
-export const EINVOICE_API = `${process.env.NEXT_PUBLIC_X_DOMAIN}/api/einvoice`;
-
-
 export const ENVIRONMENT = {
     IN_PRODUCTION: process.env.NEXT_PUBLIC_IN_PRODUCTION,
     X_DOMAIN: process.env.NEXT_PUBLIC_X_DOMAIN,
+    AI_DOMAIN: process.env.NEXT_PUBLIC_AI_DOMAIN,
 };
+
+
+export const COMPANY_DETAILS_API = `${ENVIRONMENT.X_DOMAIN}/api/company_details`;
+export const EINVOICE_API = `${ENVIRONMENT.X_DOMAIN}/api/einvoice`;
+
+export const UPLOAD_AUDIO_API = `${ENVIRONMENT.AI_DOMAIN}/upload_audio`;
+export const UPLOAD_FILE_API = `${ENVIRONMENT.AI_DOMAIN}/upload_file`;
 
 
 export type ResponseData = {
