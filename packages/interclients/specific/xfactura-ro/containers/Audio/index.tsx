@@ -12,10 +12,10 @@ import {
 
 export default function Audio({
     setShowMicrophone,
-    addAudioElement,
+    extractInvoiceFromAudio,
 } : {
     setShowMicrophone: Dispatch<SetStateAction<boolean>>;
-    addAudioElement: (blob: Blob) => void;
+    extractInvoiceFromAudio: (blob: Blob) => void;
 }) {
     const recorderControls = useAudioRecorder();
 
@@ -27,7 +27,7 @@ export default function Audio({
             <AudioRecorder
                 onRecordingComplete={(blob) => {
                     setShowMicrophone(false);
-                    addAudioElement(blob);
+                    extractInvoiceFromAudio(blob);
                 }}
                 recorderControls={recorderControls}
                 audioTrackConstraints={{

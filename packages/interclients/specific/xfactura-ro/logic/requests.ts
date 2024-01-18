@@ -75,15 +75,16 @@ export const uploadAudio = async (
     }
 
     const formData = new FormData();
-    formData.append('file', audio, 'audio.mp3');
+    const id = (Math.random() + '').slice(2);
+    const filename = `audio-${id}.mp3`;
+    formData.append('file', audio, filename);
 
     return fetch(UPLOAD_AUDIO_API, {
         method: 'POST',
         body: formData,
     })
-        .then((response) => response.json())
-        .then((data) => {
-            return data;
+        .then((response) => {
+            return response.json();
         })
         .catch((error) => {
             logger('error', error);
@@ -91,22 +92,22 @@ export const uploadAudio = async (
 }
 
 export const uploadFile = async (
-    file: any,
+    file: File | Blob,
 ) => {
     if (!ENVIRONMENT.AI_DOMAIN) {
         return;
     }
 
     const formData = new FormData();
-    formData.append('file', file, 'file.png');
+    const filename = file instanceof File ? file.name : 'file.png';
+    formData.append('file', file, filename);
 
     return fetch(UPLOAD_FILE_API, {
         method: 'POST',
         body: formData,
     })
-        .then((response) => response.json())
-        .then((data) => {
-            return data;
+        .then((response) => {
+            return response.json();
         })
         .catch((error) => {
             logger('error', error);

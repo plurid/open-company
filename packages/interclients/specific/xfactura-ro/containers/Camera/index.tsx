@@ -6,10 +6,10 @@ import LinkButton from '../../components/LinkButton';
 
 
 export default function CameraContainer({
-    handlePhoto,
+    extractInvoiceFromCamera,
     back,
 } : {
-    handlePhoto: (dataUri: string) => void;
+    extractInvoiceFromCamera: (dataUri: string) => void;
     back: () => void;
 }) {
     return (
@@ -27,7 +27,7 @@ export default function CameraContainer({
 
             <Camera
                 onTakePhoto={(dataUri) => {
-                    handlePhoto(dataUri);
+                    extractInvoiceFromCamera(dataUri);
                 }}
                 idealFacingMode="environment"
                 isMaxResolution={true}

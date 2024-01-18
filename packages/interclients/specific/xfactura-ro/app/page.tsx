@@ -56,6 +56,7 @@ import {
 
 import {
     getEInvoice,
+    uploadFile,
     uploadAudio,
 } from '../logic/requests';
 
@@ -135,12 +136,34 @@ export default function Home() {
 
 
     // #region handlers
-    const addAudioElement = async (
+    const extractInvoiceFromFile = async (
+        file: File,
+    ) => {
+        setShowLoading(true);
+        const response = await uploadFile(file);
+        handleExtractedData(response);
+        setShowLoading(false);
+    }
+
+    const extractInvoiceFromCamera = async (
+        dataURI: string,
+    ) => {
+        setShowCamera(false);
+
+        setShowLoading(true);
+        await logicCamera(dataURI, handleExtractedData);
+        setShowLoading(false);
+    }
+
+    const extractInvoiceFromAudio = async (
         blob: Blob,
     ) => {
-        const data = await uploadAudio(blob);
-        // console.log(data);
-    };
+        setShowLoading(true);
+        const response = await uploadAudio(blob);
+        setShowLoading(false);
+        handleExtractedData(response);
+    }
+
 
     const updateMetadata = (
         type: keyof IMetadata,
@@ -219,17 +242,6 @@ export default function Home() {
         }
     }
 
-    const handleInvoicePhoto = async (
-        dataURI: string,
-    ) => {
-        setShowCamera(false);
-        setShowLoading(true);
-
-        await logicCamera(dataURI);
-
-        setShowLoading(false);
-    }
-
     const resetInvoice = () => {
         setSeller({
             ...newParty,
@@ -252,7 +264,7 @@ export default function Home() {
         response: ExtractedResponse,
     ) => {
         try {
-            if (!response.status) {
+            if (!response || !response.status) {
                 return;
             }
 
@@ -408,12 +420,12 @@ export default function Home() {
                         hasMediaDevices={hasMediaDevices}
                         setShowCamera={setShowCamera}
                         setShowMicrophone={setShowMicrophone}
-                        handleExtractedData={handleExtractedData}
+                        extractInvoiceFromFile={extractInvoiceFromFile}
                     />
 
                     {showCamera && (
                         <Camera
-                            handlePhoto={handleInvoicePhoto}
+                            extractInvoiceFromCamera={extractInvoiceFromCamera}
                             back={() => setShowCamera(false)}
                         />
                     )}
@@ -421,7 +433,7 @@ export default function Home() {
                     {showMicrophone && (
                         <Audio
                             setShowMicrophone={setShowMicrophone}
-                            addAudioElement={addAudioElement}
+                            extractInvoiceFromAudio={extractInvoiceFromAudio}
                         />
                     )}
                 </div>

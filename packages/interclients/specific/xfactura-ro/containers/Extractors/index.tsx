@@ -9,12 +9,7 @@ import Tooltip from '../../components/Tooltip';
 
 import {
     acceptedInvoiceFiles,
-    ExtractedResponse,
 } from '../../data';
-
-import {
-    uploadFile,
-} from '../../logic/requests';
 
 
 
@@ -22,12 +17,12 @@ export default function Extractors({
     hasMediaDevices,
     setShowCamera,
     setShowMicrophone,
-    handleExtractedData,
+    extractInvoiceFromFile,
 } : {
     hasMediaDevices: boolean;
     setShowCamera: Dispatch<SetStateAction<boolean>>;
     setShowMicrophone: Dispatch<SetStateAction<boolean>>;
-    handleExtractedData: (response: ExtractedResponse) => void;
+    extractInvoiceFromFile: (file: File) => void;
 }) {
     const configInput = useRef<HTMLInputElement | null>(null);
 
@@ -54,12 +49,7 @@ export default function Extractors({
             return;
         }
 
-        const response = await uploadFile(file);
-        if (!response) {
-            return;
-        }
-
-        handleExtractedData(response);
+        extractInvoiceFromFile(file);
     }
 
 

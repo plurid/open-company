@@ -1,6 +1,10 @@
 import { createWorker } from 'tesseract.js';
 
 import {
+    ExtractedResponse,
+} from '../data';
+
+import {
     uploadFile,
 } from '../logic/requests';
 
@@ -8,6 +12,7 @@ import {
 
 export const logicCamera = async (
     dataURI: string,
+    handleExtractedData: (data: ExtractedResponse) => void,
 ) => {
     // console.log(dataURI);
     const dataPart = dataURI.split(',')[1];
@@ -21,8 +26,8 @@ export const logicCamera = async (
     const byteArray = new Uint8Array(byteNumbers);
     const blob = new Blob([byteArray], { type: 'image/png' });
 
-    const data = await uploadFile(blob);
-    // console.log(data);
+    const response = await uploadFile(blob);
+    handleExtractedData(response);
 
 
     // console.log(blob);
