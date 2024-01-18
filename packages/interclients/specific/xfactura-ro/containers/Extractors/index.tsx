@@ -9,6 +9,7 @@ import Tooltip from '../../components/Tooltip';
 
 import {
     acceptedInvoiceFiles,
+    ExtractedResponse,
 } from '../../data';
 
 import {
@@ -21,10 +22,12 @@ export default function Extractors({
     hasMediaDevices,
     setShowCamera,
     setShowMicrophone,
+    handleExtractedData,
 } : {
     hasMediaDevices: boolean;
     setShowCamera: Dispatch<SetStateAction<boolean>>;
     setShowMicrophone: Dispatch<SetStateAction<boolean>>;
+    handleExtractedData: (response: ExtractedResponse) => void;
 }) {
     const configInput = useRef<HTMLInputElement | null>(null);
 
@@ -51,8 +54,12 @@ export default function Extractors({
             return;
         }
 
-        const data = await uploadFile(file);
-        // console.log(data);
+        const response = await uploadFile(file);
+        if (!response) {
+            return;
+        }
+
+        handleExtractedData(response);
     }
 
 

@@ -13,6 +13,7 @@ import {
     InvoiceLine,
     emptyMetadata,
     Metadata as IMetadata,
+    ExtractedResponse,
 } from '../data';
 
 import Menu from '../components/Menu';
@@ -42,6 +43,15 @@ import {
     normalizeUserCounty,
     normalizeUserCountry,
     normalizeVatNumber,
+    verifyInputVatNumber,
+    verifyInputUserName,
+    verifyInputUserCountry,
+    verifyInputUserCounty,
+    verifyInputUserCity,
+    verifyInputUserAddress,
+    verifyInputUserInvoiceNumber,
+    verifyInputUserCurrency,
+    verifyInputUserDate,
 } from '../logic/validation';
 
 import {
@@ -237,6 +247,86 @@ export default function Home() {
             ...emptyInvoiceLine,
         }]);
     }
+
+    const handleExtractedData = (
+        response: ExtractedResponse,
+    ) => {
+        try {
+            if (!response.status) {
+                return;
+            }
+
+            const {
+                vatNumberSeller,
+                nameSeller,
+                countrySeller,
+                countySeller,
+                citySeller,
+                addressSeller,
+
+                vatNumberBuyer,
+                nameBuyer,
+                countryBuyer,
+                countyBuyer,
+                cityBuyer,
+                addressBuyer,
+
+                invoiceNumber,
+                currency,
+                issueDate,
+                dueDate,
+
+                products,
+            } = response.data;
+
+            setSeller(prevValues => ({
+                ...prevValues,
+                vatNumber: verifyInputVatNumber(vatNumberSeller),
+                name: verifyInputUserName(nameSeller),
+                country: verifyInputUserCountry(countrySeller),
+                county: verifyInputUserCounty(countySeller),
+                city: verifyInputUserCity(citySeller),
+                address: verifyInputUserAddress(addressSeller),
+            }));
+
+            setBuyer(prevValues => ({
+                ...prevValues,
+                vatNumber: verifyInputVatNumber(vatNumberBuyer),
+                name: verifyInputUserName(nameBuyer),
+                country: verifyInputUserCountry(countryBuyer),
+                county: verifyInputUserCounty(countyBuyer),
+                city: verifyInputUserCity(cityBuyer),
+                address: verifyInputUserAddress(addressBuyer),
+            }));
+
+            setMetadata(prevValues => ({
+                ...prevValues,
+                number: verifyInputUserInvoiceNumber(invoiceNumber),
+                currency: verifyInputUserCurrency(currency),
+                issueDate: verifyInputUserDate(issueDate),
+                dueDate: verifyInputUserDate(dueDate),
+            }));
+
+            if (Array.isArray(products)) {
+                const newLines = [
+                    ...lines,
+                    ...products.map((product) => ({
+                        ...emptyInvoiceLine,
+                        name: product.description || '',
+                        quantity: product.quantity || 1,
+                        price: product.price || 0,
+                        vatRate: product.vat || 19,
+                    })),
+                ].filter(line => line.name !== '');
+
+                setLines([
+                    ...newLines,
+                ]);
+            }
+        } catch (error) {
+            return;
+        }
+    }
     // #endregion handlers
 
 
@@ -263,6 +353,19 @@ export default function Home() {
         }
     }, []);
 
+    /** media devices */
+    useEffect(() => {
+        let hasMediaDevices = true;
+
+        if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+            hasMediaDevices = true;
+        } else {
+            hasMediaDevices = false;
+        }
+
+        setHasMediaDevices(hasMediaDevices);
+    }, []);
+
     /** valid data */
     useEffect(() => {
         const validSeller = checkValidParty(seller);
@@ -284,19 +387,6 @@ export default function Home() {
         metadata,
         lines,
     ]);
-
-    /** media devices */
-    useEffect(() => {
-        let hasMediaDevices = true;
-
-        if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-            hasMediaDevices = true;
-        } else {
-            hasMediaDevices = false;
-        }
-
-        setHasMediaDevices(hasMediaDevices);
-    }, []);
     // #endregion effects
 
 
@@ -318,6 +408,7 @@ export default function Home() {
                         hasMediaDevices={hasMediaDevices}
                         setShowCamera={setShowCamera}
                         setShowMicrophone={setShowMicrophone}
+                        handleExtractedData={handleExtractedData}
                     />
 
                     {showCamera && (

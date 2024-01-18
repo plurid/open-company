@@ -1,5 +1,6 @@
 import {
     useState,
+    useCallback,
     useEffect,
     Dispatch,
     SetStateAction,
@@ -54,6 +55,74 @@ export default function Party({
     ] = useState(false);
 
 
+    const checkVatNumber = useCallback(async (
+        value: string,
+    ) => {
+        try {
+            setParty(prevValues => ({
+                ...prevValues,
+                vatNumber: value,
+            }));
+
+            const vatNumber = normalizeVatNumber(value);
+            if (localStorage.usingStorage && localStorage.companies[vatNumber]) {
+                const localStorageData = localStorage.companies[vatNumber];
+                if (localStorageData && verifyPartyData(localStorageData)) {
+                    setParty(localStorageData);
+                    setUsingLocalData(true);
+                    return;
+                }
+            }
+
+            setLoadingVatNumber(true);
+            const request: any = await getCompanyDetails(vatNumber);
+            setLoadingVatNumber(false);
+            if (request && request.status) {
+                if (usingLocalData) {
+                    return;
+                }
+
+                const {
+                    adresa_domiciliu_fiscal,
+                    adresa_sediu_social,
+                    date_generale,
+                } = request.data;
+
+                const name = date_generale.denumire;
+                const address = adresa_domiciliu_fiscal.ddenumire_Strada
+                    ? (adresa_domiciliu_fiscal.ddenumire_Strada + ' ' + adresa_domiciliu_fiscal.dnumar_Strada)
+                    : adresa_sediu_social.sdenumire_Strada
+                        ? (adresa_sediu_social.sdenumire_Strada + ' ' + adresa_sediu_social.snumar_Strada)
+                        : '';
+                const city = adresa_domiciliu_fiscal.ddenumire_Localitate || adresa_sediu_social.sdenumire_Localitate || '';
+                const county = adresa_domiciliu_fiscal.ddenumire_Judet || adresa_sediu_social.sdenumire_Judet || '';
+
+                setParty(prevValues => ({
+                    ...prevValues,
+                    name: name ? normalizePartyName(name) : prevValues.name,
+                    address: address ? address : prevValues.address,
+                    city: city ? normalizePartyCity(city) : prevValues.city,
+                    county: county ? normalizePartyCounty(county) : prevValues.county,
+                    country: 'România',
+                }));
+            } else {
+                setParty(prevValues => ({
+                    ...prevValues,
+                    vatNumber,
+                }));
+            }
+        } catch (error) {
+            setParty(prevValues => ({
+                ...prevValues,
+                vatNumber: value,
+            }));
+            return;
+        }
+    }, [
+        setParty,
+        usingLocalData,
+    ]);
+
     const updateParty = (
         type: typeof partyFields[number],
     ) => {
@@ -61,66 +130,8 @@ export default function Party({
             value: string,
         ) => {
             if (type === 'vatNumber' && normalizeVatNumber(value).length > 5) {
-                try {
-                    setParty(prevValues => ({
-                        ...prevValues,
-                        vatNumber: value,
-                    }));
-
-                    const vatNumber = normalizeVatNumber(value);
-                    if (localStorage.usingStorage && localStorage.companies[vatNumber]) {
-                        const localStorageData = localStorage.companies[vatNumber];
-                        if (localStorageData && verifyPartyData(localStorageData)) {
-                            setParty(localStorageData);
-                            setUsingLocalData(true);
-                            return;
-                        }
-                    }
-
-                    setLoadingVatNumber(true);
-                    const request: any = await getCompanyDetails(vatNumber);
-                    setLoadingVatNumber(false);
-                    if (request && request.status) {
-                        if (usingLocalData) {
-                            return;
-                        }
-
-                        const {
-                            adresa_domiciliu_fiscal,
-                            adresa_sediu_social,
-                            date_generale,
-                        } = request.data;
-
-                        const name = date_generale.denumire;
-                        const address = adresa_domiciliu_fiscal.ddenumire_Strada
-                            ? (adresa_domiciliu_fiscal.ddenumire_Strada + ' ' + adresa_domiciliu_fiscal.dnumar_Strada)
-                            : adresa_sediu_social.sdenumire_Strada
-                                ? (adresa_sediu_social.sdenumire_Strada + ' ' + adresa_sediu_social.snumar_Strada)
-                                : '';
-                        const city = adresa_domiciliu_fiscal.ddenumire_Localitate || adresa_sediu_social.sdenumire_Localitate || '';
-                        const county = adresa_domiciliu_fiscal.ddenumire_Judet || adresa_sediu_social.sdenumire_Judet || '';
-
-                        setParty(prevValues => ({
-                            ...prevValues,
-                            name: name ? normalizePartyName(name) : prevValues.name,
-                            address: address ? address : prevValues.address,
-                            city: city ? normalizePartyCity(city) : prevValues.city,
-                            county: county ? normalizePartyCounty(county) : prevValues.county,
-                            country: 'România',
-                        }));
-                    } else {
-                        setParty(prevValues => ({
-                            ...prevValues,
-                            vatNumber,
-                        }));
-                    }
-                } catch (error) {
-                    setParty(prevValues => ({
-                        ...prevValues,
-                        vatNumber: value,
-                    }));
-                    return;
-                }
+                checkVatNumber(value);
+                return;
             }
 
             setParty(prevValues => ({
@@ -172,6 +183,15 @@ export default function Party({
     }, [
         kind,
         setParty,
+    ]);
+
+    useEffect(() => {
+        if (data.vatNumber.length > 5) {
+            checkVatNumber(data.vatNumber);
+        }
+    }, [
+        data.vatNumber,
+        checkVatNumber,
     ]);
 
 

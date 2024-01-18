@@ -132,3 +132,36 @@ export type ResponseData = {
     status: boolean;
     data?: any;
 }
+
+
+export type ExtractedResponse = {
+    status: false;
+} | {
+    status: true;
+    data: {
+        addressBuyer: string | null;
+        addressSeller: string | null;
+        cityBuyer: string | null;
+        citySeller: string | null;
+        countryBuyer: string | null;
+        countrySeller: string | null;
+        countyBuyer: string | null;
+        countySeller: string | null;
+        currency: string | null;
+        issueDate: string | null;
+        dueDate: string | null;
+        invoiceNumber: string | null;
+        nameBuyer: string | null;
+        nameSeller: string | null;
+        products: {
+            description: string | null;
+            price: number | null;
+            quantity: number | null;
+            total: number | null;
+            unit: string | null;
+            vat: number | null;
+        }[];
+        vatNumberBuyer: string | null;
+        vatNumberSeller: string | null;
+    };
+}

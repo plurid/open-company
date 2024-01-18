@@ -108,8 +108,12 @@ export const checkValidMetadata = (metadata: Metadata) => {
 
 
 export const normalizeVatNumber = (
-    vatNumber: string,
+    vatNumber: string | null | undefined,
 ) => {
+    if (!vatNumber) {
+        return '';
+    }
+
     let value = vatNumber
         .toUpperCase()
         .replace(/\s/g, '');
@@ -199,4 +203,109 @@ export const isObject = (
     return typeof value === 'object'
         && value !== null
         && !Array.isArray(value);
+}
+
+
+
+export const verifyInputVatNumber = (
+    value: string | null | undefined,
+) => {
+    if (typeof value !== 'string') {
+        return '';
+    }
+
+    return value
+        .toUpperCase()
+        .replace(/\s/g, '')
+        .replace('RO', '');
+}
+
+export const verifyInputUserName = (
+    value: string | null | undefined,
+) => {
+    if (typeof value !== 'string') {
+        return '';
+    }
+
+    return value;
+}
+
+export const verifyInputUserCountry = (
+    value: string | null | undefined,
+) => {
+    if (typeof value !== 'string') {
+        return '';
+    }
+
+    return value;
+}
+
+export const verifyInputUserCounty = (
+    value: string | null | undefined,
+) => {
+    if (typeof value !== 'string') {
+        return '';
+    }
+
+    return value;
+}
+
+export const verifyInputUserCity = (
+    value: string | null | undefined,
+) => {
+    if (typeof value !== 'string') {
+        return '';
+    }
+
+    return value;
+}
+
+export const verifyInputUserAddress = (
+    value: string | null | undefined,
+) => {
+    if (typeof value !== 'string') {
+        return '';
+    }
+
+    return value;
+}
+
+export const verifyInputUserInvoiceNumber = (
+    value: string | null | undefined,
+) => {
+    if (typeof value !== 'string') {
+        return '';
+    }
+
+    return value;
+}
+
+export const verifyInputUserCurrency = (
+    value: string | null | undefined,
+) => {
+    if (typeof value !== 'string') {
+        return '';
+    }
+
+    return value;
+}
+
+export const verifyInputUserDate = (
+    value: string | null | undefined,
+) => {
+    if (typeof value !== 'string') {
+        return Date.now();
+    }
+
+    try {
+        const date = new Date(value);
+
+        if (isNaN(date.getTime())) {
+            return Date.now();
+        }
+
+        return date.getTime();
+    } catch (error) {
+        return Date.now();
+    }
 }
