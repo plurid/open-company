@@ -281,30 +281,30 @@ export default function Home() {
 
             setSeller(prevValues => ({
                 ...prevValues,
-                vatNumber: verifyInputVatNumber(vatNumberSeller),
-                name: verifyInputUserName(nameSeller),
-                country: verifyInputUserCountry(countrySeller),
-                county: verifyInputUserCounty(countySeller),
-                city: verifyInputUserCity(citySeller),
-                address: verifyInputUserAddress(addressSeller),
+                vatNumber: verifyInputVatNumber(vatNumberSeller) || prevValues.vatNumber,
+                name: verifyInputUserName(nameSeller) || prevValues.name,
+                country: verifyInputUserCountry(countrySeller) || prevValues.country,
+                county: verifyInputUserCounty(countySeller) || prevValues.county,
+                city: verifyInputUserCity(citySeller) || prevValues.city,
+                address: verifyInputUserAddress(addressSeller) || prevValues.address,
             }));
 
             setBuyer(prevValues => ({
                 ...prevValues,
-                vatNumber: verifyInputVatNumber(vatNumberBuyer),
-                name: verifyInputUserName(nameBuyer),
-                country: verifyInputUserCountry(countryBuyer),
-                county: verifyInputUserCounty(countyBuyer),
-                city: verifyInputUserCity(cityBuyer),
-                address: verifyInputUserAddress(addressBuyer),
+                vatNumber: verifyInputVatNumber(vatNumberBuyer) || prevValues.vatNumber,
+                name: verifyInputUserName(nameBuyer) || prevValues.name,
+                country: verifyInputUserCountry(countryBuyer) || prevValues.country,
+                county: verifyInputUserCounty(countyBuyer) || prevValues.county,
+                city: verifyInputUserCity(cityBuyer) || prevValues.city,
+                address: verifyInputUserAddress(addressBuyer) || prevValues.address,
             }));
 
             setMetadata(prevValues => ({
                 ...prevValues,
-                number: verifyInputUserInvoiceNumber(invoiceNumber),
-                currency: verifyInputUserCurrency(currency),
-                issueDate: verifyInputUserDate(issueDate),
-                dueDate: verifyInputUserDate(dueDate),
+                number: verifyInputUserInvoiceNumber(invoiceNumber) || prevValues.number,
+                currency: verifyInputUserCurrency(currency) || prevValues.currency,
+                issueDate: verifyInputUserDate(issueDate) || prevValues.issueDate,
+                dueDate: verifyInputUserDate(dueDate) || prevValues.dueDate,
             }));
 
             if (Array.isArray(products)) {
