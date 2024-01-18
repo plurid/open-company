@@ -55,6 +55,7 @@ export default function Settings({
         downloadTextFile(
             `xfactura-ro-export-${date}.json`,
             JSON.stringify(data, null, 2),
+            'application/json',
         );
     }
 

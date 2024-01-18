@@ -1,11 +1,14 @@
 export function downloadTextFile(
     fileName: string,
     text: string,
+    type = 'application/xml',
 ) {
     const blob = new Blob(
-        [text],
+        [
+            text,
+        ],
         {
-            type: 'application/xml',
+            type,
         },
     );
 
