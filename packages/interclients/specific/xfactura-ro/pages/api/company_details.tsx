@@ -8,7 +8,7 @@ import {
 } from '../../data';
 
 import {
-    normalizeVatNumber,
+    verifyInputVatNumber,
 } from '../../logic/validation';
 
 import {
@@ -36,11 +36,11 @@ export default async function handler(
         const {
             vatNumber,
         } = data;
-        const normalizedVatNumber = normalizeVatNumber(vatNumber);
+        const verifiedVatNumber = verifyInputVatNumber(vatNumber);
         if (
-            !normalizedVatNumber
-            || normalizedVatNumber.length < 5
-            || normalizedVatNumber.length > 12
+            !verifiedVatNumber
+            || verifiedVatNumber.length < 5
+            || verifiedVatNumber.length > 12
         ) {
             res.status(400).json({
                 status: false,
@@ -72,23 +72,23 @@ export default async function handler(
             },
             body: JSON.stringify([
                 {
-                    cui: normalizedVatNumber,
+                    cui: verifiedVatNumber,
                     data: new Date().toISOString().split('T')[0],
                 },
             ]),
         })
-            .then((response) => response.json())
-            .then((data) => {
-                return data;
+            .then((response) => {
+                return response.json();
             })
             .catch((error) => {
                 logger('error', error);
             });
 
-        if (result.cod !== 200) {
+        if (!result || result.cod !== 200) {
             res.status(404).json({
                 status: false,
             });
+            return;
         }
 
         const entity = result.found[0];

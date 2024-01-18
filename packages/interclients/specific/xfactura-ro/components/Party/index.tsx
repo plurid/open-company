@@ -1,10 +1,13 @@
 import {
     useState,
-    useCallback,
     useEffect,
     Dispatch,
     SetStateAction,
 } from 'react';
+
+import {
+    useDebouncedCallback,
+} from 'use-debounce';
 
 import {
     NewParty,
@@ -28,6 +31,7 @@ import {
     normalizePartyCity,
     normalizePartyCounty,
     normalizeVatNumber,
+    verifyInputVatNumber,
     verifyPartyData,
 } from '../../logic/validation';
 
@@ -55,16 +59,11 @@ export default function Party({
     ] = useState(false);
 
 
-    const checkVatNumber = useCallback(async (
+    const checkVatNumber = useDebouncedCallback(async (
         value: string,
     ) => {
         try {
-            setParty(prevValues => ({
-                ...prevValues,
-                vatNumber: value,
-            }));
-
-            const vatNumber = normalizeVatNumber(value);
+            const vatNumber = verifyInputVatNumber(value);
             if (localStorage.usingStorage && localStorage.companies[vatNumber]) {
                 const localStorageData = localStorage.companies[vatNumber];
                 if (localStorageData && verifyPartyData(localStorageData)) {
@@ -99,6 +98,7 @@ export default function Party({
 
                 setParty(prevValues => ({
                     ...prevValues,
+                    vatNumber: normalizeVatNumber(vatNumber),
                     name: name ? normalizePartyName(name) : prevValues.name,
                     address: address ? address : prevValues.address,
                     city: city ? normalizePartyCity(city) : prevValues.city,
@@ -108,20 +108,18 @@ export default function Party({
             } else {
                 setParty(prevValues => ({
                     ...prevValues,
-                    vatNumber,
+                    vatNumber: normalizeVatNumber(vatNumber),
                 }));
             }
         } catch (error) {
+            setLoadingVatNumber(false);
             setParty(prevValues => ({
                 ...prevValues,
                 vatNumber: value,
             }));
             return;
         }
-    }, [
-        setParty,
-        usingLocalData,
-    ]);
+    });
 
     const updateParty = (
         type: typeof partyFields[number],
@@ -129,7 +127,12 @@ export default function Party({
         return async (
             value: string,
         ) => {
-            if (type === 'vatNumber' && normalizeVatNumber(value).length > 5) {
+            if (type === 'vatNumber' && verifyInputVatNumber(value).length > 5) {
+                setParty(prevValues => ({
+                    ...prevValues,
+                    vatNumber: value,
+                }));
+
                 checkVatNumber(value);
                 return;
             }

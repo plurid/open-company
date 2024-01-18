@@ -216,6 +216,7 @@ export const verifyInputVatNumber = (
 
     return value
         .toUpperCase()
+        .trim()
         .replace(/\s/g, '')
         .replace('RO', '');
 }
