@@ -2,6 +2,11 @@ import {
     useState,
 } from 'react';
 
+import {
+    useGoogleLogin,
+    TokenResponse as GoogleTokenResponse,
+} from '@react-oauth/google';
+
 import localStorage from '../../data/localStorage';
 
 import LinkButton from '../LinkButton';
@@ -23,6 +28,7 @@ export default function ActsModal({
         type: 'local' | 'cloud',
     ) => void;
 }) {
+    // #region state
     const [
         loggedIn,
         setLoggedIn,
@@ -42,8 +48,38 @@ export default function ActsModal({
         showBuyScreen,
         setShowBuyScreen,
     ] = useState(false);
+    // #endregion state
 
 
+    // #region handlers
+    const googleSuccessLogin = (
+        tokenResponse: Omit<GoogleTokenResponse, "error" | "error_description" | "error_uri">,
+    ) => {
+        setLoggedIn(true);
+        setShowBuyScreen(true);
+        setShowLoginScreen(false);
+    }
+    const googleErrorLogin = () => {
+        console.log('Login Failed');
+    }
+    const googleLogin = useGoogleLogin({
+        onSuccess: (tokenResponse) => googleSuccessLogin(tokenResponse),
+        onError: () => googleErrorLogin()
+    });
+
+
+    const appleSuccessLogin = () => {
+        setLoggedIn(true);
+        setShowBuyScreen(true);
+        setShowLoginScreen(false);
+    }
+    const appleErrorLogin = () => {
+        console.log('Login Failed');
+    }
+    // #endregion handlers
+
+
+    // #region render
     const initialScreen = (
         <>
         <div
@@ -168,20 +204,16 @@ export default function ActsModal({
             </div>
 
             <LinkButton
-                text="logare cu Google"
+                text="logare prin Google"
                 onClick={() => {
-                    setLoggedIn(true);
-                    setShowBuyScreen(true);
-                    setShowLoginScreen(false);
+                    googleLogin();
                 }}
             />
 
             <LinkButton
-                text="logare cu Apple"
+                text="logare prin Apple"
                 onClick={() => {
-                    setLoggedIn(true);
-                    setShowBuyScreen(true);
-                    setShowLoginScreen(false);
+                    appleSuccessLogin();
                 }}
             />
 
@@ -276,4 +308,5 @@ export default function ActsModal({
             {screen}
         </div>
     );
+    // #endregion render
 }

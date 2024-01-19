@@ -1,7 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
 import './globals.css';
+
+import {
+    ENVIRONMENT,
+} from '../data';
 
 
 
@@ -23,7 +29,13 @@ export default function RootLayout({
             lang="ro"
             suppressHydrationWarning
         >
-            <body className={inter.className}>{children}</body>
+            <body className={inter.className}>
+                <GoogleOAuthProvider
+                    clientId={ENVIRONMENT.GOOGLE_LOGIN}
+                >
+                    {children}
+                </GoogleOAuthProvider>
+            </body>
         </html>
     );
 }

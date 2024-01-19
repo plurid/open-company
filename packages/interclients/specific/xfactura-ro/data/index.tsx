@@ -115,9 +115,10 @@ export const acceptedInvoiceFiles = '.jpg,.jpeg,.png,.pdf,.docx,.xlsx,.xml,.json
 
 
 export const ENVIRONMENT = {
-    IN_PRODUCTION: process.env.NEXT_PUBLIC_IN_PRODUCTION,
-    X_DOMAIN: process.env.NEXT_PUBLIC_X_DOMAIN,
-    AI_DOMAIN: process.env.NEXT_PUBLIC_AI_DOMAIN,
+    IN_PRODUCTION: process.env.NEXT_PUBLIC_IN_PRODUCTION || '',
+    X_DOMAIN: process.env.NEXT_PUBLIC_X_DOMAIN || '',
+    AI_DOMAIN: process.env.NEXT_PUBLIC_AI_DOMAIN || '',
+    GOOGLE_LOGIN: process.env.NEXT_PUBLIC_GOOGLE_LOGIN || '',
 };
 
 
