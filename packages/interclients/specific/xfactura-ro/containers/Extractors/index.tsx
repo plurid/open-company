@@ -11,6 +11,8 @@ import ActsModal from '../../components/ActsModal';
 
 import {
     acceptedInvoiceFiles,
+    extractorTitles,
+    extractorDescriptions,
 } from '../../data';
 
 import {
@@ -50,7 +52,7 @@ export default function Extractors({
     const [
         actsModalDescription,
         setActsModalDescription,
-    ] = useState('');
+    ] = useState(<></>);
 
 
     const triggerReadInput = () => {
@@ -84,6 +86,9 @@ export default function Extractors({
         setShowActsModal(false);
 
         switch (actsModalType) {
+            case 'upload':
+                triggerReadInput();
+                break;
             case 'camera':
                 if (kind === 'local') {
                     setShowCamera(true);
@@ -91,13 +96,15 @@ export default function Extractors({
                     setShowCamera(true);
                 }
                 break;
+            case 'record':
+                setShowMicrophone(true);
             default:
                 break;
         }
 
         setActsModalType('');
         setActsModalTitle('');
-        setActsModalDescription('');
+        setActsModalDescription(<></>);
     }
 
 
@@ -119,15 +126,7 @@ export default function Extractors({
                     onChange={() => handleReadInput()}
                 />
                 <Tooltip
-                    content={(
-                        <>
-                            încarcă fișier cu factura în format
-                            <br />
-                            {acceptedInvoiceFiles.replace(/\./g, ' ')}
-                            <br />
-                            pentru a detecta automat datele
-                        </>
-                    )}
+                    content={extractorDescriptions.upload}
                 >
                     <div
                         className="flex items-center gap-1"
@@ -135,8 +134,13 @@ export default function Extractors({
                         {uploadIcon}
 
                         <LinkButton
-                            text="încărcare"
-                            onClick={() => triggerReadInput()}
+                            text={extractorTitles.upload}
+                            onClick={() => {
+                                setShowActsModal(true);
+                                setActsModalType('upload');
+                                setActsModalTitle(extractorTitles.upload);
+                                setActsModalDescription(extractorDescriptions.upload);
+                            }}
                         />
                     </div>
                 </Tooltip>
@@ -148,13 +152,7 @@ export default function Extractors({
                         className="mb-4"
                     >
                         <Tooltip
-                            content={(
-                                <>
-                                    folosește camera pentru a fotografia factura
-                                    <br />
-                                    și a detecta automat datele
-                                </>
-                            )}
+                            content={extractorDescriptions.camera}
                         >
                             <div
                                 className="flex items-center gap-1"
@@ -162,12 +160,12 @@ export default function Extractors({
                                 {photoIcon}
 
                                 <LinkButton
-                                    text="fotografiere"
+                                    text={extractorTitles.camera}
                                     onClick={() => {
                                         setShowActsModal(true);
                                         setActsModalType('camera');
-                                        setActsModalTitle('fotografiere');
-                                        setActsModalDescription('folosește camera pentru a fotografia factura și a detecta automat datele');
+                                        setActsModalTitle(extractorTitles.camera);
+                                        setActsModalDescription(extractorDescriptions.camera);
                                     }}
                                 />
                             </div>
@@ -178,13 +176,7 @@ export default function Extractors({
                         className="mb-4"
                     >
                         <Tooltip
-                            content={(
-                                <>
-                                    folosește microfonul pentru a dicta factura
-                                    <br />
-                                    &quot;factură de la ... către ... număr ... dată ... produs unu ...&quot;
-                                </>
-                            )}
+                            content={extractorDescriptions.record}
                         >
                             <div
                                 className="flex items-center gap-1"
@@ -192,8 +184,13 @@ export default function Extractors({
                                 {microphoneIcon}
 
                                 <LinkButton
-                                    text="înregistrare"
-                                    onClick={() => setShowMicrophone(show => !show)}
+                                    text={extractorTitles.record}
+                                    onClick={() => {
+                                        setShowActsModal(true);
+                                        setActsModalType('record');
+                                        setActsModalTitle(extractorTitles.record);
+                                        setActsModalDescription(extractorDescriptions.record);
+                                    }}
                                 />
                             </div>
                         </Tooltip>

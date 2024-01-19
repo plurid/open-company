@@ -172,3 +172,36 @@ export const smartActsLabels = {
     'local': 'local',
     'cloud': 'cloud',
 };
+
+
+export const extractorTitles = {
+    'upload': 'încărcare',
+    'camera': 'fotografiere',
+    'record': 'înregistrare',
+};
+
+export const extractorDescriptions = {
+    'upload': (
+        <>
+            încarcă fișier cu factura în format
+            <br />
+            {acceptedInvoiceFiles.replace(/\./g, ' ')}
+            <br />
+            pentru a detecta automat datele
+        </>
+    ),
+    'camera': (
+        <>
+            folosește camera pentru a fotografia factura
+            <br />
+            și a detecta automat datele
+        </>
+    ),
+    'record': (
+        <>
+            folosește microfonul pentru a dicta factura
+            <br />
+            &quot;factură de la CUI ... către CUI ... număr ... dată ... produs unu ... preț ...&quot;
+        </>
+    ),
+};
