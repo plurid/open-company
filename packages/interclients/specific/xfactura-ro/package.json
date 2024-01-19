@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@php-wasm/node": "^0.5.4",
+        "@react-oauth/google": "^0.12.1",
         "@webcontainer/api": "^1.1.8",
         "flowbite-react": "^0.7.2",
         "next": "14.0.4",
