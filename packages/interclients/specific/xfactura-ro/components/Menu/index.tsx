@@ -62,7 +62,7 @@ export default function Menu() {
     const [
         view,
         setView,
-    ] = useState<'general' | 'about' | 'companies' | 'invoices' | 'settings'>('general');
+    ] = useState<'general' | 'about' | 'ai' | 'companies' | 'inventory' | 'invoices' | 'settings'>('general');
 
 
     useEffect(() => {
@@ -157,8 +157,20 @@ export default function Menu() {
                     </li>
                     <li className="m-4">
                         <LinkButton
+                            text="acte inteligente"
+                            onClick={() => setView('ai')}
+                        />
+                    </li>
+                    <li className="m-4">
+                        <LinkButton
                             text="companii"
                             onClick={() => setView('companies')}
+                        />
+                    </li>
+                    <li className="m-4">
+                        <LinkButton
+                            text="stocuri"
+                            onClick={() => setView('inventory')}
                         />
                     </li>
                     <li className="m-4">
@@ -171,6 +183,15 @@ export default function Menu() {
                         <LinkButton
                             text="setări"
                             onClick={() => setView('settings')}
+                        />
+                    </li>
+
+                    <li className="m-4">
+                        <LinkButton
+                            text="delogare"
+                            onClick={() => {
+                                // if logged in
+                            }}
                         />
                     </li>
                 </ul>

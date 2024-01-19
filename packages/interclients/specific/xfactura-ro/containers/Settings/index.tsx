@@ -202,10 +202,10 @@ export default function Settings({
                     tooltip={(
                         <>
                             <p>
-                                actele inteligente pot fi folosite pentru a genera automat xfacturi din imagini sau folosind vocea
+                                actele inteligente pot fi folosite pentru a genera automat xfacturi din imagini, documente, sau folosind vocea
                             </p>
                             <p>
-                                modelele neuronale pentru actele inteligente pot rula în browser (local—gratuit) sau pe serverul xfactura.ro (cloud—contra cost)
+                                modelele neuronale pentru actele inteligente pot rula în browser (local—complet gratuit) sau pe serverul xfactura.ro (cloud—contra cost)
                             </p>
                             <p
                                 style={{
