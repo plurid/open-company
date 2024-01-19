@@ -165,3 +165,10 @@ export type ExtractedResponse = {
         vatNumberSeller: string | null;
     };
 }
+
+
+export const smartActsLabels = {
+    'unspecified': 'nespecificat',
+    'local': 'local',
+    'cloud': 'cloud',
+};

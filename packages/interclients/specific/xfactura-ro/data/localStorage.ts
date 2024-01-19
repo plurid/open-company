@@ -7,6 +7,7 @@ import {
 export const localKeys = {
     usingStorage: 'usingStorage',
     generateEinvoiceLocally: 'generateEinvoiceLocally',
+    smartActs: 'smartActs',
     defaultSeller: 'defaultSeller',
     company: 'company-',
     invoice: 'invoice-',
@@ -15,7 +16,8 @@ export const localKeys = {
 export type Keys =
     | 'usingStorage'
     | 'defaultSeller'
-    | 'generateEinvoiceLocally';
+    | 'generateEinvoiceLocally'
+    | 'smartActs';
 export type CompanyKey = `company-${string}`;
 export type InvoiceKey = `invoice-${string}`;
 export type LocalStorageKey = Keys | CompanyKey | InvoiceKey;
@@ -82,6 +84,7 @@ const deleteAllLocalStorage = (
 class LocalStorage {
     public usingStorage: boolean = true;
     public generateEinvoiceLocally: boolean = false;
+    public smartActs: string = 'unspecified';
     public defaultSeller: string = '';
     public companies: Record<string, NewParty | undefined> = {};
     public invoices: Record<string, any | undefined> = {};
@@ -97,6 +100,7 @@ class LocalStorage {
 
         this.usingStorage = getLocalStorage(localKeys.usingStorage, true);
         this.generateEinvoiceLocally = getLocalStorage(localKeys.generateEinvoiceLocally, false);
+        this.smartActs = getLocalStorage(localKeys.smartActs, 'unspecified');
         this.defaultSeller = getLocalStorage(localKeys.defaultSeller, '');
         this.invoices = getAllLocalStorage(localKeys.invoice);
         this.companies = getAllLocalStorage(localKeys.company);
@@ -106,7 +110,10 @@ class LocalStorage {
         key: LocalStorageKey,
         value: V,
     ) {
-        if (!this.usingStorage && key !== localKeys.usingStorage) {
+        if (!this.usingStorage
+            && key !== localKeys.usingStorage
+            && key !== localKeys.smartActs
+        ) {
             return;
         }
 
@@ -116,11 +123,13 @@ class LocalStorage {
     public obliterate() {
         deleteLocalStorage(localKeys.defaultSeller);
         deleteLocalStorage(localKeys.generateEinvoiceLocally);
+        deleteLocalStorage(localKeys.smartActs);
         deleteAllLocalStorage(localKeys.company);
         deleteAllLocalStorage(localKeys.invoice);
 
         this.defaultSeller = '';
         this.generateEinvoiceLocally = false;
+        this.smartActs = 'unspecified';
         this.companies = {};
         this.invoices = {};
     }

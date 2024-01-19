@@ -3,6 +3,10 @@ import {
     useState,
 } from 'react';
 
+import {
+    smartActsLabels,
+} from '../../data';
+
 import localStorage, {
     localKeys,
 } from '../../data/localStorage';
@@ -11,6 +15,7 @@ import MenuBack from '../../components/MenuBack';
 import Deleter from '../../components/Deleter';
 import LinkButton from '../../components/LinkButton';
 import Toggle from '../../components/Toggle';
+import Dropdown from '../../components/Dropdown';
 
 import {
     isObject,
@@ -38,8 +43,13 @@ export default function Settings({
 
     const [
         generateEinvoiceLocally,
-        setGenerateEinvoiceLocally
+        setGenerateEinvoiceLocally,
     ] = useState(localStorage.generateEinvoiceLocally);
+
+    const [
+        smartActs,
+        setSmartActs,
+    ] = useState(localStorage.smartActs);
 
 
     const exportData = () => {
@@ -169,6 +179,40 @@ export default function Settings({
                                 }}
                             >
                                 dacă această opțiune este dezactivată, efactura se va genera pe serverul xfactura.ro fără a fi stocate datele
+                            </p>
+                        </>
+                    )}
+                />
+
+                <Dropdown
+                    name="acte inteligente"
+                    selected={(smartActsLabels as any)[smartActs]}
+                    selectables={[
+                        ...Object.values(smartActsLabels),
+                    ]}
+                    atSelect={(selected) => {
+                        Object.keys(smartActsLabels).forEach((key) => {
+                            if ((smartActsLabels as any)[key] === selected) {
+                                localStorage.set(localKeys.smartActs, key);
+                                localStorage.smartActs = key;
+                                setSmartActs(key);
+                            }
+                        });
+                    }}
+                    tooltip={(
+                        <>
+                            <p>
+                                actele inteligente pot fi folosite pentru a genera automat xfacturi din imagini sau folosind vocea
+                            </p>
+                            <p>
+                                modelele neuronale pentru actele inteligente pot rula în browser (local—gratuit) sau pe serverul xfactura.ro (cloud—contra cost)
+                            </p>
+                            <p
+                                style={{
+                                    margin: 0,
+                                }}
+                            >
+                                prin selectarea acestei opțiuni generarea inteligentă va rula direct modelul neuronal local sau în cloud
                             </p>
                         </>
                     )}
