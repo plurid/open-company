@@ -32,7 +32,7 @@ export default function About({
             </p>
 
             <p>
-                xfactura.ro rulează complet local în browser și nu stochează datele în nicio bază de date externă
+                xfactura.ro poate fi rulat complet local în browser și nu stochează datele în nicio bază de date externă
                 <br />
                 toate datele sunt stocate folosind localStorage
                 <br />
@@ -56,6 +56,14 @@ export default function About({
                     target="_blank"
                 >
                     stripe
+                </a>
+                <br />
+                pentru cereri de funcționalitate sau raportări de probleme&nbsp;
+                <a
+                    href="mailto:contact@xfactura.ro?subject=xfactura.ro"
+                    target="_blank"
+                >
+                    contact
                 </a>
             </p>
 
