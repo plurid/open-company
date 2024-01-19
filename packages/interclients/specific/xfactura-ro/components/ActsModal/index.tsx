@@ -2,6 +2,8 @@ import {
     useState,
 } from 'react';
 
+import localStorage from '../../data/localStorage';
+
 import LinkButton from '../LinkButton';
 import Subtitle from '../Subtitle';
 import TooltipQuestion from '../TooltipQuestion';
@@ -58,6 +60,16 @@ export default function ActsModal({
             <div>
                 {description}
             </div>
+
+            {localStorage.usingStorage ? (
+                <div>
+                    datele sunt stocate doar local
+                </div>
+            ) : (
+                <div>
+                    datele nu sunt stocate nici local, nici în cloud
+                </div>
+            )}
         </div>
 
         <div
@@ -89,7 +101,7 @@ export default function ActsModal({
             <div
                 className="text-sm"
             >
-                gratuit
+                complet gratuit
             </div>
         </div>
 
@@ -123,7 +135,7 @@ export default function ActsModal({
                                 margin: 0,
                             }}
                         >
-                            folosire modele neuronale în cloud, timpul de încărcare și de procesare este scurt, iar rezultatele sunt mult mai precise
+                            folosire modele neuronale în cloud-ul xfactura.ro, timpul de încărcare și de procesare este scurt, iar rezultatele sunt mult mai precise
                         </p>
                     )}
                 />
@@ -156,6 +168,24 @@ export default function ActsModal({
             </div>
 
             <LinkButton
+                text="logare cu Google"
+                onClick={() => {
+                    setLoggedIn(true);
+                    setShowBuyScreen(true);
+                    setShowLoginScreen(false);
+                }}
+            />
+
+            <LinkButton
+                text="logare cu Apple"
+                onClick={() => {
+                    setLoggedIn(true);
+                    setShowBuyScreen(true);
+                    setShowLoginScreen(false);
+                }}
+            />
+
+            <LinkButton
                 text="înapoi"
                 onClick={() => {
                     setShowLoginScreen(false);
@@ -174,6 +204,52 @@ export default function ActsModal({
                 />
             </div>
 
+            <div
+                className="max-w-[400px]"
+            >
+                actele inteligente sunt folosite pentru procesarea documentelor în cloud-ul xfactura.ro
+                <br />
+                datele nu sunt stocate
+                <br />
+                1 act inteligent = 1 document procesat
+            </div>
+
+            <div
+                className="font-bold cursor-pointer select-none"
+            >
+                <div>
+                    70 RON
+                </div>
+
+                <div>
+                    300 acte inteligente
+                </div>
+            </div>
+
+            <div
+                className="font-bold cursor-pointer select-none"
+            >
+                <div>
+                    150 RON
+                </div>
+
+                <div>
+                    1.000 acte inteligente
+                </div>
+            </div>
+
+            <div
+                className="font-bold cursor-pointer select-none"
+            >
+                <div>
+                    500 RON
+                </div>
+
+                <div>
+                    5.000 acte inteligente
+                </div>
+            </div>
+
             <LinkButton
                 text="înapoi"
                 onClick={() => {
@@ -190,9 +266,12 @@ export default function ActsModal({
     return (
         <div
             role="status"
-            className={`fixed w-full h-full backdrop-blur-md top-0 right-0 bottom-0 z-30 grid items-center justify-center place-content-center gap-12`}
-            style={{
-            }}
+            className={`
+                w-full h-full
+                backdrop-blur-md
+                fixed top-0 right-0 bottom-0 z-30
+                grid items-center justify-center place-content-center gap-12
+            `}
         >
             {screen}
         </div>
