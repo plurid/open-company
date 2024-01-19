@@ -151,18 +151,6 @@ export default function Menu() {
                     </li>
                     <li className="m-4">
                         <LinkButton
-                            text="despre xfactura.ro"
-                            onClick={() => setView('about')}
-                        />
-                    </li>
-                    <li className="m-4">
-                        <LinkButton
-                            text="acte inteligente"
-                            onClick={() => setView('ai')}
-                        />
-                    </li>
-                    <li className="m-4">
-                        <LinkButton
                             text="companii"
                             onClick={() => setView('companies')}
                         />
@@ -179,6 +167,19 @@ export default function Menu() {
                             onClick={() => setView('invoices')}
                         />
                     </li>
+
+                    <li className="m-4 mt-8">
+                        <LinkButton
+                            text="despre xfactura.ro"
+                            onClick={() => setView('about')}
+                        />
+                    </li>
+                    <li className="m-4">
+                        <LinkButton
+                            text="acte inteligente"
+                            onClick={() => setView('ai')}
+                        />
+                    </li>
                     <li className="m-4">
                         <LinkButton
                             text="setări"
@@ -186,7 +187,7 @@ export default function Menu() {
                         />
                     </li>
 
-                    <li className="m-4">
+                    <li className="m-4 mt-8">
                         <LinkButton
                             text="delogare"
                             onClick={() => {
