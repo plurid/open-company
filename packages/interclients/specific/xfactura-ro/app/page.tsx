@@ -434,6 +434,7 @@ export default function Home() {
                         <Audio
                             setShowMicrophone={setShowMicrophone}
                             extractInvoiceFromAudio={extractInvoiceFromAudio}
+                            hide={() => setShowMicrophone(false)}
                         />
                     )}
                 </div>

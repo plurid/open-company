@@ -39,3 +39,17 @@ export const microphoneIcon = (
         <path d="M38,25a2,2,0,0,0-4,0,10,10,0,0,1-20,0,2,2,0,0,0-4,0A14,14,0,0,0,22,38.84V43H21a2,2,0,0,0,0,4h6a2,2,0,0,0,0-4H26V38.84A14,14,0,0,0,38,25Z" fill="white" />
     </svg>
 );
+
+
+export const closeIcon = (
+    <svg
+        xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50"
+        style={{
+            filter: 'invert(1)', width: '25px', height: '25px',
+        }}
+    >
+        <path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z">
+            {/* close */}
+        </path>
+    </svg>
+);
