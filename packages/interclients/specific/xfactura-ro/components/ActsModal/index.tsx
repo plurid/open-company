@@ -4,7 +4,7 @@ import {
 
 import {
     useGoogleLogin,
-    TokenResponse as GoogleTokenResponse,
+    CodeResponse as GoogleCodeResponse,
 } from '@react-oauth/google';
 
 import localStorage from '../../data/localStorage';
@@ -12,6 +12,7 @@ import localStorage from '../../data/localStorage';
 import LinkButton from '../LinkButton';
 import Subtitle from '../Subtitle';
 import TooltipQuestion from '../TooltipQuestion';
+import BuyScreen from '../BuyScreen';
 
 
 
@@ -53,21 +54,32 @@ export default function ActsModal({
 
     // #region handlers
     const googleSuccessLogin = (
-        tokenResponse: Omit<GoogleTokenResponse, "error" | "error_description" | "error_uri">,
+        codeResponse:  Omit<GoogleCodeResponse, 'error' | 'error_description' | 'error_uri'>,
     ) => {
-        console.log({
-            tokenResponse,
-        });
+        fetch('/api/google_log_in', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(codeResponse),
+        })
+            .then(async (response) => {
+                const data = await response.json();
 
-        setLoggedIn(true);
-        setShowBuyScreen(true);
-        setShowLoginScreen(false);
+                setLoggedIn(true);
+                setShowBuyScreen(true);
+                setShowLoginScreen(false);
+            })
+            .catch((error) => {
+                console.log('error', error);
+            });
     }
     const googleErrorLogin = () => {
         console.log('Login Failed');
     }
     const googleLogin = useGoogleLogin({
-        onSuccess: (tokenResponse) => googleSuccessLogin(tokenResponse),
+        flow: 'auth-code',
+        onSuccess: (codeResponse) => googleSuccessLogin(codeResponse),
         onError: () => googleErrorLogin(),
     });
 
@@ -193,6 +205,7 @@ export default function ActsModal({
             onClick={() => {
                 back();
             }}
+            centered={true}
         />
         </>
     );
@@ -226,71 +239,15 @@ export default function ActsModal({
                 onClick={() => {
                     setShowLoginScreen(false);
                 }}
+                centered={true}
             />
         </>
     );
 
     const buyScreen = (
         <>
-            <div
-                className="m-auto"
-            >
-                <Subtitle
-                    text={"cumpărare acte inteligente"}
-                />
-            </div>
-
-            <div
-                className="max-w-[400px]"
-            >
-                actele inteligente sunt folosite pentru procesarea documentelor în cloud-ul xfactura.ro
-                <br />
-                datele nu sunt stocate
-                <br />
-                1 act inteligent = 1 document procesat
-            </div>
-
-            <div
-                className="font-bold cursor-pointer select-none"
-            >
-                <div>
-                    70 RON
-                </div>
-
-                <div>
-                    300 acte inteligente
-                </div>
-            </div>
-
-            <div
-                className="font-bold cursor-pointer select-none"
-            >
-                <div>
-                    150 RON
-                </div>
-
-                <div>
-                    1.000 acte inteligente
-                </div>
-            </div>
-
-            <div
-                className="font-bold cursor-pointer select-none"
-            >
-                <div>
-                    500 RON
-                </div>
-
-                <div>
-                    5.000 acte inteligente
-                </div>
-            </div>
-
-            <LinkButton
-                text="înapoi"
-                onClick={() => {
-                    setShowBuyScreen(false);
-                }}
+            <BuyScreen
+                setShowBuyScreen={setShowBuyScreen}
             />
         </>
     );
