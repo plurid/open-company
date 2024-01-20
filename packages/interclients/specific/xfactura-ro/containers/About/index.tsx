@@ -32,11 +32,23 @@ export default function About({
             </p>
 
             <p>
-                xfactura.ro poate fi rulat complet local în browser și nu stochează datele în nicio bază de date externă
+                xfactura.ro poate fi rulat complet local în browser și nu stochează datele în nicio bază de date externă decât la cererea utilizatorului
                 <br />
-                toate datele sunt stocate folosind localStorage
+                toate datele sunt stocate folosind&nbsp;
+                <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage"
+                    target="_blank"
+                >
+                    localStorage
+                </a>
                 <br />
-                datele pot fi exportate și importate în format JSON
+                datele pot fi exportate și importate în format&nbsp;
+                <a
+                    href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON"
+                    target="_blank"
+                >
+                    JSON
+                </a>
             </p>
 
             <p>
