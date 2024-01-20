@@ -69,7 +69,10 @@ export default function LineMenu({
                         className="mt-4 mb-2"
                     >
                         <Deleter
-                            atDelete={() => removeLine(index)}
+                            atDelete={() => {
+                                setShow(false);
+                                removeLine(index);
+                            }}
                         />
                     </div>
                 </div>

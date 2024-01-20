@@ -70,7 +70,7 @@ export default function Line({
             <div
                 className="select-none text-center text-gray-500 text-sm lg:mt-11"
             >
-                {index + 1 + '.'}
+                {(index + 1) + '.'}
             </div>
 
             <Input
