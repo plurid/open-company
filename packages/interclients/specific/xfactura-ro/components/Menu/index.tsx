@@ -3,6 +3,8 @@ import {
     useEffect,
 } from 'react';
 
+import { googleLogout } from '@react-oauth/google';
+
 import LinkButton from '../../components/LinkButton';
 
 import CompaniesList from '../../containers/CompaniesList';
@@ -208,6 +210,8 @@ export default function Menu() {
                             text="delogare"
                             onClick={() => {
                                 // if logged in
+
+                                googleLogout();
                             }}
                         />
                     </li>

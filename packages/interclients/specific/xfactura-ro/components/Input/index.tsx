@@ -43,6 +43,7 @@ export default function Input({
 
             <input
                 className="bg-gray-800 w-[200px] p-2 border-none rounded-none text-white focus:outline-none focus:ring-2 focus:ring-white disabled:bg-gray-600"
+                name={text}
                 value={value}
                 onChange={(event) => {
                     setValue(event.target.value);

@@ -163,6 +163,7 @@ export default function CustomDatepicker({
                     labelTodayButton='azi'
                     labelClearButton='resetare'
                     icon={undefined}
+                    name={text}
                 />
             </Flowbite>
         </div>

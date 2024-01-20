@@ -55,6 +55,10 @@ export default function ActsModal({
     const googleSuccessLogin = (
         tokenResponse: Omit<GoogleTokenResponse, "error" | "error_description" | "error_uri">,
     ) => {
+        console.log({
+            tokenResponse,
+        });
+
         setLoggedIn(true);
         setShowBuyScreen(true);
         setShowLoginScreen(false);
@@ -64,7 +68,7 @@ export default function ActsModal({
     }
     const googleLogin = useGoogleLogin({
         onSuccess: (tokenResponse) => googleSuccessLogin(tokenResponse),
-        onError: () => googleErrorLogin()
+        onError: () => googleErrorLogin(),
     });
 
 

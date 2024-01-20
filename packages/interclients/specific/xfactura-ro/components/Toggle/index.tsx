@@ -44,6 +44,7 @@ const Toggle = ({
             <label className="relative inline-flex items-center cursor-pointer">
                 <input
                     type="checkbox"
+                    name={text}
                     checked={value}
                     className="sr-only peer"
                     onChange={() => {
