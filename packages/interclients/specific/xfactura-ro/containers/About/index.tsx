@@ -1,4 +1,5 @@
 import MenuBack from '../../components/MenuBack';
+import Subtitle from '../../components/Subtitle';
 
 
 
@@ -11,11 +12,10 @@ export default function About({
         <div
             className="text-left"
         >
-            <h1
-                className="text-center mb-8"
-            >
-                despre xfactura.ro
-            </h1>
+            <Subtitle
+                text="despre xfactura.ro"
+                centered={true}
+            />
 
             <p>
                 xfactura.ro este un proiect&nbsp;

@@ -9,6 +9,7 @@ import {
 import localStorage from '../../data/localStorage';
 
 import MenuBack from '../../components/MenuBack';
+import Subtitle from '../../components/Subtitle';
 
 
 
@@ -27,11 +28,10 @@ export default function CompaniesList({
 
     return (
         <div>
-            <h1
-                className="text-center mb-8"
-            >
-                companii
-            </h1>
+            <Subtitle
+                text="companii"
+                centered={true}
+            />
 
             {companies.length === 0 && (
                 <div>

@@ -16,6 +16,7 @@ import Deleter from '../../components/Deleter';
 import LinkButton from '../../components/LinkButton';
 import Toggle from '../../components/Toggle';
 import Dropdown from '../../components/Dropdown';
+import Subtitle from '../../components/Subtitle';
 
 import {
     isObject,
@@ -137,11 +138,10 @@ export default function Settings({
 
     return (
         <div>
-            <h1
-                className="text-center mb-8"
-            >
-                setări
-            </h1>
+            <Subtitle
+                text="setări"
+                centered={true}
+            />
 
             <div
                 className="grid gap-4"

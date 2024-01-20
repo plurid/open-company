@@ -5,6 +5,7 @@ import {
 import localStorage from '../../data/localStorage';
 
 import MenuBack from '../../components/MenuBack';
+import Subtitle from '../../components/Subtitle';
 
 
 
@@ -23,11 +24,10 @@ export default function InvoicesList({
 
     return (
         <div>
-            <h1
-                className="text-center mb-8"
-            >
-                xfacturi
-            </h1>
+            <Subtitle
+                text="xfacturi"
+                centered={true}
+            />
 
             {invoices.length === 0 && (
                 <div>

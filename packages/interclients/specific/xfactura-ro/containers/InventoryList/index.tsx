@@ -9,6 +9,7 @@ import {
 import localStorage from '../../data/localStorage';
 
 import MenuBack from '../../components/MenuBack';
+import Subtitle from '../../components/Subtitle';
 
 
 
@@ -27,11 +28,10 @@ export default function InventoryList({
 
     return (
         <div>
-            <h1
-                className="text-center mb-8"
-            >
-                stocuri
-            </h1>
+            <Subtitle
+                text="stocuri"
+                centered={true}
+            />
 
             {inventory.length === 0 && (
                 <div>
