@@ -5,9 +5,11 @@ import {
 
 import LinkButton from '../../components/LinkButton';
 
-import About from '../../containers/About';
 import CompaniesList from '../../containers/CompaniesList';
+import InventoryList from '../../containers/InventoryList';
 import InvoicesList from '../../containers/InvoicesList';
+import About from '../../containers/About';
+import AI from '../../containers/AI';
 import Settings from '../../containers/Settings';
 
 
@@ -109,13 +111,6 @@ export default function Menu() {
 
     let viewElement: JSX.Element | undefined;
     switch (view) {
-        case 'about':
-            viewElement = (
-                <About
-                    back={() => setView('general')}
-                />
-            );
-            break;
         case 'companies':
             viewElement = (
                 <CompaniesList
@@ -123,9 +118,30 @@ export default function Menu() {
                 />
             );
             break;
+        case 'inventory':
+            viewElement = (
+                <InventoryList
+                    back={() => setView('general')}
+                />
+            );
+            break;
         case 'invoices':
             viewElement = (
                 <InvoicesList
+                    back={() => setView('general')}
+                />
+            );
+            break;
+        case 'about':
+            viewElement = (
+                <About
+                    back={() => setView('general')}
+                />
+            );
+            break;
+        case 'ai':
+            viewElement = (
+                <AI
                     back={() => setView('general')}
                 />
             );

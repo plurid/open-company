@@ -88,6 +88,7 @@ class LocalStorage {
     public defaultSeller: string = '';
     public companies: Record<string, NewParty | undefined> = {};
     public invoices: Record<string, any | undefined> = {};
+    public inventory: Record<string, any | undefined> = {};
 
     constructor() {
         this.load();
