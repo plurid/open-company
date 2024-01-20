@@ -46,6 +46,7 @@ export default function LineMenu({
         >
             <button
                 onClick={() => setShow(!show)}
+                className="lg:mt-10"
             >
                 {show ? (
                     <>{collapse}</>
@@ -56,7 +57,7 @@ export default function LineMenu({
 
             {show && (
                 <div
-                    className="absolute z-30 border top-[30px] left-0 w-[220px] backdrop-blur-md shadow-2xl p-4 lg:right-0 lg:left-auto"
+                    className="absolute z-30 border top-[40px] left-0 w-[220px] backdrop-blur-md shadow-2xl p-4 lg:right-0 lg:left-auto lg:top-[80px]"
                 >
                     <Toggle
                         text="TVA inclus"
